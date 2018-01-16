@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数据库 on 终点站</title>
-    <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <link>http://sinnerliu.coding.me/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
     <description>Recent content in 数据库 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 16 Jan 2018 11:52:41 +0800</lastBuildDate>
     
-	<atom:link href="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://sinnerliu.coding.me/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>linux安装oracle精简版客户端</title>
-      <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/</link>
+      <link>http://sinnerliu.coding.me/post/hello/</link>
       <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
       
-      <guid>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/</guid>
+      <guid>http://sinnerliu.coding.me/post/hello/</guid>
       <description>&lt;p&gt;linux安装oracle精简版客户端
 &lt;/p&gt;</description>
     </item>
