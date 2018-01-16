@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 16 Jan 2018 16:58:07 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jan 2018 17:13:31 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>My Source - RSS &amp; Podcasts安卓离线rss阅读器去广告版本</title>
+      <link>https://blog.gofinall.com/post/mysourcerss/</link>
+      <pubDate>Tue, 16 Jan 2018 17:13:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysourcerss/</guid>
+      <description>&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>使用Hugo来生成静态博客</title>
