@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/mysql%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%9D%A5%E9%80%A0%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2018-01-16T14:21:37+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -23,6 +30,20 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/mysql/</loc>
+    <lastmod>2018-01-16T14:21:37+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/mysql/</loc>
+    <lastmod>2018-01-16T14:21:37+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/categories/oracle12/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -31,13 +52,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-01-16T11:52:41+08:00</lastmod>
+    <lastmod>2018-01-16T14:21:37+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/tags/</loc>
+    <lastmod>2018-01-16T14:21:37+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
