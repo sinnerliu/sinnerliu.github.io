@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://sinnerliu.coding.me/sitemap.xml
+Sitemap: https://sinnerliu.coding.me/sitemap.xml

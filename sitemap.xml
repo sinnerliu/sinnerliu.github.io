@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="http://sinnerliu.coding.me/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://sinnerliu.coding.me/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://sinnerliu.coding.me/about/</loc>
+    <loc>https://sinnerliu.coding.me/about/</loc>
     <lastmod>2017-08-28T21:41:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/post/hello/</loc>
+    <loc>https://sinnerliu.coding.me/post/hello/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/categories/</loc>
+    <loc>https://sinnerliu.coding.me/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/categories/oracle12/</loc>
+    <loc>https://sinnerliu.coding.me/categories/oracle12/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/post/</loc>
+    <loc>https://sinnerliu.coding.me/post/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/tags/</loc>
+    <loc>https://sinnerliu.coding.me/tags/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>https://sinnerliu.coding.me/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2018-01-16T11:52:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sinnerliu.coding.me/</loc>
+    <loc>https://sinnerliu.coding.me/</loc>
     <lastmod>2017-08-28T21:41:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
