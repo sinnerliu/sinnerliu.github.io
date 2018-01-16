@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on 终点站</title>
+    <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/categories/</link>
+    <description>Recent content in Categories on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    
+	<atom:link href="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Oracle12</title>
+      <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/categories/oracle12/</link>
+      <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
+      
+      <guid>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/categories/oracle12/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

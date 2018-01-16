@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>终点站</title>
+    <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/</link>
+    <description>Recent content on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 20 Aug 2017 21:38:52 +0800</lastBuildDate>
+    
+	<atom:link href="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于</title>
+      <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/about/</link>
+      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      
+      <guid>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/about/</guid>
+      <description>Hugo is a static site engine written in Go.
+It makes use of a variety of open source projects including:
+ Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>linux安装oracle精简版客户端</title>
+      <link>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/</link>
+      <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
+      
+      <guid>https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/</guid>
+      <description>&lt;p&gt;linux安装oracle精简版客户端
+&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

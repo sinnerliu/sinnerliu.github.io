@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/sitemap.xml

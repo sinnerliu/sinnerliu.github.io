@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>linux安装oracle精简版客户端 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="linux安装oracle精简版客户端 " />
+<meta name="keywords" content="oracle" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.32.2" />
+
+
+<link rel="canonical" href="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/sinnerliu/sinnerliu.coding.me.git/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/sinnerliu/sinnerliu.coding.me.git/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/sinnerliu/sinnerliu.coding.me.git/favicon-16x16.png">
+<link rel="icon" href="/sinnerliu/sinnerliu.coding.me.git/favicon.ico" />
+<link rel="manifest" href="/sinnerliu/sinnerliu.coding.me.git/manifest.json">
+<link rel="mask-icon" href="/sinnerliu/sinnerliu.coding.me.git/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/sinnerliu/sinnerliu.coding.me.git/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/sinnerliu/sinnerliu.coding.me.git/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="linux安装oracle精简版客户端" />
+<meta property="og:description" content="linux安装oracle精简版客户端
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/post/hello/" />
+
+
+
+<meta property="article:published_time" content="2018-01-16T11:52:41&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-01-16T11:52:41&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="linux安装oracle精简版客户端">
+<meta itemprop="description" content="linux安装oracle精简版客户端
+">
+
+
+<meta itemprop="datePublished" content="2018-01-16T11:52:41&#43;08:00" />
+<meta itemprop="dateModified" content="2018-01-16T11:52:41&#43;08:00" />
+<meta itemprop="wordCount" content="1073">
+
+
+
+<meta itemprop="keywords" content="数据库," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="linux安装oracle精简版客户端"/>
+<meta name="twitter:description" content="linux安装oracle精简版客户端
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/sinnerliu/sinnerliu.coding.me.git/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/sinnerliu/sinnerliu.coding.me.git/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/sinnerliu/sinnerliu.coding.me.git/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/sinnerliu/sinnerliu.coding.me.git/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/sinnerliu/sinnerliu.coding.me.git/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/sinnerliu/sinnerliu.coding.me.git/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/sinnerliu/sinnerliu.coding.me.git/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/sinnerliu/sinnerliu.coding.me.git/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/sinnerliu/sinnerliu.coding.me.git/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/sinnerliu/sinnerliu.coding.me.git/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/sinnerliu/sinnerliu.coding.me.git/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/sinnerliu/sinnerliu.coding.me.git/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">linux安装oracle精简版客户端</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-01-16 </span>
+        <div class="post-category">
+            
+              <a href="/sinnerliu/sinnerliu.coding.me.git/categories/oracle12/"> oracle12 </a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#前提准备">前提准备</a></li>
+<li><a href="#解压">解压</a></li>
+<li><a href="#配置环境变量">配置环境变量</a></li>
+<li><a href="#配置tnsname-ora">配置tnsname.ora</a></li>
+<li><a href="#测试sqlplus">测试sqlplus</a></li>
+<li><a href="#tnsping命令">tnsping命令</a></li>
+<li><a href="#exp和imp命令">exp和imp命令</a></li>
+<li><a href="#sqlldr命令">sqlldr命令</a></li>
+<li><a href="#最后">最后</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>linux安装oracle精简版客户端
+</p>
+
+<h3 id="前提准备">前提准备</h3>
+
+<p>安装包下载地址：<a href="http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html">http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</a></p>
+
+<p>版本要求：最好和服务端一致，可以高一点，但是不能底于服务端的版本号；最好不要高于oracle服务端的的大版本，比如，服务端是11g的，最好就下11版本的客户端，不要下载12版本的客户端；</p>
+
+<p>下载包：
+oracle-instantclient11.2-basic-11.2.0.1.0-1.x86_64.zip
+oracle-instantclient11.2-jdbc-11.2.0.1.0-1.x86_64.zip
+oracle-instantclient11.2-sqlplus-11.2.0.1.0-1.x86_64.zip
+oracle-instantclient11.2-odbc-11.2.0.1.0-1.x86_64.zip
+oracle-instantclient11.2-tools-11.2.0.1.0-1.x86_64.zip</p>
+
+<h3 id="解压">解压</h3>
+
+<p>把上述包全部解压</p>
+
+<pre><code class="language-shell">unzip oracle-instantclient11.2-basic-11.2.0.1.0-1.x86_64.zip
+unzip oracle-instantclient11.2-jdbc-11.2.0.1.0-1.x86_64.zip 
+unzip oracle-instantclient11.2-sqlplus-11.2.0.1.0-1.x86_64.zip
+unzip oracle-instantclient11.2-odbc-11.2.0.1.0-1.x86_64.zip
+unzip oracle-instantclient11.2-tools-11.2.0.1.0-1.x86_64.zip
+</code></pre>
+
+<p>解压后得到目录：instantclient_11_2</p>
+
+<p>赋执行权限</p>
+
+<pre><code class="language-shell">chmod -R 7755 instantclient_11_2
+</code></pre>
+
+<h3 id="配置环境变量">配置环境变量</h3>
+
+<pre><code class="language-shell">vi ~/.bash_profile
+export ORACLE_HOME=/home/oracle/instantclient_11_2
+export ORACLE_IC_HOME=$ORACLE_HOME
+export TNS_ADMIN=$ORACLE_HOME
+export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+export CLASSPATH=$ORACLE_HOME/ojdbc6.jar:./
+export PATH=$PATH:$ORACLE_HOME
+export ORACLE_SID=orcl
+</code></pre>
+
+<p>使环境变量生效</p>
+
+<pre><code class="language-shell">source ~/.bash_profile
+</code></pre>
+
+<h3 id="配置tnsname-ora">配置tnsname.ora</h3>
+
+<pre><code class="language-shell">cd $ORACLE_HOME
+vi tnsname.ora
+orcl =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.132.2 )(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = orcl)
+    )
+  )
+</code></pre>
+
+<h3 id="测试sqlplus">测试sqlplus</h3>
+
+<pre><code class="language-shell">sqlplus oracle/oracle@orcl
+SQL*Plus: Release 11.2.0.1.0 - Production on Fri Aug 5 12:32:54 2005
+
+Copyright (c) 1982, 2005, Oracle. All rights reserved.
+
+SQL&gt;
+</code></pre>
+
+<p>连接成功！</p>
+
+<p>如果sqlplus报错：ORA-12533 或者 ORA-12533: TNS:illegal ADDRESS parameters</p>
+
+<p>解决办法：</p>
+
+<ul>
+<li>先检查tnsname.ora有没有配置错误；</li>
+<li>如果tnsname.ora确定正确，则需要把tnsname.ora文件里面的所有空格和换行符去掉，里面只剩下一行，如下：
+<code>shell
+orcl=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.132.2)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=orcl)))
+</code>
+然后在进行测试，应该会成功</li>
+</ul>
+
+<p>创建目录(后面的tnsping、exp、imp、sqlldr会用到)：</p>
+
+<pre><code class="language-shell">mkdir -p $ORACLE_HOME/network/mesg/
+mkdir -p $ORACLE_HOME/rdbms/mesg
+</code></pre>
+
+<h3 id="tnsping命令">tnsping命令</h3>
+
+<p>由于精简版客户端默认没有tnsping的，需要我们去服务端copy；</p>
+
+<pre><code class="language-shell">scp $ORACLE_HOME/bin/tnsping oracle@ip_client:$ORACLE_HOME/tnsping
+scp $ORACLE_HOME/network/mesg/tnsus.msb oracle@ip_client:$ORACLE_HOME/network/mesg/tnsus.msb
+</code></pre>
+
+<p>然后再测试tnsping</p>
+
+<pre><code class="language-shell">#tnsping orcl
+TNS Ping Utility for Linux: Version 11.2.0.1.0 - Production on 10-MAR-2014 09:28:39
+Copyright (c) 1997, 2006, Oracle.  All rights reserved.
+Used parameter files:
+Used HOSTNAME adapter to resolve the alias
+Attempting to contact (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.132.2)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=orcl)))
+</code></pre>
+
+<h3 id="exp和imp命令">exp和imp命令</h3>
+
+<p>由于精简版客户端默认没有exp和imp命令，需要我们去服务端copy；</p>
+
+<pre><code class="language-shell">scp $ORACLE_HOME/bin/exp oracle@ip_client:$ORACLE_HOME/exp
+scp $ORACLE_HOME/bin/imp oracle@ip_client:$ORACLE_HOME/imp
+scp $ORACLE_HOME/rdbms/mesg/ulus.msb oracle@ip_client:$ORACLE_HOME/rdbms/mesg/ulus.msb
+scp $ORACLE_HOME/rdbms/mesg/expus.msb oracle@ip_client:$ORACLE_HOME/rdbms/mesg/expus.msb
+scp $ORACLE_HOME/rdbms/mesg/impus.msb oracle@ip_client:$ORACLE_HOME/rdbms/mesg/impus.msb
+</code></pre>
+
+<h3 id="sqlldr命令">sqlldr命令</h3>
+
+<p>由于精简版客户端默认没有sqlldr命令，需要我们去服务端copy；</p>
+
+<pre><code class="language-shell">scp $ORACLE_HOME/bin/sqlldr oracle@ip_client:$ORACLE_HOME/sqlldr
+scp $ORACLE_HOME/network/mesg/* oracle@ip_client:$ORACLE_HOME/network/mesg/
+scp $ORACLE_HOME/rdbms/mesg/* oracle@ip_client:$ORACLE_HOME/rdbms/mesg
+scp $ORACLE_HOME/lib/* oracle@ip_client:$ORACLE_HOME/
+</code></pre>
+
+<p>你会发现network/mesg/和rdbms/mesg/下面copy的东西把上面tnsping、exp、imp中copy的文件都包含了；这个其实是免得有些库依赖或者.msb没有copy完全，索性就全部copy过来了，免得后面再出问题；偷了个懒！</p>
+
+<p>为了放置copy过来的文件没有执行权限，我们在客户端服务器上再进行一次赋权</p>
+
+<pre><code class="language-shell">chmod -R 7755 $ORACLE_HOME
+</code></pre>
+
+<p>然后你再去测试sqlldr命令就会发现已经能用了；</p>
+
+<pre><code class="language-shell">$ sqlldr
+
+SQL*Loader: Release 11.2.0.1.0 - Production on Sat Jan 6 14:17:09 2018
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+
+Usage: SQLLDR keyword=value [,keyword=value,...]
+
+Valid Keywords:
+
+    userid -- ORACLE username/password           
+   control -- control file name                  
+       log -- log file name                      
+       bad -- bad file name                      
+      data -- data file name                     
+   discard -- discard file name                  
+discardmax -- number of discards to allow          (Default all)
+      skip -- number of logical records to skip    (Default 0)
+      load -- number of logical records to load    (Default all)
+    errors -- number of errors to allow            (Default 50)
+      rows -- number of rows in conventional path bind array or be
+</code></pre>
+
+<h3 id="最后">最后</h3>
+
+<p>最后还有一件重要的事情，去喝杯茶，抽支烟，犒劳下自己！</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/sinnerliu/sinnerliu.coding.me.git/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://git.coding.net/sinnerliu/sinnerliu.coding.me.git/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/sinnerliu/sinnerliu.coding.me.git/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/sinnerliu/sinnerliu.coding.me.git/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/sinnerliu/sinnerliu.coding.me.git/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/sinnerliu/sinnerliu.coding.me.git/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/sinnerliu/sinnerliu.coding.me.git/dist/even.min.js?v=2.7.2"></script>
+
+
+
+
+</body>
+</html>
