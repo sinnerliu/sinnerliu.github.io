@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 终点站</title>
-    <link>https://sinnerliu.coding.me/post/</link>
+    <link>https://blog.gofinall.com/post/</link>
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 16 Jan 2018 11:52:41 +0800</lastBuildDate>
     
-	<atom:link href="https://sinnerliu.coding.me/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>linux安装oracle精简版客户端</title>
-      <link>https://sinnerliu.coding.me/post/hello/</link>
+      <link>https://blog.gofinall.com/post/hello/</link>
       <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
       
-      <guid>https://sinnerliu.coding.me/post/hello/</guid>
+      <guid>https://blog.gofinall.com/post/hello/</guid>
       <description>&lt;p&gt;linux安装oracle精简版客户端
 &lt;/p&gt;</description>
     </item>
