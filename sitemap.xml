@@ -65,14 +65,14 @@
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/categories/linux/</loc>
+    <loc>https://blog.gofinall.com/tags/linux/</loc>
     <lastmod>2018-01-16T15:07:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/tags/linux/</loc>
+    <loc>https://blog.gofinall.com/categories/linux/</loc>
     <lastmod>2018-01-16T15:07:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -128,14 +128,14 @@
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/categories/%E5%AE%89%E5%8D%93/</loc>
+    <loc>https://blog.gofinall.com/tags/%E5%AE%89%E5%8D%93/</loc>
     <lastmod>2018-01-16T17:13:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/tags/%E5%AE%89%E5%8D%93/</loc>
+    <loc>https://blog.gofinall.com/categories/%E5%AE%89%E5%8D%93/</loc>
     <lastmod>2018-01-16T17:13:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -163,14 +163,14 @@
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://blog.gofinall.com/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2018-01-16T16:58:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.gofinall.com/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://blog.gofinall.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2018-01-16T16:58:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
