@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/frp/</loc>
+    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/mysourcerss/</loc>
     <lastmod>2018-01-16T17:13:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -58,6 +65,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/frp/</loc>
+    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/hugo/</loc>
     <lastmod>2018-01-16T16:58:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -101,7 +115,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-01-16T17:13:31+08:00</lastmod>
+    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -122,7 +136,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/</loc>
-    <lastmod>2018-01-16T16:58:07+08:00</lastmod>
+    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -137,6 +151,13 @@
   <url>
     <loc>https://blog.gofinall.com/categories/%E5%AE%89%E5%8D%93/</loc>
     <lastmod>2018-01-16T17:13:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
