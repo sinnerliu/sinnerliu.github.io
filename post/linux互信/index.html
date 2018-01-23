@@ -80,7 +80,7 @@
 
 <meta itemprop="datePublished" content="2018-01-23T18:16:24&#43;08:00" />
 <meta itemprop="dateModified" content="2018-01-23T18:16:24&#43;08:00" />
-<meta itemprop="wordCount" content="252">
+<meta itemprop="wordCount" content="234">
 
 
 
@@ -185,13 +185,15 @@
 
 <p></p>
 
-<p>1、在主机A上执行命令   ssh-keygen -t rsa
-2、将主机A/home/用户名/.ssh/id_rsa.pub文件的内容加入~/.ssh/authorized_keys文件内
-3、在主机A上修改权限   chmod 600  ~/.ssh/authorized_keys
-4、将主机B中的/home/用户名/.ssh/id_rsa.pub文件内容，加入主机A的~/.ssh/authorized_keys文件内，主机A可通过ssh方式免密码登录主机B</p>
+<p>1、在主机A上执行命令   ssh-keygen -t rsa</p>
 
-<p>备注：如果互信失败，需要进入：.ssh目录执行chmod 700 .和chmod 700 ..
-查看SELINUX=disabled</p>
+<p>2、将主机A/home/用户名/.ssh/id_rsa.pub文件的内容加入~/.ssh/authorized_keys文件内</p>
+
+<p>3、在主机A上修改权限   chmod 600  ~/.ssh/authorized_keys</p>
+
+<p>4、将主机B中的/home/用户名/.ssh/id_rsa.pub文件内容，加入主机A的~/.ssh/authorized_keys文件内，主机A可通过ssh方式免密码登录主机B</p>
+
+<p>备注：如果互信失败，需要进入：.ssh目录执行chmod 700 .和chmod 700 ..</p>
     </div>
 
     
