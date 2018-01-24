@@ -6,10 +6,21 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 23 Jan 2018 18:16:24 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jan 2018 14:40:26 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux后台执行命令</title>
+      <link>https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Wed, 24 Jan 2018 14:40:26 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</guid>
+      <description>&lt;p&gt;你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Linux互信</title>
