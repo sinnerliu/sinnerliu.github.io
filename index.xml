@@ -21,6 +21,17 @@
     </item>
     
     <item>
+      <title>GitLab_本地GitLab服务器搭建</title>
+      <link>https://blog.gofinall.com/post/gitlab/</link>
+      <pubDate>Mon, 26 Feb 2018 15:07:55 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/gitlab/</guid>
+      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>linux 技巧： 让你的远程会话后台执行</title>
       <link>https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Wed, 24 Jan 2018 14:40:26 +0800</pubDate>
