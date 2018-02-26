@@ -80,7 +80,7 @@
 
 <meta itemprop="datePublished" content="2018-02-26T15:07:55&#43;08:00" />
 <meta itemprop="dateModified" content="2018-02-26T15:07:55&#43;08:00" />
-<meta itemprop="wordCount" content="1614">
+<meta itemprop="wordCount" content="1604">
 
 
 
@@ -463,11 +463,11 @@ SYNOPSIS
   git init --bare new_project_name.git
 </code></pre>
 
-<pre><code>
-- 以镜像推送的方式上传代码到 GitCafe 服务器上。请确保已经添加了公钥到新的机器上。
+<ul>
+<li>以镜像推送的方式上传代码到 GitCafe 服务器上。请确保已经添加了公钥到新的机器上。</li>
+</ul>
 
-​```shell
-cd project_name.git
+<pre><code class="language-shell">cd project_name.git
 git push --mirror git@192.168.20.XX/path/to/path/new_project_name.git
 </code></pre>
 
