@@ -80,7 +80,7 @@
 
 <meta itemprop="datePublished" content="2018-02-26T15:07:55&#43;08:00" />
 <meta itemprop="dateModified" content="2018-02-26T15:07:55&#43;08:00" />
-<meta itemprop="wordCount" content="1514">
+<meta itemprop="wordCount" content="1614">
 
 
 
@@ -199,7 +199,16 @@
 <li><a href="#出现页面502">出现页面502</a></li>
 </ul></li>
 <li><a href="#配置邮件发送">配置邮件发送</a></li>
-<li><a href="#其他">其他</a></li>
+<li><a href="#日志查看">日志查看</a></li>
+<li><a href="#gitlab汉化">gitlab汉化</a>
+<ul>
+<li><a href="#查看版本">查看版本</a></li>
+<li><a href="#克隆获取汉化版本库">克隆获取汉化版本库</a></li>
+<li><a href="#查看该汉化补丁的版本">查看该汉化补丁的版本</a></li>
+<li><a href="#打汉化补丁">打汉化补丁</a></li>
+<li><a href="#启动gitlab">启动gitlab</a></li>
+<li><a href="#重新配置gitlab">重新配置gitlab</a></li>
+</ul></li>
 <li><a href="#git仓库迁移">git仓库迁移</a></li>
 </ul></li>
 </ul></li>
@@ -291,8 +300,9 @@ If you are located in China, try using <a href="https://mirror.tuna.tsinghua.edu
 
 <h4 id="出现页面502">出现页面502</h4>
 
-<p>原因：由于unicorn默认使用的是8080端口，可能有其他程序占用了8080端口。
-解决办法：打开/etc/gitlab/gitlab.rb,打开# unicorn[‘port’] = 8080 的注释，将8080修改为9090，保存后运行</p>
+<p>原因：由于unicorn默认使用的是8080端口，可能有其他程序占用了8080端口。</p>
+
+<p>解决办法：打开/etc/gitlab/gitlab.rb,打开# unicorn[‘port’] = 8080 的注释，将8080修改为9090，保存后运行</p>
 
 <pre><code>sudo gitlab-ctl reconfigure
 </code></pre>
@@ -359,11 +369,48 @@ gitlab_rails['smtp_force_ssl'] = false
 <p>查看日志
 <code>sudo gitlab-ctl tail</code></p>
 
-<h3 id="其他">其他</h3>
+<h3 id="日志查看">日志查看</h3>
 
 <p>unicorn日志查看：<code>gitlab-ctl tail unicorn</code></p>
 
 <p>gitlab日志查看：<code>gitlab-ctl tail</code></p>
+
+<h3 id="gitlab汉化">gitlab汉化</h3>
+
+<h4 id="查看版本">查看版本</h4>
+
+<pre><code class="language-shell">cat /opt/gitlab/embedded/service/gitlab-rails/VERSION  
+10.5.1
+ 
+yum -y install git  
+</code></pre>
+
+<h4 id="克隆获取汉化版本库">克隆获取汉化版本库</h4>
+
+<p><code>git clone https://gitlab.com/xhang/gitlab.git</code></p>
+
+<h4 id="查看该汉化补丁的版本">查看该汉化补丁的版本</h4>
+
+<pre><code class="language-shell">cat gitlab/VERSION  
+10.5.1  
+</code></pre>
+
+<h4 id="打汉化补丁">打汉化补丁</h4>
+
+<pre><code class="language-shell">cd /root/gitlab/  
+git diff v10.5.1 v10.5.1-zh &gt;/tmp/10.5.1-zh.diff  
+
+yum install patch -y  
+patch -d /opt/gitlab/embedded/service/gitlab-rails -p1 &lt; /tmp/10.5.1-zh.diff  
+</code></pre>
+
+<h4 id="启动gitlab">启动gitlab</h4>
+
+<p><code>gitlab-ctl start</code></p>
+
+<h4 id="重新配置gitlab">重新配置gitlab</h4>
+
+<p><code>gitlab-ctl reconfigure</code></p>
 
 <h3 id="git仓库迁移">git仓库迁移</h3>
 
@@ -416,11 +463,11 @@ SYNOPSIS
   git init --bare new_project_name.git
 </code></pre>
 
-<ul>
-<li>以镜像推送的方式上传代码到 GitCafe 服务器上。请确保已经添加了公钥到新的机器上。</li>
-</ul>
+<pre><code>
+- 以镜像推送的方式上传代码到 GitCafe 服务器上。请确保已经添加了公钥到新的机器上。
 
-<pre><code class="language-shell">cd project_name.git
+​```shell
+cd project_name.git
 git push --mirror git@192.168.20.XX/path/to/path/new_project_name.git
 </code></pre>
 
