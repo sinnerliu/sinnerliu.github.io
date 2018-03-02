@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MySQL中utf8和utf8mb4的区别 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？
+
+" />
+<meta name="keywords" content="mysql, utf8, utf8mb4" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.32.2" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/mysql-utf8-utf8mb4/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="MySQL中utf8和utf8mb4的区别" />
+<meta property="og:description" content="我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/mysql-utf8-utf8mb4/" />
+
+
+
+<meta property="article:published_time" content="2018-03-02T14:51:39&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-02T14:51:39&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="MySQL中utf8和utf8mb4的区别">
+<meta itemprop="description" content="我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？
+
+">
+
+
+<meta itemprop="datePublished" content="2018-03-02T14:51:39&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-02T14:51:39&#43;08:00" />
+<meta itemprop="wordCount" content="1211">
+
+
+
+<meta itemprop="keywords" content="mysql," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="MySQL中utf8和utf8mb4的区别"/>
+<meta name="twitter:description" content="我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MySQL中utf8和utf8mb4的区别</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-02 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？</p>
+
+<p></p>
+
+<p>在数据库属性—&gt;字符集里我们可以看到有utf8 ,和utf8mb4 (<strong>注意是小写</strong>) ，看后缀他们<strong>都属于UTF-8 Unicode编码</strong></p>
+
+<p><img src="http://wx1.sinaimg.cn/large/62d3e37egy1foyh7p5vw5j20co0b3jro.jpg" alt="" /></p>
+
+<p>总的来说utf8mb4是utf8的扩展，要想两种编码相互转换的话，除了将编码改为utf8mb4外不需要做其他转换。但要注意在程序获取字符的地方写成大写的UTF-8,不要写小写的，小写的不包括utf8mb4。</p>
+
+<p><img src="https://wx1.sinaimg.cn/large/62d3e37egy1foyh774b1ij20oh040gm5.jpg" alt="image" /></p>
+
+<p>下面是来自<a href="http://ourmysql.com/archives/1402">http://ourmysql.com/archives/1402</a>对于两种字符编码的解释</p>
+
+<p><strong>一、简介</strong></p>
+
+<p>MySQL在5.5.3之后增加了这个utf8mb4的编码，<strong>mb4就是most bytes 4的意思</strong>，专门用来兼容四字节的unicode。好在utf8mb4是utf8的超集，除了将编码改为utf8mb4外不需要做其他转换。当然，为了节省空间，一般情况下使用utf8也就够了。</p>
+
+<p><strong>二、内容描述</strong></p>
+
+<p>那上面说了既然utf8能够存下大部分中文汉字,那为什么还要使用utf8mb4呢? <strong>原来mysql支持的 utf8 编码最大字符长度为 3 字节，如果遇到 4 字节的宽字符就会插入异常了。</strong>三个字节的 UTF-8 最大能编码的 Unicode 字符是 0xffff，也就是 Unicode 中的基本多文种平面(BMP)。也就是说，任何不在基本多文本平面的 Unicode字符，都无法使用 Mysql 的 utf8 字符集存储。包括 Emoji 表情(Emoji 是一种特殊的 Unicode 编码，常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等。</p>
+
+<p><strong>三、问题根源</strong></p>
+
+<p>最初的 UTF-8 格式使用一至六个字节，最大能编码 31 位字符。最新的 UTF-8 规范只使用一到四个字节，最大能编码21位，正好能够表示所有的 17个 Unicode 平面。</p>
+
+<p>utf8 是 Mysql 中的一种字符集，只支持最长三个字节的 UTF-8字符，也就是 Unicode 中的基本多文本平面。</p>
+
+<p>Mysql 中的 utf8 为什么只支持持最长三个字节的 UTF-8字符呢？我想了一下，可能是因为 Mysql 刚开始开发那会，Unicode 还没有辅助平面这一说呢。那时候，Unicode 委员会还做着 “65535 个字符足够全世界用了”的美梦。Mysql 中的字符串长度算的是字符数而非字节数，对于 CHAR 数据类型来说，需要为字符串保留足够的长。当使用 utf8 字符集时，需要保留的长度就是 utf8 最长字符长度乘以字符串长度，所以这里理所当然的限制了 utf8 最大长度为 3，比如 CHAR(100)  Mysql 会保留 300字节长度。至于后续的版本为什么不对 4 字节长度的 UTF-8 字符提供支持，我想一个是为了向后兼容性的考虑，还有就是基本多文种平面之外的字符确实很少用到。</p>
+
+<p>要在 Mysql 中保存 4 字节长度的 UTF-8 字符，需要使用 utf8mb4 字符集，但只有 5.5.3 版本以后的才支持(查看版本： select version();)。我觉得，为了获取更好的兼容性，应该总是使用 utf8mb4 而非 utf8.  对于 CHAR 类型数据，utf8mb4 会多消耗一些空间，根据 Mysql 官方建议，使用 VARCHAR  替代 CHAR。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/mysql/">mysql</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/gitlab/">
+            <span class="next-text nav-default">GitLab_本地GitLab服务器搭建</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

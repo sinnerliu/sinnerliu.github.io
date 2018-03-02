@@ -6,10 +6,21 @@
     <description>Recent content in Mysql on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 16 Jan 2018 14:21:37 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 02 Mar 2018 14:51:39 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL中utf8和utf8mb4的区别</title>
+      <link>https://blog.gofinall.com/post/mysql-utf8-utf8mb4/</link>
+      <pubDate>Fri, 02 Mar 2018 14:51:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-utf8-utf8mb4/</guid>
+      <description>&lt;p&gt;我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Mysql使用存储过程来造测试数据</title>
