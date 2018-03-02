@@ -21,6 +21,17 @@
     </item>
     
     <item>
+      <title>Linux下python2.7安装pip</title>
+      <link>https://blog.gofinall.com/post/python-pip-install/</link>
+      <pubDate>Fri, 02 Mar 2018 17:20:56 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-pip-install/</guid>
+      <description>&lt;p&gt;由于centos自带的python为2.7，默认没有安装pip，我们在使用的时候不方便，下面就说下怎么安装pip。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>MySQL中utf8和utf8mb4的区别</title>
       <link>https://blog.gofinall.com/post/mysql-utf8-utf8mb4/</link>
       <pubDate>Fri, 02 Mar 2018 14:51:39 +0800</pubDate>
