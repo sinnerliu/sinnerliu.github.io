@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/postgres-install/</loc>
+    <lastmod>2018-03-05T16:21:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/python-pip-install/</loc>
     <lastmod>2018-03-02T17:20:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -163,8 +170,15 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/postgres/</loc>
+    <lastmod>2018-03-05T16:21:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-03-02T17:20:56+08:00</lastmod>
+    <lastmod>2018-03-05T16:21:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -227,7 +241,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2018-03-02T14:51:39+08:00</lastmod>
+    <lastmod>2018-03-05T16:21:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

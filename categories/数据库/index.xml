@@ -6,10 +6,28 @@
     <description>Recent content in 数据库 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 02 Mar 2018 14:51:39 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Mar 2018 16:21:04 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Postgres绿色版本安装 windows</title>
+      <link>https://blog.gofinall.com/post/postgres-install/</link>
+      <pubDate>Mon, 05 Mar 2018 16:21:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/postgres-install/</guid>
+      <description>&lt;p&gt;虽然PostgreSQL是为类UNIX平台开发的，但它却是可以移植的。从7.1版本开始，PostgreSQL可以编译安装和作为一个PostgreSQL服务器运行在Windows NT 4，2000，XP和Server 2003中。从8.0版本开始，已经有了Windows本地版本了，为服务端和客户端提供了Windows的安装程序。
+PostgreSQL的Windows安装包包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PostgreSQL server&lt;/li&gt;
+&lt;li&gt;pgAdmin，一个动图形化工具，用来维护和管理你的Postgres 数据库&lt;/li&gt;
+&lt;li&gt;StackBuilder，一个包管理器，可用于下载和安装额外的PostgreSQL应用程序和驱&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>MySQL中utf8和utf8mb4的区别</title>
