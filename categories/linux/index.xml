@@ -6,10 +6,21 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 02 Mar 2018 17:20:56 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Mar 2018 12:09:12 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>将Centos的yum源更换为国内的阿里云源</title>
+      <link>https://blog.gofinall.com/post/centos-yum-aliyun/</link>
+      <pubDate>Thu, 08 Mar 2018 12:09:12 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-yum-aliyun/</guid>
+      <description>&lt;p&gt;由于centos默认的Yum源速度太慢，在使用的时候不方便，于是将yum源改成阿里的源。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Linux下python2.7安装pip</title>

@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/centos-yum-aliyun/</loc>
+    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/postgres-install/</loc>
     <lastmod>2018-03-05T16:21:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -129,14 +136,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
-    <lastmod>2018-01-24T14:40:26+08:00</lastmod>
+    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2018-03-02T17:20:56+08:00</lastmod>
+    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -178,7 +185,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-03-05T16:21:04+08:00</lastmod>
+    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -207,6 +214,13 @@
   <url>
     <loc>https://blog.gofinall.com/tags/</loc>
     <lastmod>2018-01-22T16:37:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/yum/</loc>
+    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
