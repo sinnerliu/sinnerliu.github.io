@@ -84,7 +84,7 @@ Tomcat 运行过程遇到Caused by: java.lang.OutOfMemoryError: PermGen space或
 
 <meta itemprop="datePublished" content="2018-03-08T17:30:05&#43;08:00" />
 <meta itemprop="dateModified" content="2018-03-08T17:30:05&#43;08:00" />
-<meta itemprop="wordCount" content="1643">
+<meta itemprop="wordCount" content="1642">
 
 
 
@@ -285,9 +285,10 @@ interval   -间隔时间，单位为秒或毫秒
 </code></pre>
 
 <ul>
-<li>参数说明如下：
-<code>shell
-S0     -Heap上的Survivor space 0区已使用空间的百分比
+<li>参数说明如下：</li>
+</ul>
+
+<pre><code class="language-shell">S0     -Heap上的Survivor space 0区已使用空间的百分比
 S1     -Heap上的Survivor space 1区已使用空间的百分比
 E      -Heap上Eden space区已使用空间的百分比
 O      -Heap上的Old space区已使用空间的百分比，达到100%，就是内存溢出了
@@ -297,8 +298,7 @@ YGCT   -从应用程序启动到采样时Yang GC所用的时间【单位秒】
 FGC    -从应用程序启动到采样时Full GC的次数
 FGCT   -从应用程序启动到采样时Full GC所用的时间
 GCT    -从应用程序启动到采样时用于垃圾回收的总时间【单位秒】
-</code></li>
-</ul>
+</code></pre>
 
 <p>通过监控O、P数值情况，再次调整JAVA_OPTS相关参数大小达到优化目的。</p>
     </div>
