@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/kvm-centos-add-disk/</loc>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/tomcat-jvm/</loc>
     <lastmod>2018-03-08T17:30:05+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -121,6 +128,20 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/centos/</loc>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/fdisk/</loc>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/frp/</loc>
     <lastmod>2018-01-22T16:37:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -142,6 +163,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/kvm/</loc>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
     <lastmod>2018-03-08T12:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -150,7 +178,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -192,7 +220,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-03-08T17:30:05+08:00</lastmod>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -220,7 +248,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/</loc>
-    <lastmod>2018-01-22T16:37:07+08:00</lastmod>
+    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

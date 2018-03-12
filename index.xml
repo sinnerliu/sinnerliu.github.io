@@ -21,6 +21,17 @@
     </item>
     
     <item>
+      <title>kvm虚拟机centos根目录扩容</title>
+      <link>https://blog.gofinall.com/post/kvm-centos-add-disk/</link>
+      <pubDate>Mon, 12 Mar 2018 16:01:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/kvm-centos-add-disk/</guid>
+      <description>&lt;p&gt;由于之前给kvm虚拟机中的centos分配的根目录过少，导致根目录经常100%，下面我们来进行根目录扩容。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Tomcat调整Jvm</title>
       <link>https://blog.gofinall.com/post/tomcat-jvm/</link>
       <pubDate>Thu, 08 Mar 2018 17:30:05 +0800</pubDate>
