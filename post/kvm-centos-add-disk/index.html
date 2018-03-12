@@ -250,21 +250,21 @@ Partition 1 does not end on cylinder boundary.
 /dev/vda2            1018      624153   314059776   8e  Linux LVM
 Partition 2 does not end on cylinder boundary.
 
-Disk /dev/mapper/vg_ocdp21-lv_root: 53.7 GB, 53687091200 bytes
+Disk /dev/mapper/vg_hadoop21-lv_root: 53.7 GB, 53687091200 bytes
 255 heads, 63 sectors/track, 6527 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0x00000000
 
-Disk /dev/mapper/vg_ocdp21-lv_swap: 5217 MB, 5217714176 bytes
+Disk /dev/mapper/vg_hadoop21-lv_swap: 5217 MB, 5217714176 bytes
 255 heads, 63 sectors/track, 634 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0x00000000
 
-Disk /dev/mapper/vg_ocdp21-lv_home: 262.7 GB, 262689259520 bytes
+Disk /dev/mapper/vg_hadoop21-lv_home: 262.7 GB, 262689259520 bytes
 255 heads, 63 sectors/track, 31936 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -285,10 +285,10 @@ Disk identifier: 0x00000000
 
 <pre><code class="language-shell">[root@node1 ~]# df -h
 Filesystem                    Size  Used Avail Use% Mounted on
-/dev/mapper/vg_ocdp21-lv_root  50G   27G   20G  58% /
+/dev/mapper/vg_hadoop21-lv_root  50G   27G   20G  58% /
 tmpfs                          2.4G   12K  2.4G   1% /dev/shm
 /dev/vda1                      477M   32M  420M   8% /boot
-/dev/mapper/vg_ocdp21-lv_home  241G  904M  228G   1% /home
+/dev/mapper/vg_hadoop21-lv_home  241G  904M  228G   1% /home
 </code></pre>
 
 <h4 id="对新增磁盘分区">对新增磁盘分区</h4>
@@ -359,21 +359,21 @@ Partition 1 does not end on cylinder boundary.
 /dev/vda2            1018      624153   314059776   8e  Linux LVM
 Partition 2 does not end on cylinder boundary.
 
-Disk /dev/mapper/vg_ocdp21-lv_root: 53.7 GB, 53687091200 bytes
+Disk /dev/mapper/vg_hadoop21-lv_root: 53.7 GB, 53687091200 bytes
 255 heads, 63 sectors/track, 6527 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0x00000000
 
-Disk /dev/mapper/vg_ocdp21-lv_swap: 5217 MB, 5217714176 bytes
+Disk /dev/mapper/vg_hadoop21-lv_swap: 5217 MB, 5217714176 bytes
 255 heads, 63 sectors/track, 634 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0x00000000
 
-Disk /dev/mapper/vg_ocdp21-lv_home: 262.7 GB, 262689259520 bytes
+Disk /dev/mapper/vg_hadoop21-lv_home: 262.7 GB, 262689259520 bytes
 255 heads, 63 sectors/track, 31936 cylinders
 Units = cylinders of 16065 * 512 = 8225280 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -425,7 +425,7 @@ This filesystem will be automatically checked every 32 mounts or 180 days, which
   
 [root@node1 ~]# vgdisplay
   --- Volume group ---
-  VG Name               vg_ocdp21
+  VG Name               vg_hadoop21
   System ID             
   Format                lvm2
   Metadata Areas        1
@@ -448,11 +448,11 @@ This filesystem will be automatically checked every 32 mounts or 180 days, which
 
 <h4 id="将-dev-sdb4的pv空间扩展到vg卷组-volgroup">将/dev/sdb4的PV空间扩展到VG卷组:VolGroup</h4>
 
-<pre><code class="language-shell">[root@node1 ~]# vgextend /dev/vg_ocdp21 /dev/vdb4
-  Volume group &quot;vg_ocdp21&quot; successfully extended
+<pre><code class="language-shell">[root@node1 ~]# vgextend /dev/vg_hadoop21 /dev/vdb4
+  Volume group &quot;vg_hadoop21&quot; successfully extended
 [root@node1 ~]# vgdisplay
   --- Volume group ---
-  VG Name               vg_ocdp21
+  VG Name               vg_hadoop21
   System ID             
   Format                lvm2
   Metadata Areas        2
@@ -477,42 +477,42 @@ This filesystem will be automatically checked every 32 mounts or 180 days, which
 
 <pre><code class="language-shell">[root@node1 ~]# df -h
 Filesystem                    Size  Used Avail Use% Mounted on
-/dev/mapper/vg_ocdp21-lv_root  50G   27G   20G  58% /
+/dev/mapper/vg_hadoop21-lv_root  50G   27G   20G  58% /
 tmpfs                          2.4G   12K  2.4G   1% /dev/shm
 /dev/vda1                      477M   32M  420M   8% /boot
-/dev/mapper/vg_ocdp21-lv_home  241G  904M  228G   1% /home
+/dev/mapper/vg_hadoop21-lv_home  241G  904M  228G   1% /home
                       
-[root@node1 ~]# lvextend -L +90G /dev/mapper/vg_ocdp21-lv_root 
-  Size of logical volume vg_ocdp21/lv_root changed from 50.00 GiB (12800 extents) to 140.00 GiB (35840 extents).
+[root@node1 ~]# lvextend -L +90G /dev/mapper/vg_hadoop21-lv_root 
+  Size of logical volume vg_hadoop21/lv_root changed from 50.00 GiB (12800 extents) to 140.00 GiB (35840 extents).
   Logical volume lv_root successfully resized
 </code></pre>
 
 <h4 id="检查文件系统是否完整挂载">检查文件系统是否完整挂载</h4>
 
-<pre><code class="language-shell">[root@node1 ~]# e2fsck /dev/mapper/vg_ocdp21-lv_root 
+<pre><code class="language-shell">[root@node1 ~]# e2fsck /dev/mapper/vg_hadoop21-lv_root 
 e2fsck 1.41.12 (17-May-2010)
-/dev/mapper/vg_ocdp21-lv_root is mounted.
+/dev/mapper/vg_hadoop21-lv_root is mounted.
 e2fsck: Cannot continue, aborting.
 </code></pre>
 
 <h4 id="将扩容的lv逻辑卷的容量写入根分区中">将扩容的LV逻辑卷的容量写入根分区中（/）</h4>
 
-<pre><code class="language-shell">[root@node1 ~]# resize2fs /dev/mapper/vg_ocdp21-lv_root 
+<pre><code class="language-shell">[root@node1 ~]# resize2fs /dev/mapper/vg_hadoop21-lv_root 
 resize2fs 1.41.12 (17-May-2010)
-Filesystem at /dev/mapper/vg_ocdp21-lv_root is mounted on /; on-line resizing required
+Filesystem at /dev/mapper/vg_hadoop21-lv_root is mounted on /; on-line resizing required
 old desc_blocks = 4, new_desc_blocks = 9
-Performing an on-line resize of /dev/mapper/vg_ocdp21-lv_root to 36700160 (4k) blocks.
-The filesystem on /dev/mapper/vg_ocdp21-lv_root is now 36700160 blocks long.
+Performing an on-line resize of /dev/mapper/vg_hadoop21-lv_root to 36700160 (4k) blocks.
+The filesystem on /dev/mapper/vg_hadoop21-lv_root is now 36700160 blocks long.
 </code></pre>
 
 <h4 id="查看已经写入根分区的磁盘容量">查看已经写入根分区的磁盘容量</h4>
 
 <pre><code class="language-shell">[root@node1 ~]# df -h
 Filesystem                      Size  Used Avail Use% Mounted on
-/dev/mapper/vg_ocdp21-lv_root   147G   27G  113G  20% /
+/dev/mapper/vg_hadoop21-lv_root   147G   27G  113G  20% /
 tmpfs                           2.4G   12K  2.4G   1% /dev/shm
 /dev/vda1                       477M   32M  420M   8% /boot
-/dev/mapper/vg_ocdp21-lv_home   241G  904M  228G   1% /home
+/dev/mapper/vg_hadoop21-lv_home   241G  904M  228G   1% /home
 </code></pre>
 
 <h4 id="到此为止-简单-快速扩容根分区的问题成功结束">到此为止，简单，快速扩容根分区的问题成功结束。</h4>
