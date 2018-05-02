@@ -21,6 +21,17 @@
     </item>
     
     <item>
+      <title>oracle12c中文乱码，修改字符集的方法</title>
+      <link>https://blog.gofinall.com/post/oracle-character/</link>
+      <pubDate>Wed, 02 May 2018 14:31:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/oracle-character/</guid>
+      <description>&lt;p&gt;由于在安装Oracle 12c的时候没有设定字符集，采用的是操作系统默认字符集：WE8MSWIN1252，现需要将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>kvm虚拟机centos根目录扩容</title>
       <link>https://blog.gofinall.com/post/kvm-centos-add-disk/</link>
       <pubDate>Mon, 12 Mar 2018 16:01:04 +0800</pubDate>

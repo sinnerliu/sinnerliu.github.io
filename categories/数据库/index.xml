@@ -6,10 +6,21 @@
     <description>Recent content in 数据库 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 05 Mar 2018 16:21:04 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 May 2018 14:31:39 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>oracle12c中文乱码，修改字符集的方法</title>
+      <link>https://blog.gofinall.com/post/oracle-character/</link>
+      <pubDate>Wed, 02 May 2018 14:31:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/oracle-character/</guid>
+      <description>&lt;p&gt;由于在安装Oracle 12c的时候没有设定字符集，采用的是操作系统默认字符集：WE8MSWIN1252，现需要将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Postgres绿色版本安装 windows</title>
