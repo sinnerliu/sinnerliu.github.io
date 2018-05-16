@@ -80,7 +80,7 @@
 
 <meta itemprop="datePublished" content="2018-05-16T11:04:38&#43;08:00" />
 <meta itemprop="dateModified" content="2018-05-16T11:04:38&#43;08:00" />
-<meta itemprop="wordCount" content="1490">
+<meta itemprop="wordCount" content="1486">
 
 
 
@@ -205,6 +205,7 @@
 <ul>
 <li><a href="#onedrive共享的起始目录">onedrive共享的起始目录</a></li>
 <li><a href="#去掉链接中的">去掉链接中的 /?/</a></li>
+<li><a href="#缓存时间">缓存时间</a></li>
 <li><a href="#设置缓存模式为sqlite">设置缓存模式为sqlite</a></li>
 </ul></li>
 <li><a href="#q-a">Q&amp;A:</a></li>
@@ -358,8 +359,9 @@ php one.php upload:file demo.zip /test/d.zip
 <p>nginx图片404问题,参考<a href="https://github.com/donwa/oneindex/issues/14">https://github.com/donwa/oneindex/issues/14</a></p>
 </blockquote>
 
-<p>####缓存时间
-初步测试直链过期时间为一小时,默认设置为：</p>
+<h4 id="缓存时间">缓存时间</h4>
+
+<p>初步测试直链过期时间为一小时,默认设置为：</p>
 
 <pre><code>  'cache_expire_time' =&gt; 3600, //缓存过期时间 /秒
   'cache_refresh_time' =&gt; 600, //缓存刷新时间 /秒
@@ -378,14 +380,17 @@ php one.php upload:file demo.zip /test/d.zip
 
 <h3 id="q-a">Q&amp;A:</h3>
 
-<p><strong>Q:需要企业版或教育版的全局管理员？</strong>
-A:不需要，全局管理员开出来的子账号就可以，不过该域名在office365必须要有管理员</p>
+<p><strong>Q:需要企业版或教育版的全局管理员？</strong></p>
 
-<p><strong>Q:文件上传后，不能即时在程序页面显示出来？</strong>
-A:有缓存，可以在config/base.php设置缓存时间。</p>
+<p>A:不需要，全局管理员开出来的子账号就可以，不过该域名在office365必须要有管理员</p>
 
-<p><strong>Q:能否使用自己的client_id、client_secret？</strong>
-A:参考：<a href="https://github.com/donwa/oneindex/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84client_id%E3%80%81client_secret">https://github.com/donwa/oneindex/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84client_id%E3%80%81client_secret</a></p>
+<p><strong>Q:文件上传后，不能即时在程序页面显示出来？</strong></p>
+
+<p>A:有缓存，可以在config/base.php设置缓存时间。</p>
+
+<p><strong>Q:能否使用自己的client_id、client_secret？</strong></p>
+
+<p>A:参考：<a href="https://github.com/donwa/oneindex/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84client_id%E3%80%81client_secret">https://github.com/donwa/oneindex/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84client_id%E3%80%81client_secret</a></p>
 
 <blockquote>
 <p>感谢 moeclub 提供的 client_id 和 client_secret,以实现一键绑定</p>
