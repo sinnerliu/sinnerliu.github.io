@@ -19,7 +19,7 @@
       <guid>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</guid>
       <description>&lt;p&gt;说明：这个插件可以将构建的产物（例如：Jar）发布到FTP中去。&lt;/p&gt;
 
-&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34;&gt;FTP publisher plugin&lt;/a&gt;(&lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin&#34;&gt;https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
