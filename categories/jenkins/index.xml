@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jenkins on 终点站</title>
+    <link>https://blog.gofinall.com/categories/jenkins/</link>
+    <description>Recent content in Jenkins on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 18 May 2018 11:25:38 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jenkins Ftp Publisher Plugin</title>
+      <link>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</link>
+      <pubDate>Fri, 18 May 2018 11:25:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</guid>
+      <description>&lt;p&gt;说明：这个插件可以将构建的产物（例如：Jar）发布到FTP中去。&lt;/p&gt;
+
+&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34;&gt;FTP publisher plugin&lt;/a&gt;(&lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin&#34;&gt;https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
