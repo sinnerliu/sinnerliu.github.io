@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 18 May 2018 11:25:38 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 May 2018 11:13:44 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Testlink 安装时提示logs/upload路径错误解决办法</title>
+      <link>https://blog.gofinall.com/post/testlink_install_error1/</link>
+      <pubDate>Wed, 23 May 2018 11:13:44 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/testlink_install_error1/</guid>
+      <description>如果安装Testlink的时候出现以下问题 For security reasons we suggest that directories tagged with [S] on following messages, will be made UNREACHEABLE from browser. Give a look to README file, section &#39;Installation &amp;amp; SECURITY&#39; to understand how to change the defaults. Checking if /var/www/testlink/gui/templates_c directory exists OK Checking if /var/www/testlink/gui/templates_c directory is writable (by</description>
+    </item>
     
     <item>
       <title>Jenkins Ftp Publisher Plugin</title>
