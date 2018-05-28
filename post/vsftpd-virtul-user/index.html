@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>vsftpd服务器配置虚拟用户 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="vsftpd介绍 VSFTP是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。
+本文所有配置是在CentOS 5.8-64位系统上进行，配置的是vsftp虚拟用户模式，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。
+
+" />
+<meta name="keywords" content="ftp, linux, vsftpd" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/vsftpd-virtul-user/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="vsftpd服务器配置虚拟用户" />
+<meta property="og:description" content="vsftpd介绍
+
+VSFTP是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。
+
+本文所有配置是在CentOS 5.8-64位系统上进行，配置的是vsftp虚拟用户模式，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/vsftpd-virtul-user/" />
+
+
+
+<meta property="article:published_time" content="2018-05-28T17:26:10&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-05-28T17:26:10&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="vsftpd服务器配置虚拟用户">
+<meta itemprop="description" content="vsftpd介绍
+
+VSFTP是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。
+
+本文所有配置是在CentOS 5.8-64位系统上进行，配置的是vsftp虚拟用户模式，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-05-28T17:26:10&#43;08:00" />
+<meta itemprop="dateModified" content="2018-05-28T17:26:10&#43;08:00" />
+<meta itemprop="wordCount" content="1752">
+
+
+
+<meta itemprop="keywords" content="linux,ftp,vsftpd," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="vsftpd服务器配置虚拟用户"/>
+<meta name="twitter:description" content="vsftpd介绍
+
+VSFTP是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。
+
+本文所有配置是在CentOS 5.8-64位系统上进行，配置的是vsftp虚拟用户模式，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">vsftpd服务器配置虚拟用户</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-05-28 </span>
+        <div class="post-category">
+            
+              <a href="/categories/linux/"> linux </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#vsftpd介绍">vsftpd介绍</a></li>
+<li><a href="#安装vsftpd和db-load加密工具">安装vsftpd和db_load加密工具</a></li>
+<li><a href="#添加宿主用户">添加宿主用户</a></li>
+<li><a href="#建立虚拟用户名单文件">建立虚拟用户名单文件</a></li>
+<li><a href="#编辑虚拟用户名单文件">编辑虚拟用户名单文件：</a></li>
+<li><a href="#生成虚拟用户数据文件">生成虚拟用户数据文件</a></li>
+<li><a href="#修改认证方式">修改认证方式</a></li>
+<li><a href="#建立虚拟用户个人vsftp的配置文件">建立虚拟用户个人Vsftp的配置文件</a>
+<ul>
+<li><a href="#建立目录">建立目录</a></li>
+<li><a href="#编辑虚拟用户配置文件">编辑虚拟用户配置文件</a></li>
+</ul></li>
+<li><a href="#配置vsftpd">配置vsftpd</a></li>
+<li><a href="#重启vsftpd服务器">重启vsftpd服务器</a></li>
+<li><a href="#其他配置">其他配置</a>
+<ul>
+<li><a href="#虚拟目录配置">虚拟目录配置</a></li>
+<li><a href="#修改vsftp端口">修改vsftp端口</a></li>
+</ul></li>
+<li><a href="#常见问题">常见问题</a>
+<ul>
+<li><a href="#上传文件的权限配置">上传文件的权限配置</a></li>
+<li><a href="#登陆ftp服务器-报错-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot">登陆ftp服务器，报错：500 OOPS: vsftpd: refusing to run with writable root inside chroot()</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="vsftpd介绍">vsftpd介绍</h3>
+
+<p><strong>VSFTP</strong>是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。</p>
+
+<p>本文所有配置是在CentOS 5.8-64位系统上进行，配置的是<strong>vsftp虚拟用户模式</strong>，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。</p>
+
+<p></p>
+
+<h3 id="安装vsftpd和db-load加密工具">安装vsftpd和db_load加密工具</h3>
+
+<pre><code class="language-shell">#要关闭selinux 和防火墙或者开启允许的端口，不然访问会有问题
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+#关闭防火墙
+#centos6
+service iptables stop
+#centos7
+systemctl stop firewalld.service
+#安装vsftp和db_load
+yum install vsftpd db4-utils -y
+</code></pre>
+
+<h3 id="添加宿主用户">添加宿主用户</h3>
+
+<p>新建系统用户vsftpd，用户目录为/home/vsftpd, 用户登录终端设为/bin/false(即使之不能登录系统)</p>
+
+<p><code>useradd vsftpd -d /home/vsftpd -s /bin/false</code></p>
+
+<p>所配置的虚拟用户其实都是映射成配置的宿主用户。</p>
+
+<h3 id="建立虚拟用户名单文件">建立虚拟用户名单文件</h3>
+
+<pre><code>touch /etc/vsftpd/virtusers
+</code></pre>
+
+<h3 id="编辑虚拟用户名单文件">编辑虚拟用户名单文件：</h3>
+
+<p>第一行账号，第二行密码，注意：不能使用root做用户名，系统保留</p>
+
+<pre><code>vi /etc/vsftpd/virtusers
+</code></pre>
+
+<h3 id="生成虚拟用户数据文件">生成虚拟用户数据文件</h3>
+
+<pre><code>db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db
+</code></pre>
+
+<h3 id="修改认证方式">修改认证方式</h3>
+
+<p>修改/etc/pam.d/vsftpd配置文件</p>
+
+<pre><code class="language-shell">#%PAM-1.0
+#session    optional     pam_keyinit.so    force revoke
+#auth       required    pam_listfile.so item=user sense=deny file=/etc/vsftpd/ftpusers onerr=succeed
+#auth       required    pam_shells.so
+#auth       include password-auth
+#account    include password-auth
+#session    required     pam_loginuid.so
+#session    include password-auth
+
+auth sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers
+account sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers
+</code></pre>
+
+<p><strong>注意：</strong>如果系统为32位，上面<code>lib64</code>改为<code>lib</code>，否则配置不生效。</p>
+
+<h3 id="建立虚拟用户个人vsftp的配置文件">建立虚拟用户个人Vsftp的配置文件</h3>
+
+<h4 id="建立目录">建立目录</h4>
+
+<pre><code>mkdir /etc/vsftpd/vconf
+cd /etc/vsftpd/vconf
+</code></pre>
+
+<h4 id="编辑虚拟用户配置文件">编辑虚拟用户配置文件</h4>
+
+<p><strong>配置文件名必须为虚拟用户名</strong></p>
+
+<pre><code>touch ftp01
+vi ftp01
+</code></pre>
+
+<p>添加以下内容</p>
+
+<pre><code>#虚拟用户登录后的根目录
+local_root=/home/vsftpd/ftp01
+#虚拟用户和本地用户有相同的权限,默认是NO.
+#virtual_use_local_privs=YES
+anon_umask=022
+#开放虚拟用户的下载权限。注意这个地方千万不能写成YES，否则将不能列出和下载子目录的文件。
+anon_world_readable_only=NO
+#开放虚拟用户的写权限
+write_enable=NO
+#开放虚拟用户的下载权限
+anon_world_readable_only=YES
+#开放虚拟用户的上传权限
+anon_upload_enable=NO
+#开放虚拟用户创建目录的权限
+anon_mkdir_write_enable=NO
+#开放虚拟用户删除和重命名的权限
+anon_other_write_enable=NO
+</code></pre>
+
+<h3 id="配置vsftpd">配置vsftpd</h3>
+
+<p>编辑<code>/etc/vsftpd/vsftpd.conf</code>文件</p>
+
+<pre><code>#设定不允许匿名访问 
+anonymous_enable=NO
+#设定本地用户可以访问。注：如使用虚拟宿主用户，在该项目设定为NO的情况下所有虚拟用户将无法访问 
+local_enable=YES
+#使用户不能离开主目录
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd/chroot_list
+#设定支持ASCII模式的上传和下载功能 
+ascii_upload_enable=YES
+ascii_download_enable=YES
+#PAM认证文件名。PAM将根据/etc/pam.d/vsftpd进行认证
+pam_service_name=vsftpd
+#下面的配置在vsftpd.conf中末尾手动添加
+#设定启用虚拟用户功能 
+guest_enable=YES
+#指定虚拟用户的宿主用户
+guest_username=vsftpd
+#设定虚拟用户个人vsftp的FTP服务文件存放路径。
+user_config_dir=/etc/vsftpd/vuser_conf
+</code></pre>
+
+<h3 id="重启vsftpd服务器">重启vsftpd服务器</h3>
+
+<pre><code>#centos6
+service vsftpd restart 
+#centos7
+systemctl restart vsftpd.service
+</code></pre>
+
+<h3 id="其他配置">其他配置</h3>
+
+<h4 id="虚拟目录配置">虚拟目录配置</h4>
+
+<p>比如：</p>
+
+<p>把/home/a 映射为 <a href="ftp://localhost/a">ftp://localhost/a</a></p>
+
+<p>把/home/b/c 则为 <a href="ftp://localhost/c">ftp://localhost/c</a></p>
+
+<p>解决办法</p>
+
+<p><code>[root@localhost ~]# mount --bind 原有的目录 新目录</code></p>
+
+<p>操作</p>
+
+<pre><code class="language-shell"># 创建新目录
+[root@localhost ~]# mkdir /home/public/soft
+# 然后执行mount命令  
+[root@localhost ~]# mount --bind /mnt/soft /home/public/soft 
+</code></pre>
+
+<p>查看是否挂载成功：进入/home/public/soft目录，查看内容是否和/mnt/soft下面的内容一致，如果一致则映射成功。</p>
+
+<p>按照上面的设置在服务器重新启动的时候，mount 就会失效，我们再配置开机自动mount</p>
+
+<pre><code class="language-shell">[root@localhost etc]# vi /etc/fstab    
+# 将下面的语句添加到/etc/fstab文件的末尾 
+/mnt/soft /home/public/soft   auto bind 0 0 
+</code></pre>
+
+<h4 id="修改vsftp端口">修改vsftp端口</h4>
+
+<p>1.在文件<code>/etc/vsftpd/vsftpd.conf</code>末尾添加<code>listen_port=2121</code></p>
+
+<p>2.修改/etc/services，将将其中的 ftp 21/tcp 改为 ftp 2121/tcp , ftp 21/udp改为 ftp 2121/udp，即</p>
+
+<pre><code class="language-shell">ftp   21/tcp   -------&gt;       ftp      2121/tcp
+ftp   21/udp   -------&gt;       ftp      2121/udp
+</code></pre>
+
+<h3 id="常见问题">常见问题</h3>
+
+<h4 id="上传文件的权限配置">上传文件的权限配置</h4>
+
+<p>设置上传之后文件的权限，有两种情况：</p>
+
+<ol>
+<li>如果使用vsftp的是本地用户，则要修改配置文件中的 local_umask 的值。</li>
+<li>如果使用vsftp的是虚拟用户，则要修改配置文件中的 anon_umask 的值。</li>
+</ol>
+
+<h4 id="登陆ftp服务器-报错-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot">登陆ftp服务器，报错：500 OOPS: vsftpd: refusing to run with writable root inside chroot()</h4>
+
+<p>原因在于，从vsftpd_2.3.5版开始，取消了登陆用户的根目录的可写权限。
+解决办法1：
+去掉该用户根目录的写的权限，再新建一目录，以后用新目录
+解决办法2：
+保持旧版的管理策略，ftp用户根目录还是可以设置为可写权限。
+在vsftpd.conf中添加如下配置</p>
+
+<pre><code>allow_writeable_chroot=YES
+</code></pre>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/ftp/">ftp</a>
+          
+          <a href="/tags/vsftpd/">vsftpd</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/testlink_install_error1/">
+            <span class="next-text nav-default">Testlink 安装时提示logs/upload路径错误解决办法</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold" target="_blank" rel="nofollow">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

@@ -6,10 +6,25 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 12 Mar 2018 16:01:04 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 28 May 2018 17:26:10 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>vsftpd服务器配置虚拟用户</title>
+      <link>https://blog.gofinall.com/post/vsftpd-virtul-user/</link>
+      <pubDate>Mon, 28 May 2018 17:26:10 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/vsftpd-virtul-user/</guid>
+      <description>&lt;h3 id=&#34;vsftpd介绍&#34;&gt;vsftpd介绍&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;VSFTP&lt;/strong&gt;是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。&lt;/p&gt;
+
+&lt;p&gt;本文所有配置是在CentOS 5.8-64位系统上进行，配置的是&lt;strong&gt;vsftp虚拟用户模式&lt;/strong&gt;，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>kvm虚拟机centos根目录扩容</title>

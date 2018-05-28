@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/vsftpd-virtul-user/</loc>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/testlink_install_error1/</loc>
     <lastmod>2018-05-23T11:13:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -177,6 +184,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/ftp/</loc>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/git/</loc>
     <lastmod>2018-02-26T15:07:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -213,14 +227,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
-    <lastmod>2018-03-08T12:09:12+08:00</lastmod>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2018-03-12T16:01:04+08:00</lastmod>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -269,7 +283,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-05-23T11:13:44+08:00</lastmod>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -326,6 +340,13 @@
   <url>
     <loc>https://blog.gofinall.com/categories/tomcat/</loc>
     <lastmod>2018-03-08T17:30:05+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/vsftpd/</loc>
+    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
