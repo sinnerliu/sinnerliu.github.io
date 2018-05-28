@@ -418,12 +418,17 @@ ftp   21/udp   -------&gt;       ftp      2121/udp
 
 <h4 id="登陆ftp服务器-报错-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot">登陆ftp服务器，报错：500 OOPS: vsftpd: refusing to run with writable root inside chroot()</h4>
 
-<p>原因在于，从vsftpd_2.3.5版开始，取消了登陆用户的根目录的可写权限。
-解决办法1：
-去掉该用户根目录的写的权限，再新建一目录，以后用新目录
-解决办法2：
-保持旧版的管理策略，ftp用户根目录还是可以设置为可写权限。
-在vsftpd.conf中添加如下配置</p>
+<p>原因在于，从vsftpd_2.3.5版开始，取消了登陆用户的根目录的可写权限。</p>
+
+<p>解决办法1：</p>
+
+<p>去掉该用户根目录的写的权限，再新建一目录，以后用新目录</p>
+
+<p>解决办法2：</p>
+
+<p>保持旧版的管理策略，ftp用户根目录还是可以设置为可写权限。</p>
+
+<p>在vsftpd.conf中添加如下配置</p>
 
 <pre><code>allow_writeable_chroot=YES
 </code></pre>
