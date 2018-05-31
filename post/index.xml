@@ -43,7 +43,7 @@
       <guid>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</guid>
       <description>&lt;p&gt;说明：这个插件可以将构建的产物（例如：Jar）发布到FTP中去。&lt;/p&gt;
 
-&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34; target=&#34;_blank&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -151,7 +151,7 @@ PostgreSQL的Windows安装包包括：&lt;/p&gt;
       <pubDate>Mon, 26 Feb 2018 15:07:55 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/post/gitlab/</guid>
-      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
+      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34; target=&#34;_blank&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
