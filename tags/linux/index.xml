@@ -6,10 +6,21 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 28 May 2018 17:26:10 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jun 2018 16:56:41 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ssh port forwarding（ssh端口转发）</title>
+      <link>https://blog.gofinall.com/post/ssh-port-forwarding/</link>
+      <pubDate>Fri, 08 Jun 2018 16:56:41 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/ssh-port-forwarding/</guid>
+      <description>&lt;p&gt;SSH的的Port Forward，中文可以称为端口转发，是SSH的一项非常重要的功能。它可以建立一条安全的SSH通道，并把任意的TCP连接放到这条通道中。下面仔细就仔细讨论SSH的这种非常有用的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>vsftpd服务器配置虚拟用户</title>

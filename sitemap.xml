@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/ssh-port-forwarding/</loc>
+    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/aria2/</loc>
     <lastmod>2018-06-04T14:52:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -256,14 +263,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
-    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
+    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2018-05-28T17:26:10+08:00</lastmod>
+    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -312,7 +319,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-06-04T14:52:50+08:00</lastmod>
+    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -425,6 +432,13 @@
   <url>
     <loc>https://blog.gofinall.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2018-05-02T14:31:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</loc>
+    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
