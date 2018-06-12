@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/flashplayer-2144/</loc>
+    <lastmod>2018-06-12T17:26:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/ssh-port-forwarding/</loc>
     <lastmod>2018-06-08T16:56:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -213,6 +220,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/flashplayer/</loc>
+    <lastmod>2018-06-12T17:26:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/frp/</loc>
     <lastmod>2018-01-22T16:37:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -319,7 +333,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
+    <lastmod>2018-06-12T17:26:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -432,6 +446,13 @@
   <url>
     <loc>https://blog.gofinall.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2018-05-02T14:31:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
+    <lastmod>2018-06-12T17:26:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
