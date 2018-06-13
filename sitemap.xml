@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/mvn-setting/</loc>
+    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/flashplayer-2144/</loc>
     <lastmod>2018-06-12T17:26:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -255,6 +262,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/java/</loc>
+    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/jenkins/</loc>
     <lastmod>2018-05-18T11:25:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -285,6 +299,20 @@
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
     <lastmod>2018-06-08T16:56:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/maven/</loc>
+    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/maven/</loc>
+    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -333,7 +361,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-06-12T17:26:27+08:00</lastmod>
+    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
