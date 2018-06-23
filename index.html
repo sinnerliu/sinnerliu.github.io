@@ -142,6 +142,41 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/windows-linux-md5/">Windows和Linux利用原生命令查看文件MD5</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-06-23 </span>
+      <div class="post-category">
+          
+            <a href="/categories/md5/"> md5 </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h3 id="背景">背景</h3>
+
+<p>在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。</p>
+
+<p>md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。</p>
+
+<p>md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。</p>
+
+<p>在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/windows-linux-md5/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/mvn-setting/">maven命令行窗口指定settings.xml</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-06-13 </span>
@@ -392,33 +427,6 @@
     </div>
     <div class="read-more">
       <a href="/post/oneindex/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/oracle-character/">oracle12c中文乱码，修改字符集的方法</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-05-02 </span>
-      <div class="post-category">
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>由于在安装Oracle 12c的时候没有设定字符集，采用的是操作系统默认字符集：WE8MSWIN1252，现需要将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/oracle-character/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

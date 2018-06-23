@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Windows和Linux利用原生命令查看文件MD5 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="背景 在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。
+md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。
+md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。
+在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。
+
+" />
+<meta name="keywords" content="md5, md5sum" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/windows-linux-md5/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Windows和Linux利用原生命令查看文件MD5" />
+<meta property="og:description" content="背景
+
+在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。
+
+md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。
+
+md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。
+
+在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/windows-linux-md5/" />
+
+
+
+<meta property="article:published_time" content="2018-06-23T15:29:39&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-06-23T15:29:39&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Windows和Linux利用原生命令查看文件MD5">
+<meta itemprop="description" content="背景
+
+在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。
+
+md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。
+
+md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。
+
+在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-06-23T15:29:39&#43;08:00" />
+<meta itemprop="dateModified" content="2018-06-23T15:29:39&#43;08:00" />
+<meta itemprop="wordCount" content="1041">
+
+
+
+<meta itemprop="keywords" content="linux,windows," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows和Linux利用原生命令查看文件MD5"/>
+<meta name="twitter:description" content="背景
+
+在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。
+
+md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。
+
+md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。
+
+在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Windows和Linux利用原生命令查看文件MD5</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-06-23 </span>
+        <div class="post-category">
+            
+              <a href="/categories/md5/"> md5 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#windows">windows</a></li>
+<li><a href="#linux">linux</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。</p>
+
+<p>md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。</p>
+
+<p>md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。</p>
+
+<p>在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。</p>
+
+<p></p>
+
+<h3 id="windows">windows</h3>
+
+<ul>
+<li>查看文件md5值</li>
+</ul>
+
+<p><code>certutil -hashfile filename MD5</code></p>
+
+<ul>
+<li>查看文件sha1值</li>
+</ul>
+
+<p><code>certutil -hashfile filename SHA1</code></p>
+
+<ul>
+<li>查看文件sha256值
+<code>certutil -hashfile filename SHA256</code></li>
+</ul>
+
+<h3 id="linux">linux</h3>
+
+<ul>
+<li>查看文件md5值
+<code>md5sum filename</code></li>
+</ul>
+
+<pre><code class="language-shell">#查看单个文件的md5
+[root@master localhost]# md5sum filename  
+0a6de444981b68d6a049053296491e49  filename
+#查看当前目录下所有文件的md5
+[root@master localhost]# md5sum *
+0a6de444981b68d6a049053296491e49  filename
+13df384c47dd2638fd923f60c40224c6  filename2
+</code></pre>
+
+<ul>
+<li>md5值重定向</li>
+</ul>
+
+<p>将生成md5值重定向到指定的文件，通常文件的扩展名我们会命为.md5</p>
+
+<pre><code class="language-shell">[root@master localhost]# md5sum data &gt; data.md5
+[root@master localhost]# md5sum data
+0a6de444981b68d6a049053296491e49  data
+[root@master localhost]# cat data.md5
+0a6de444981b68d6a049053296491e49  data
+
+#将多个文件的md5重定向到指定的文件,每个文件的md5生成为一行
+
+[root@master localhost]# ls
+data  data.bak  data.md5  d.md5
+[root@master localhost]# md5sum data* &gt; d.md5
+[root@master localhost]# cat d.md5
+0a6de444981b68d6a049053296491e49  data
+0a6de444981b68d6a049053296491e49  data.bak
+0bd94658869c53cdcdf35a0f7de93e01  data.md5
+</code></pre>
+
+<ul>
+<li>重定向追加</li>
+</ul>
+
+<p>这里新增文件ls，单独求其md5，将其md5追加到文件中</p>
+
+<pre><code class="language-shell">[root@master localhost]# cp /bin/ls .
+[root@master localhost]# ls
+data  data.bak  data.md5  d.md5  ls
+[root@master localhost]# md5sum ls &gt;&gt; d.md5
+[root@master localhost]# cat d.md5
+0a6de444981b68d6a049053296491e49  data 
+0a6de444981b68d6a049053296491e49  data.bak
+0bd94658869c53cdcdf35a0f7de93e01  data.md5
+c6337b20f3c159544bff5cf622391f9e  ls
+</code></pre>
+
+<ul>
+<li>md5校验</li>
+</ul>
+
+<p><code>-c</code>选项来对文件md5进行校验。校验时，根据已生成的md5来进行校验。生成当前文件的md5，并和之前已经生成的md5进行对比，如果一致，则返回OK，否则返回错误信息</p>
+
+<pre><code class="language-shell">[root@master localhost]# md5sum -c d.md5
+data: OK
+data.bak: OK
+data.md5: OK 
+ls: OK
+</code></pre>
+
+<p>修改文件后，文件md5变化</p>
+
+<pre><code class="language-shell">[root@master localhost]# ls
+data
+[root@master localhost]# md5sum data
+2360752c3368ca4f89169f5ecc06e383  data
+[root@master localhost]# md5sum data  &gt; data.md5
+[root@master localhost]# echo &quot;lwg&quot; &gt;&gt; data
+[root@master localhost]# md5sum data
+287d237083a42f09785daa46a5fa3afe  data
+[root@master localhost]# md5sum -c data.md5
+data: FAILED
+md5sum: WARNING: 1 of 1 computed checksum did NOT match
+</code></pre>
+
+<p><code>--status</code>，不显示校验信息，以命令返回值来判断，校验一致返回0，不一致返回1</p>
+
+<pre><code class="language-shell">[root@master localhost]# md5sum -c data.md5
+data: FAILED
+md5sum: WARNING: 1 of 1 computed checksum did NOT match
+[root@master localhost]# md5sum -c --status data.md5
+[root@master localhost]# echo $?
+1
+</code></pre>
+
+<p>多个文件文件校验和grep连用，通过grep将正确的信息过滤掉</p>
+
+<pre><code class="language-shell">[root@master localhost]# md5sum -c ../value.md5
+acpid: OK
+acpid.1: OK
+anaconda.log: OK
+anaconda.syslog: OK
+anaconda.xlog: OK
+boot.log: OK
+boot.log.1: OK
+...
+...
+省略中间部分
+...
+...
+ yum.log.2: OK  15: md5sum: WARNING: 1 of 56 computed checksums did NOT match
+[root@master localhost]# md5sum -c ../value.md5 | grep -v OK
+md5sum: WARNING: 1 of 56 computed checksums did NOT match
+cron.1: FAILED
+</code></pre>
+
+<p><strong>特殊说明</strong></p>
+
+<ol>
+<li><p>md5sum 是校验文件内容，与文件名是否相同无关</p></li>
+
+<li><p>md5sum值逐位校验，所以文件越大，校验时间越长。</p></li>
+</ol>
+
+<ul>
+<li><p>总结</p>
+
+<p>通过md5sum来校验生成文件校验码，来发现文件传输（网络传输、复制、本地不同设备间的传输）异常造成的文件内容不一致的情况。</p></li>
+</ul>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/windows/">windows</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/mvn-setting/">
+            <span class="next-text nav-default">maven命令行窗口指定settings.xml</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold" target="_blank" rel="nofollow">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

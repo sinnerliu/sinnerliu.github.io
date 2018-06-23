@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/windows-linux-md5/</loc>
+    <lastmod>2018-06-23T15:29:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/mvn-setting/</loc>
     <lastmod>2018-06-13T21:20:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -291,7 +298,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
-    <lastmod>2018-06-08T16:56:41+08:00</lastmod>
+    <lastmod>2018-06-23T15:29:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -313,6 +320,13 @@
   <url>
     <loc>https://blog.gofinall.com/categories/maven/</loc>
     <lastmod>2018-06-13T21:20:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/md5/</loc>
+    <lastmod>2018-06-23T15:29:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -361,7 +375,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-06-13T21:20:23+08:00</lastmod>
+    <lastmod>2018-06-23T15:29:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -432,6 +446,13 @@
   <url>
     <loc>https://blog.gofinall.com/tags/webui/</loc>
     <lastmod>2018-06-04T14:48:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/windows/</loc>
+    <lastmod>2018-06-23T15:29:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

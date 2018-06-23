@@ -21,6 +21,25 @@
     </item>
     
     <item>
+      <title>Windows和Linux利用原生命令查看文件MD5</title>
+      <link>https://blog.gofinall.com/post/windows-linux-md5/</link>
+      <pubDate>Sat, 23 Jun 2018 15:29:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-linux-md5/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。&lt;/p&gt;
+
+&lt;p&gt;md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。&lt;/p&gt;
+
+&lt;p&gt;md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。&lt;/p&gt;
+
+&lt;p&gt;在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>maven命令行窗口指定settings.xml</title>
       <link>https://blog.gofinall.com/post/mvn-setting/</link>
       <pubDate>Wed, 13 Jun 2018 21:20:23 +0800</pubDate>
