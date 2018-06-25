@@ -89,7 +89,7 @@ aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议�
 
 <meta itemprop="datePublished" content="2018-06-04T14:52:50&#43;08:00" />
 <meta itemprop="dateModified" content="2018-06-04T14:52:50&#43;08:00" />
-<meta itemprop="wordCount" content="1954">
+<meta itemprop="wordCount" content="2066">
 
 
 
@@ -200,7 +200,9 @@ aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议�
 <li><a href="#配置">配置</a></li>
 <li><a href="#配置示例下载">配置示例下载</a></li>
 <li><a href="#windows-懒人包下载">Windows 懒人包下载</a></li>
+<li><a href="#启动">启动</a></li>
 <li><a href="#各种webgui">各种WebGUI</a></li>
+<li><a href="#信息参考">信息参考</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -377,6 +379,16 @@ README.md     # README
 Aria2Data     # 下载目录 默认下载文件会保存在这里
 </code></pre>
 
+<h3 id="启动">启动</h3>
+
+<p>直接启动：<code>aria2c.exe --conf-path=aria2.conf</code>
+隐藏窗口启动：
+创建文本文件<code>HideRun.vbs</code>，复制以下内容，注意修改D:\Progra~1\aria2\ 为你的aria2安装路径</p>
+
+<p><code>CreateObject(&quot;WScript.Shell&quot;).Run &quot;D:\Progra~1\aria2\aria2c.exe --conf-path=aria2.conf&quot;,0</code></p>
+
+<p>启动的时候双击<code>HideRun.vbs</code>即可</p>
+
 <h3 id="各种webgui">各种WebGUI</h3>
 
 <p>YAAW:</p>
@@ -390,6 +402,10 @@ Aria2Data     # 下载目录 默认下载文件会保存在这里
 <p>AriaNG(推荐):</p>
 
 <p>下载地址: <a href="https://github.com/mayswind/AriaNg" target="_blank">https://github.com/mayswind/AriaNg</a></p>
+
+<h3 id="信息参考">信息参考</h3>
+
+<p><a href="http://aria2c.com/usage.html" target="_blank">http://aria2c.com/usage.html</a></p>
     </div>
 
     
