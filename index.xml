@@ -21,6 +21,19 @@
     </item>
     
     <item>
+      <title>RabbitMQ使用分析和高可用集群搭建</title>
+      <link>https://blog.gofinall.com/post/rabbitmq/</link>
+      <pubDate>Fri, 06 Jul 2018 17:56:00 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/rabbitmq/</guid>
+      <description>&lt;h3 id=&#34;rabbitmq-基础理解&#34;&gt;RabbitMQ 基础理解&lt;/h3&gt;
+
+&lt;p&gt;​     RabbitMQ，是一个使用 erlang 编写的 AMQP（高级消息队列协议）的服务实现，简单来说，就是一个功能强大的消息队列服务。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Windows和Linux利用原生命令查看文件MD5</title>
       <link>https://blog.gofinall.com/post/windows-linux-md5/</link>
       <pubDate>Sat, 23 Jun 2018 15:29:39 +0800</pubDate>

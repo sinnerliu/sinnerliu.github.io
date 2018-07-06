@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>RabbitMQ使用分析和高可用集群搭建 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" /><meta name="description" content="RabbitMQ使用分析和高可用集群搭建" />
+<meta name="keywords" content="RabbitMQ, 高可用" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/rabbitmq/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="RabbitMQ使用分析和高可用集群搭建" />
+<meta property="og:description" content="RabbitMQ使用分析和高可用集群搭建" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/rabbitmq/" />
+
+
+
+<meta property="article:published_time" content="2018-07-06T17:56:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-07-06T17:56:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="RabbitMQ使用分析和高可用集群搭建">
+<meta itemprop="description" content="RabbitMQ使用分析和高可用集群搭建">
+
+
+<meta itemprop="datePublished" content="2018-07-06T17:56:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-06T17:56:00&#43;08:00" />
+<meta itemprop="wordCount" content="4376">
+
+
+
+<meta itemprop="keywords" content="linux,rabbitmq," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RabbitMQ使用分析和高可用集群搭建"/>
+<meta name="twitter:description" content="RabbitMQ使用分析和高可用集群搭建"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">RabbitMQ使用分析和高可用集群搭建</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-06 </span>
+        <div class="post-category">
+            
+              <a href="/categories/rabbitmq/"> rabbitmq </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#rabbitmq-基础理解">RabbitMQ 基础理解</a>
+<ul>
+<li><a href="#概念理解">概念理解：</a></li>
+<li><a href="#持久化">持久化：</a></li>
+<li><a href="#分析理解">分析理解:</a></li>
+</ul></li>
+<li><a href="#rabbitmq-消息确认策略分析">RabbitMQ 消息确认策略分析</a>
+<ul>
+<li><a href="#confrim-transaction-概念应用">Confrim / Transaction 概念应用</a></li>
+<li><a href="#confrim-transaction-测试分析">Confrim / Transaction 测试分析</a></li>
+<li><a href="#consumer">Consumer</a></li>
+</ul></li>
+<li><a href="#rabbitmq-配置">RabbitMQ 配置</a>
+<ul>
+<li><a href="#rabbitmq-安装">RabbitMQ 安装</a></li>
+<li><a href="#rabbitmq-配置文件">RabbitMQ 配置文件</a></li>
+</ul></li>
+<li><a href="#高可用的集群搭建">高可用的集群搭建</a>
+<ul>
+<li><a href="#基础概念">基础概念</a></li>
+<li><a href="#集群搭建">集群搭建</a></li>
+</ul></li>
+<li><a href="#总结">总结：</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="rabbitmq-基础理解">RabbitMQ 基础理解</h3>
+
+<p>​     RabbitMQ，是一个使用 erlang 编写的 AMQP（高级消息队列协议）的服务实现，简单来说，就是一个功能强大的消息队列服务。</p>
+
+<p></p>
+
+<p><img src="https://wx1.sinaimg.cn/large/62d3e37ely1ft0amd5f15j20x809c759.jpg" alt="" /></p>
+
+<h4 id="概念理解">概念理解：</h4>
+
+<ul>
+<li>Producer: 消息发送者</li>
+<li>RabbitMQ:
+
+<ul>
+<li>Vhost: 相当于分组，每个vhost下数据是隔离的</li>
+<li>Exchange: 路由器，接收消息，本根据RoutingKey分发消息</li>
+<li>headers：消息头类型 路由器，内部应用</li>
+<li>direct：精准匹配类型 路由器</li>
+<li>topic：主题匹配类型 路由器，支持正则 模糊匹配</li>
+<li>fanout：广播类型 路由器，RoutingKey无效</li>
+<li>RoutingKey: 路由规则</li>
+<li>Queue: 队列，用于存储消息（消息的目的地）</li>
+</ul></li>
+<li>Consumer: 消息消费者</li>
+</ul>
+
+<h4 id="持久化">持久化：</h4>
+
+<p>​    一个好的消息队列当然需要消息持久化功能，服务宕机，未消费消息不丢失，RabbitMQ持久化分为Exchange、Queue、Message
+    Exchange 和 Queue 持久化 指持久化Exchange、Queue 元数据，持久化的是自身，服务宕机，Exchange 和 Queue 自身就没有了
+    Message 持久化 顾名思义 把每一条消息体持久化，服务宕机，消息不丢失</p>
+
+<p>​    Durable 持久、Transient 临时，Queue新建类似</p>
+
+<p><img src="https://ws3.sinaimg.cn/large/62d3e37ely1ft0apszgroj20yq0bemye.jpg" alt="" /></p>
+
+<h4 id="分析理解">分析理解:</h4>
+
+<p>​    便于更直观的理解，把 RabbitMQ 的消息流对比与Http Rest接口更家熟悉形象</p>
+
+<p>​       <code>www.xxx.com/webappPath/trade/getOrder -&gt; getOrder(message) GET</code></p>
+
+<p>​            RabbitMQ Server：同比 域名 www.xxx.com，只有通过域名才能到达 Server</p>
+
+<p>​            Vhost：同比 /webappPath，一个域名可能指向多个app</p>
+
+<p>​            Exchange：同比 /trade，trade/* 下有多个method，但是需要先到达这个Class
+            RoutingKey：同比 /getOrder，只有完成的 URL 才是有效的，才能确定到具体的方法</p>
+
+<p>​           Queue：同比 getOrder(message) 消息的最终目的地</p>
+
+<p>​            Exchange Type:  同比 GET，但是Rest MethodType是整个URL的Type，而不是 Queue</p>
+
+<p>​    以上只是为了更好理解，千万不要混淆</p>
+
+<p>​    Producer / Consumer 就很好理解了，基于AMQP协议链接RabbitMQ Server，发送消息 / 接收消息</p>
+
+<h3 id="rabbitmq-消息确认策略分析">RabbitMQ 消息确认策略分析</h3>
+
+<h4 id="confrim-transaction-概念应用">Confrim / Transaction 概念应用</h4>
+
+<p>​    RabbitMQ 提供了两种可靠性的确认策略 Confrim / Transaction，Producer Client仅分析Spring-Amqp，两种机制主要影响发送:</p>
+
+<p>​    <strong>Confrim</strong>: 简单说就是直接传送消息 client &gt; mq, 接收到 mq &gt; ack, mq 在异步的完成 接下来的事情</p>
+
+<p>​    <strong>Transaction</strong>: client 请求开启事务  &gt; 发送message &gt; client 提交事务，整个过程是同步的，mq必须完成消息持久化、消息同步等。</p>
+
+<p>​        spring-amqp  提供的发送客户端 默认是Confrim 异步Ack模式，不用特殊配置，Transaction 需要在默认的基础上增加 RabbitMQ事务管理器</p>
+
+<pre><code class="language-shell">// 1.向Spring中注册RabbitMQ事务管理器
+@Bean
+public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory) {
+    return new RabbitTransactionManager(connectionFactory);
+}
+
+...
+
+// 2.设置通道为Transaction类型
+rabbitTemplate.setChannelTransacted(true);
+
+...
+
+// 3.对应的方法添加@Transactional
+@Transactional
+public void send(String exchange, String routingKey, Object object) {
+    rabbitTemplate.convertAndSend(exchange, routingKey, object);
+}
+</code></pre>
+
+<h4 id="confrim-transaction-测试分析">Confrim / Transaction 测试分析</h4>
+
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>RabbitTemplate 实现</th>
+<th>RabbitMQ Server 宕机、掉电 持久化消息测试 （是否发送发送丢失）</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Confrim</td>
+<td>异步确认模式:发送线程不会立即得到MQ反馈结果，发送后通过callback确认成功失败，类似线程池，效率高</td>
+<td>发送线程：由于是异步确认模式，当RabbitMQ Server突然失联，发送线程仍会继续发送多条消息，之后发现链接断开，抛出异常假设RabbitMQ Server 接收500挂掉   发送线程：700    实际接收 RabbitMQ Server：500   callback线程 失败：200（预期 未具体测试）缺点：发送线程认为已经发送成功，但是却失败了，反馈结果只能通callback获得，多线程问题，如未处理callback，则消息丢失 优点：性能好</td>
+</tr>
+
+<tr>
+<td>Transaction</td>
+<td>事务确认模式:发送线程会立即得到MQ反馈结果，同一线程中，多个发送阻塞进行，同db Transaction一样支持失败回滚等，效率高<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a> 支持同时管理db、mq事务，意味用一个事务中可以操作db、mq，进行提交回滚<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a> 坑：只能标注public不能同类非@Transactional方法调用<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a><a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a>只会对unchecked异常进行事务回滚</td>
+<td>发送线程：由于是事务确认模式，当RabbitMQ Server突然失联，发送线程得不到当前正在发送消息的回执，直接抛出异常假设RabbitMQ Server 接收500挂掉   发送线程：500   实际接收 RabbitMQ Server：500缺点：同步发送，逐条确认，效率低优点：同步发送，发送线程可以立即得到反馈结果，对于主线程消息不丢失</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="consumer">Consumer</h4>
+
+<p>    消费的机制和发送差不多, 但流程变为 Consumer 处理消息，需要Ack MQ Server, Server 才会真正的删除消息，通常消费者不需要开启事务，当处理异常抛出，Ack无法发到Server到，消息就会回到队列中，继续重试，阻塞到直到消息被消费Ack掉，所说的消息阻塞</p>
+
+<h3 id="rabbitmq-配置">RabbitMQ 配置</h3>
+
+<h4 id="rabbitmq-安装">RabbitMQ 安装</h4>
+
+<p>​     RabbitMQ是基于Erlang运行的，首先选择RabbitMQ版本，确定需要的Erlang版本，然后安装Erlang，自行百度、谷歌、<a href="https://www.rabbitmq.com/download.html" target="_blank">RabbitMQ官网</a>或者<a href="https://www.erlang-solutions.com/resources/download.html" target="_blank">Erlang官网</a>都会有相应的资源、教程（ps: Erlang 版本请严格按照所选RabbitMQ版本要求的Erlang范围安装，否则会有各种不治之症）</p>
+
+<p>​    本文以 Erlang20.03，RabbitMQ 3.7为例，RabbitMQ为linux 通用包，不同安装方式版本配置文件路径有差异，通用包好处，可移植性、控制性好</p>
+
+<p>包目录结构：</p>
+
+<p><img src="https://wx2.sinaimg.cn/large/62d3e37egy1ft0asr4qkuj20bk0eyt9z.jpg" alt="" /></p>
+
+<p> ./sbin/    rabbitmq 启动rabbitmq-server、插件rabbitmq-plugins、功能rabbitmqctl等脚本位置  </p>
+
+<p>./etc/rabbitmq/    rabbitmq 启动配置，包括随启动插件配置、环境配置、应用配置</p>
+
+<h4 id="rabbitmq-配置文件">RabbitMQ 配置文件</h4>
+
+<ul>
+<li>​    rabbitmq-env.conf 环境配置 key = val 形式</li>
+</ul>
+
+<pre><code># 指定节点的名字 默认 rabbit@${hostname}，如指定了节点名，需配置 host ip cluster1
+NODENAME=rabbit@cluster1
+# 指定端口 默认 5672
+NODE_PORT=5672
+# 配置持久目录
+MNESIA_BASE=/mnt/data1/rabbitmq/store
+# 配置日志目录 默认文件名字：${NODENAME}.log 可以用配置修改
+LOG_BASE=/mnt/data1/rabbitmq/logs
+</code></pre>
+
+<ul>
+<li>rabbitmq.conf 环境配置 key = val 形式</li>
+</ul>
+
+<p>​        主要配置日志、默认用户信息、持久化相关等，没有定制化通常不用修改</p>
+
+<pre><code># console log config 主要测试排查问题
+log.console             = false
+log.console.level       = debug
+
+# log config
+log.file                = rabbit.log
+log.file.level          = info
+log.file.rotation.date  = $D0
+
+# web port
+management.listener.port    = 15672
+</code></pre>
+
+<ul>
+<li>enabled_plugins 配置相应插件的名字 server start plugin也会启动</li>
+</ul>
+
+<pre><code>[rabbitmq_management].
+</code></pre>
+
+<p>具体请看官方配置说明, 详细的讲解了rabbitmq-env.conf 和 rabbitmq.conf 配置 <a href="https://www.rabbitmq.com/configure.html" target="_blank">官方配置说明</a></p>
+
+<p>RabbitMQ 常用命令：</p>
+
+<pre><code># 后台启动本地服务
+./rabbitmq-server –detached
+
+# 开启/关闭 服务
+./rabbitmqctl start_app {-n node_name}
+./rabbitmqctl stop_app {-n node_name}
+
+# 开启/关闭某个插件 (重启服务器后生效)
+./rabbitmq-plugins enable xxx 
+./rabbitmq-plugins disable xxx
+
+# 更改节点类型
+./rabbitmqctl change_cluster_node_type {disc/ram} {-n node_name}
+
+# 配置用户
+./rabbitmqctl add_user username password
+./rabbitmqctl change_password username newpassword
+./rabbitmqctl delete_user username
+./rabbitmqctl set_user_tags username administrator
+    Tag: none、management、policymaker、monitoring、administrator
+./rabbitmqctl set_permissions -p /vhost1  username 'conf' 'write' 'read'
+    conf  一个正则表达式match哪些配置资源能够被该用户配置
+    write  一个正则表达式match哪些配置资源能够被该用户写入
+    read  一个正则表达式match哪些配置资源能够被该用户读取
+</code></pre>
+
+<h3 id="高可用的集群搭建">高可用的集群搭建</h3>
+
+<h4 id="基础概念">基础概念</h4>
+
+<p>​    RabbitMQ 集群分为两种 普通集群 和 镜像集群，可以说 镜像集群 是 普通集群 的晋升版</p>
+
+<p><strong>普通集群：</strong></p>
+
+<p>​    以两个节点（rabbit01、rabbit02）为例来进行说明。</p>
+
+<p>​    rabbit01和rabbit02两个节点仅有相同的元数据，即队列的结构，但消息实体只存在于其中一个节点rabbit01（或者rabbit02）中。</p>
+
+<p>​    当消息进入rabbit01节点的Queue后，consumer从rabbit02节点消费时，RabbitMQ会临时在rabbit01、rabbit02间进行消息传输，把A中的消息实体取出并经过B发送给consumer。所以consumer应尽量连接每一个节点，从中取消息。即对于同一个逻辑队列，要在多个节点建立物理Queue。否则无论consumer连rabbit01或rabbit02，出口总在rabbit01，会产生瓶颈。当rabbit01节点故障后，rabbit02节点无法取到rabbit01节点中还未消费的消息实体。如果做了消息持久化，那么得等rabbit01节点恢复，然后才可被消费；如果没有持久化的话，就会产生消息丢失的现象。</p>
+
+<p><strong>镜像集群：</strong></p>
+
+<p>​    在普通集群的基础上，把需要的队列做成镜像队列，消息实体会主动在镜像节点间同步，而不是在客户端取数据时临时拉取，也就是说多少节点消息就会备份多少份。该模式带来的副作用也很明显，除了降低系统性能外，如果镜像队列数量过多，加之大量的消息进入，集群内部的网络带宽将会被这种同步通讯大大消耗掉。所以在对可靠性要求较高的场合中适用</p>
+
+<p>​    由于镜像队列之间消息自动同步，且内部有选举master机制，即使master节点宕机也不会影响整个集群的使用，达到去中心化的目的，从而有效的防止消息丢失及服务不可用等问题</p>
+
+<h4 id="集群搭建">集群搭建</h4>
+
+<p>RabbitMQ 集群通信的验证机制是通过 erlang.cookie进行确认的，只有erlang.cookie一致的两个服务才能通信，创建cookie文件：</p>
+
+<pre><code>mkdir ~/.erlang.cookie
+echo 'SJJARLYPVRPMWFVGKWZZ' &gt; ~/.erlang.cookie
+chmod 400 ~/.erlang.cookie
+</code></pre>
+
+<p>​    cluster1=10.0.0.1, cluster2=10.0.0.2  2台服务器为例，本地搭建需修改 tcp端口、web端口</p>
+
+<p>​    写入hostes：</p>
+
+<pre><code>10.0.0.1 cluster1
+10.0.0.2 cluster2
+</code></pre>
+
+<p>​     修改rabbitmq-env.conf：</p>
+
+<pre><code># server1
+NODENAME=rabbit@cluster1
+...
+# server2
+NODENAME=rabbit@cluster2
+</code></pre>
+
+<p>​    启动server1：</p>
+
+<pre><code>./rabbitmq-server –detached
+</code></pre>
+
+<p>​    将server2加入到server形成集群：</p>
+
+<pre><code>./rabbitmqctl -n rabbit@cluster2 stop_app
+# 重置元数据、集群配置等信息
+./rabbitmqctl -n rabbit@cluster2 reset
+# cluster2 加入到 cluster1 的集群中 --ram表示cluster2为RAM节点 默认为disc
+./rabbitmqctl -n rabbit@cluster2 join_cluster rabbit@cluster1 --ram
+./rabbitmqctl -n rabbit@cluster2 start_app
+</code></pre>
+
+<p>普通集群就搭建完成了，普通集群并不是高可用的，基于普通集群升级为镜像集群<a href="https://www.rabbitmq.com/ha.html" target="_blank">RabbitMQ HA方案</a></p>
+
+<pre><code>./rabbitmqctl set_policy &lt;name&gt; [-p &lt;vhost&gt;] &lt;pattern&gt; &lt;definition&gt; [--apply-to &lt;apply-to&gt;]
+    name: 策略名称
+    vhost: 指定vhost, 默认值 /
+    pattern: 需要镜像的正则
+    definition: 
+        ha-mode: 指明镜像队列的模式，有效值为 all/exactly/nodes 
+            all     表示在集群所有的节点上进行镜像，无需设置ha-params
+            exactly 表示在指定个数的节点上进行镜像，节点的个数由ha-params指定 
+            nodes   表示在指定的节点上进行镜像，节点名称通过ha-params指定 
+        ha-params: ha-mode 模式需要用到的参数 
+        ha-sync-mode: 镜像队列中消息的同步方式，有效值为automatic，manually
+    apply-to: 可选值3个，默认all
+        exchanges 表示镜像 exchange (并不知道意义所在)
+        queues    表示镜像 queue
+        all       表示镜像 exchange和queue
+eg:
+./rabbitmqctl set_policy test &quot;test&quot; '{&quot;ha-mode&quot;:&quot;all&quot;,&quot;ha-sync-mode&quot;:&quot;automatic&quot;}' 
+
+测试: exchange = test, queue = test
+    case1: pattern=test, apply-to=exchanges -&gt; 结果 exchange被镜像
+    case2: pattern=test, apply-to=queues    -&gt; 结果    queue被镜像
+    case3: pattern=test, apply-to=all       -&gt; 结果    queue被镜像
+结论: 不知道exchange被镜像的意义所在，镜像queue才是关键
+</code></pre>
+
+<p>ps:</p>
+
+<p>​    保证集群的高可用，至少要有1个disc节点</p>
+
+<p>​    RabbitMQ Cluster 全部挂掉，RAM节点无法先启动，必须先启动disc节点</p>
+
+<p>​    推荐 2 RAM 1 DISC 集群搭建方式</p>
+
+<h3 id="总结">总结：</h3>
+
+<p>​    RabbitMQ高可用集群还是非常有必要的，高可用的代价就是性能的降低，对可靠性要求比较高的企业务还是值得的，据我测试2R1D镜像集群(非压测, 压测结果绝对更高)，达到1000QPS+还是没问题的，如果开启事务，保证同步发送应答，也可达500QPS+，绝对满足大多数可靠性要求高的业务。</p>
+
+<p>由于工作中可能用到，先转到博客，免得后面找不到了，多谢作者，转自：<a href="https://my.oschina.net/genghz/blog/1840262" target="_blank">https://my.oschina.net/genghz/blog/1840262</a></p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/rabbitmq/">rabbitmq</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/windows-linux-md5/">
+            <span class="next-text nav-default">Windows和Linux利用原生命令查看文件MD5</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold" target="_blank" rel="nofollow">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

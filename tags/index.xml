@@ -113,7 +113,7 @@
     <item>
       <title>Linux</title>
       <link>https://blog.gofinall.com/tags/linux/</link>
-      <pubDate>Sat, 23 Jun 2018 15:29:39 +0800</pubDate>
+      <pubDate>Fri, 06 Jul 2018 17:56:00 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/tags/linux/</guid>
       <description></description>
@@ -188,6 +188,15 @@
       <pubDate>Fri, 02 Mar 2018 17:20:56 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq</title>
+      <link>https://blog.gofinall.com/tags/rabbitmq/</link>
+      <pubDate>Fri, 06 Jul 2018 17:56:00 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/tags/rabbitmq/</guid>
       <description></description>
     </item>
     
