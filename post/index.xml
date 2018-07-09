@@ -6,10 +6,23 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Jul 2018 17:56:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jul 2018 11:34:50 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Centos7下rc.local文件开机不执行</title>
+      <link>https://blog.gofinall.com/post/centos-rc.local/</link>
+      <pubDate>Mon, 09 Jul 2018 11:34:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-rc.local/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>RabbitMQ使用分析和高可用集群搭建</title>

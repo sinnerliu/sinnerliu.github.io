@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 08 Jun 2018 16:56:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jul 2018 11:34:50 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Centos7下rc.local文件开机不执行</title>
+      <link>https://blog.gofinall.com/post/centos-rc.local/</link>
+      <pubDate>Mon, 09 Jul 2018 11:34:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-rc.local/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>ssh port forwarding（ssh端口转发）</title>
