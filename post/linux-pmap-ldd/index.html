@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>linux下使用pmap和ldd查看进程调用了什么lib - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看linux下使用pmap和ldd的命令。
+
+" />
+<meta name="keywords" content="linux, pmap, ldd" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/linux-pmap-ldd/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="linux下使用pmap和ldd查看进程调用了什么lib" />
+<meta property="og:description" content="在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看linux下使用pmap和ldd的命令。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/linux-pmap-ldd/" />
+
+
+
+<meta property="article:published_time" content="2018-07-12T16:36:09&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-07-12T16:36:09&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="linux下使用pmap和ldd查看进程调用了什么lib">
+<meta itemprop="description" content="在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看linux下使用pmap和ldd的命令。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-07-12T16:36:09&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-12T16:36:09&#43;08:00" />
+<meta itemprop="wordCount" content="1108">
+
+
+
+<meta itemprop="keywords" content="linux,pmap,ldd," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="linux下使用pmap和ldd查看进程调用了什么lib"/>
+<meta name="twitter:description" content="在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看linux下使用pmap和ldd的命令。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">linux下使用pmap和ldd查看进程调用了什么lib</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-12 </span>
+        <div class="post-category">
+            
+              <a href="/categories/linux/"> linux </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#pmap命令">pmap命令</a></li>
+<li><a href="#ldd命令">ldd命令</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看<a href="http://www.ttlsa.com/linux/" target="_blank">linux</a>下使用pmap和ldd的命令。</p>
+
+<p></p>
+
+<h3 id="pmap命令">pmap命令</h3>
+
+<p>使用方法：<code>pmap 进程pid</code></p>
+
+<p>如下是查看sshd调用了哪些lib</p>
+
+<pre><code class="language-shell">[root@localhost ~]# ps -ef|grep sshd
+root       1588      1  0 16:05 ?        00:00:00 /usr/sbin/sshd
+root       1972   1588  0 16:07 ?        00:00:00 sshd: root@pts/0 
+root       2078   1974  0 16:37 pts/0    00:00:00 grep sshd
+[root@localhost ~]# pmap 1588
+1588:   /usr/sbin/sshd
+00007fc5b5aa1000     52K r-x--  /lib64/libnss_files-2.12.so
+00007fc5b5aae000   2044K -----  /lib64/libnss_files-2.12.so
+00007fc5b5cad000      4K r----  /lib64/libnss_files-2.12.so
+00007fc5b5cae000      4K rw---  /lib64/libnss_files-2.12.so
+00007fc5b5caf000     28K r-x--  /lib64/librt-2.12.so
+00007fc5b5cb6000   2044K -----  /lib64/librt-2.12.so
+00007fc5b5eb5000      4K r----  /lib64/librt-2.12.so
+00007fc5b5eb6000      4K rw---  /lib64/librt-2.12.so
+00007fc5b5eb7000    228K r-x--  /lib64/libnspr4.so
+00007fc5b5ef0000   2048K -----  /lib64/libnspr4.so
+00007fc5b60f0000      4K r----  /lib64/libnspr4.so
+00007fc5b60f1000      8K rw---  /lib64/libnspr4.so
+00007fc5b60f3000      8K rw---    [ anon ]
+00007fc5b60f5000     12K r-x--  /lib64/libplds4.so
+00007fc5b60f8000   2044K -----  /lib64/libplds4.so
+00007fc5b62f7000      4K r----  /lib64/libplds4.so
+00007fc5b62f8000      4K rw---  /lib64/libplds4.so
+00007fc5b62f9000     16K r-x--  /lib64/libplc4.so
+00007fc5b62fd000   2044K -----  /lib64/libplc4.so
+00007fc5b64fc000      4K r----  /lib64/libplc4.so
+00007fc5b64fd000      4K rw---  /lib64/libplc4.so
+00007fc5b64fe000    152K r-x--  /usr/lib64/libnssutil3.so
+00007fc5b6524000   2044K -----  /usr/lib64/libnssutil3.so
+00007fc5b6723000     24K r----  /usr/lib64/libnssutil3.so
+00007fc5b6729000      4K rw---  /usr/lib64/libnssutil3.so
+00007fc5b672a000     92K r-x--  /lib64/libpthread-2.12.so
+00007fc5b6741000   2048K -----  /lib64/libpthread-2.12.so
+00007fc5b6941000      4K r----  /lib64/libpthread-2.12.so
+00007fc5b6942000      4K rw---  /lib64/libpthread-2.12.so
+00007fc5b6943000     16K rw---    [ anon ]
+00007fc5b6947000      8K r-x--  /lib64/libkeyutils.so.1.3
+00007fc5b6949000   2044K -----  /lib64/libkeyutils.so.1.3
+00007fc5b6b48000      4K r----  /lib64/libkeyutils.so.1.3
+00007fc5b6b49000      4K rw---  /lib64/libkeyutils.so.1.3
+00007fc5b6b4a000     40K r-x--  /lib64/libkrb5support.so.0.1
+00007fc5b6b54000   2044K -----  /lib64/libkrb5support.so.0.1
+00007fc5b6d53000      4K r----  /lib64/libkrb5support.so.0.1
+00007fc5b6d54000      4K rw---  /lib64/libkrb5support.so.0.1
+00007fc5b6d55000      8K r-x--  /lib64/libfreebl3.so
+00007fc5b6d57000   2044K -----  /lib64/libfreebl3.so
+00007fc5b6f56000      4K r----  /lib64/libfreebl3.so
+00007fc5b6f57000      4K rw---  /lib64/libfreebl3.so
+00007fc5b6f58000   1576K r-x--  /lib64/libc-2.12.so
+00007fc5b70e2000   2048K -----  /lib64/libc-2.12.so
+00007fc5b72e2000     16K r----  /lib64/libc-2.12.so
+00007fc5b72e6000      8K rw---  /lib64/libc-2.12.so
+00007fc5b72e8000     16K rw---    [ anon ]
+00007fc5b72ec000   1244K r-x--  /usr/lib64/libnss3.so
+00007fc5b7423000   2048K -----  /usr/lib64/libnss3.so
+00007fc5b7623000     20K r----  /usr/lib64/libnss3.so
+00007fc5b7628000      8K rw---  /usr/lib64/libnss3.so
+00007fc5b762a000      8K rw---    [ anon ]
+00007fc5b762c000     12K r-x--  /lib64/libcom_err.so.2.1
+00007fc5b762f000   2044K -----  /lib64/libcom_err.so.2.1
+00007fc5b782e000      4K r----  /lib64/libcom_err.so.2.1
+00007fc5b782f000      4K rw---  /lib64/libcom_err.so.2.1
+00007fc5b7830000    164K r-x--  /lib64/libk5crypto.so.3.1
+00007fc5b7859000   2048K -----  /lib64/libk5crypto.so.3.1
+00007fc5b7a59000      4K r----  /lib64/libk5crypto.so.3.1
+00007fc5b7a5a000      4K rw---  /lib64/libk5crypto.so.3.1
+00007fc5b7a5b000      4K rw---    [ anon ]
+00007fc5b7a5c000    880K r-x--  /lib64/libkrb5.so.3.3
+00007fc5b7b38000   2044K -----  /lib64/libkrb5.so.3.3
+00007fc5b7d37000     40K r----  /lib64/libkrb5.so.3.3
+00007fc5b7d41000      8K rw---  /lib64/libkrb5.so.3.3
+00007fc5b7d43000    260K r-x--  /lib64/libgssapi_krb5.so.2.2
+00007fc5b7d84000   2048K -----  /lib64/libgssapi_krb5.so.2.2
+00007fc5b7f84000      4K r----  /lib64/libgssapi_krb5.so.2.2
+00007fc5b7f85000      8K rw---  /lib64/libgssapi_krb5.so.2.2
+00007fc5b7f87000     88K r-x--  /lib64/libresolv-2.12.so
+00007fc5b7f9d000   2048K -----  /lib64/libresolv-2.12.so
+00007fc5b819d000      4K r----  /lib64/libresolv-2.12.so
+00007fc5b819e000      4K rw---  /lib64/libresolv-2.12.so
+00007fc5b819f000      8K rw---    [ anon ]
+00007fc5b81a1000     28K r-x--  /lib64/libcrypt-2.12.so
+00007fc5b81a8000   2048K -----  /lib64/libcrypt-2.12.so
+00007fc5b83a8000      4K r----  /lib64/libcrypt-2.12.so
+00007fc5b83a9000      4K rw---  /lib64/libcrypt-2.12.so
+00007fc5b83aa000    184K rw---    [ anon ]
+00007fc5b83d8000     88K r-x--  /lib64/libnsl-2.12.so
+00007fc5b83ee000   2044K -----  /lib64/libnsl-2.12.so
+00007fc5b85ed000      4K r----  /lib64/libnsl-2.12.so
+00007fc5b85ee000      4K rw---  /lib64/libnsl-2.12.so
+00007fc5b85ef000      8K rw---    [ anon ]
+00007fc5b85f1000     84K r-x--  /lib64/libz.so.1.2.3
+00007fc5b8606000   2044K -----  /lib64/libz.so.1.2.3
+00007fc5b8805000      4K r----  /lib64/libz.so.1.2.3
+00007fc5b8806000      4K rw---  /lib64/libz.so.1.2.3
+00007fc5b8807000      8K r-x--  /lib64/libutil-2.12.so
+00007fc5b8809000   2044K -----  /lib64/libutil-2.12.so
+00007fc5b8a08000      4K r----  /lib64/libutil-2.12.so
+00007fc5b8a09000      4K rw---  /lib64/libutil-2.12.so
+00007fc5b8a0a000   1768K r-x--  /usr/lib64/libcrypto.so.1.0.1e
+00007fc5b8bc4000   2048K -----  /usr/lib64/libcrypto.so.1.0.1e
+00007fc5b8dc4000    108K r----  /usr/lib64/libcrypto.so.1.0.1e
+00007fc5b8ddf000     48K rw---  /usr/lib64/libcrypto.so.1.0.1e
+00007fc5b8deb000     16K rw---    [ anon ]
+00007fc5b8def000    116K r-x--  /lib64/libselinux.so.1
+00007fc5b8e0c000   2044K -----  /lib64/libselinux.so.1
+00007fc5b900b000      4K r----  /lib64/libselinux.so.1
+00007fc5b900c000      4K rw---  /lib64/libselinux.so.1
+00007fc5b900d000      4K rw---    [ anon ]
+00007fc5b900e000      8K r-x--  /lib64/libdl-2.12.so
+00007fc5b9010000   2048K -----  /lib64/libdl-2.12.so
+00007fc5b9210000      4K r----  /lib64/libdl-2.12.so
+00007fc5b9211000      4K rw---  /lib64/libdl-2.12.so
+00007fc5b9212000     48K r-x--  /lib64/libpam.so.0.82.2
+00007fc5b921e000   2048K -----  /lib64/libpam.so.0.82.2
+00007fc5b941e000      4K r----  /lib64/libpam.so.0.82.2
+00007fc5b941f000      4K rw---  /lib64/libpam.so.0.82.2
+00007fc5b9420000     96K r-x--  /lib64/libaudit.so.1.0.0
+00007fc5b9438000   2044K -----  /lib64/libaudit.so.1.0.0
+00007fc5b9637000      8K r----  /lib64/libaudit.so.1.0.0
+00007fc5b9639000     44K rw---  /lib64/libaudit.so.1.0.0
+00007fc5b9644000     32K r-x--  /lib64/libwrap.so.0.7.6
+00007fc5b964c000   2048K -----  /lib64/libwrap.so.0.7.6
+00007fc5b984c000      4K r----  /lib64/libwrap.so.0.7.6
+00007fc5b984d000      4K rw---  /lib64/libwrap.so.0.7.6
+00007fc5b984e000      4K rw---    [ anon ]
+00007fc5b984f000      8K r-x--  /lib64/libfipscheck.so.1.1.0
+00007fc5b9851000   2044K -----  /lib64/libfipscheck.so.1.1.0
+00007fc5b9a50000      4K r----  /lib64/libfipscheck.so.1.1.0
+00007fc5b9a51000      4K rw---  /lib64/libfipscheck.so.1.1.0
+00007fc5b9a52000    128K r-x--  /lib64/ld-2.12.so
+00007fc5b9c55000     56K rw---    [ anon ]
+00007fc5b9c71000      4K rw---    [ anon ]
+00007fc5b9c72000      4K r----  /lib64/ld-2.12.so
+00007fc5b9c73000      4K rw---  /lib64/ld-2.12.so
+00007fc5b9c74000      4K rw---    [ anon ]
+00007fc5b9c75000    544K r-x--  /usr/sbin/sshd
+00007fc5b9efc000     12K r----  /usr/sbin/sshd
+00007fc5b9eff000      4K rw---  /usr/sbin/sshd
+00007fc5b9f00000     36K rw---    [ anon ]
+00007fc5bb921000    132K rw---    [ anon ]
+00007ffd9c561000     84K rw---    [ stack ]
+00007ffd9c580000      4K r-x--    [ anon ]
+ffffffffff600000      4K r-x--    [ anon ]
+ total            66240K
+</code></pre>
+
+<p>内容非常详细详细，接下来看看ldd命令</p>
+
+<h3 id="ldd命令">ldd命令</h3>
+
+<p>使用方法：<code>ldd 程序命令</code></p>
+
+<p>例如，查看sshd启动需要使用哪些lib，如下：</p>
+
+<pre><code class="language-shell">[root@localhost ~]# ldd /usr/sbin/sshd
+        linux-vdso.so.1 =&gt;  (0x00007ffdb9f8d000)
+        libfipscheck.so.1 =&gt; /lib64/libfipscheck.so.1 (0x00007f7f23c90000)
+        libwrap.so.0 =&gt; /lib64/libwrap.so.0 (0x00007f7f23a85000)
+        libaudit.so.1 =&gt; /lib64/libaudit.so.1 (0x00007f7f23860000)
+        libpam.so.0 =&gt; /lib64/libpam.so.0 (0x00007f7f23652000)
+        libdl.so.2 =&gt; /lib64/libdl.so.2 (0x00007f7f2344e000)
+        libselinux.so.1 =&gt; /lib64/libselinux.so.1 (0x00007f7f2322e000)
+        libcrypto.so.10 =&gt; /usr/lib64/libcrypto.so.10 (0x00007f7f22e49000)
+        libutil.so.1 =&gt; /lib64/libutil.so.1 (0x00007f7f22c46000)
+        libz.so.1 =&gt; /lib64/libz.so.1 (0x00007f7f22a2f000)
+        libnsl.so.1 =&gt; /lib64/libnsl.so.1 (0x00007f7f22816000)
+        libcrypt.so.1 =&gt; /lib64/libcrypt.so.1 (0x00007f7f225df000)
+        libresolv.so.2 =&gt; /lib64/libresolv.so.2 (0x00007f7f223c4000)
+        libgssapi_krb5.so.2 =&gt; /lib64/libgssapi_krb5.so.2 (0x00007f7f22180000)
+        libkrb5.so.3 =&gt; /lib64/libkrb5.so.3 (0x00007f7f21e99000)
+        libk5crypto.so.3 =&gt; /lib64/libk5crypto.so.3 (0x00007f7f21c6c000)
+        libcom_err.so.2 =&gt; /lib64/libcom_err.so.2 (0x00007f7f21a68000)
+        libnss3.so =&gt; /usr/lib64/libnss3.so (0x00007f7f21728000)
+        libc.so.6 =&gt; /lib64/libc.so.6 (0x00007f7f21393000)
+        /lib64/ld-linux-x86-64.so.2 (0x0000003821000000)
+        libfreebl3.so =&gt; /lib64/libfreebl3.so (0x00007f7f21190000)
+        libkrb5support.so.0 =&gt; /lib64/libkrb5support.so.0 (0x00007f7f20f84000)
+        libkeyutils.so.1 =&gt; /lib64/libkeyutils.so.1 (0x00007f7f20d81000)
+        libpthread.so.0 =&gt; /lib64/libpthread.so.0 (0x00007f7f20b64000)
+        libnssutil3.so =&gt; /usr/lib64/libnssutil3.so (0x00007f7f20937000)
+        libplc4.so =&gt; /lib64/libplc4.so (0x00007f7f20732000)
+        libplds4.so =&gt; /lib64/libplds4.so (0x00007f7f2052e000)
+        libnspr4.so =&gt; /lib64/libnspr4.so (0x00007f7f202ef000)
+        librt.so.1 =&gt; /lib64/librt.so.1 (0x00007f7f200e7000)
+</code></pre>
+
+<p>ldd将调用到的lib名称以及他的绝对路径给显示出来了，比pmap要直观。</p>
+
+<p>在linux下，不管你使用ldd还是pmap都是可以查看到程序调用的路径。如果查看一个已经运行种但是又不知道程序路径的程序，使用pmap更快捷，对于其他的可以使用ldd，工作种，用得最多的还是ldd.</p>
+
+<p>转载：<code>http://www.ttlsa.com/html/3224.html</code></p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/pmap/">pmap</a>
+          
+          <a href="/tags/ldd/">ldd</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/flashplayer-2144-2/">
+            <span class="next-text nav-default">【解决flash助手推荐】flash_player_30_0_0_127地区不相容PJ</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold" target="_blank" rel="nofollow">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>
