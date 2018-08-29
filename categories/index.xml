@@ -57,11 +57,29 @@
     </item>
     
     <item>
+      <title>Python</title>
+      <link>https://blog.gofinall.com/categories/python/</link>
+      <pubDate>Wed, 15 Aug 2018 16:23:49 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Rabbitmq</title>
       <link>https://blog.gofinall.com/categories/rabbitmq/</link>
       <pubDate>Fri, 06 Jul 2018 17:56:00 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/categories/rabbitmq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robotframework</title>
+      <link>https://blog.gofinall.com/categories/robotframework/</link>
+      <pubDate>Wed, 29 Aug 2018 16:17:14 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/categories/robotframework/</guid>
       <description></description>
     </item>
     
