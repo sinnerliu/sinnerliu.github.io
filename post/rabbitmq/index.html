@@ -25,7 +25,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.41" />
+<meta name="generator" content="Hugo 0.48" />
 
 
 <link rel="canonical" href="https://blog.gofinall.com/post/rabbitmq/" />
@@ -49,24 +49,8 @@
 <meta property="og:title" content="RabbitMQ使用分析和高可用集群搭建" />
 <meta property="og:description" content="RabbitMQ使用分析和高可用集群搭建" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.gofinall.com/post/rabbitmq/" />
-
-
-
-<meta property="article:published_time" content="2018-07-06T17:56:00&#43;08:00"/>
-
+<meta property="og:url" content="https://blog.gofinall.com/post/rabbitmq/" /><meta property="article:published_time" content="2018-07-06T17:56:00&#43;08:00"/>
 <meta property="article:modified_time" content="2018-07-06T17:56:00&#43;08:00"/>
-
-
-
-
-
-
-
-
-
-
-
 <meta itemprop="name" content="RabbitMQ使用分析和高可用集群搭建">
 <meta itemprop="description" content="RabbitMQ使用分析和高可用集群搭建">
 
@@ -315,7 +299,7 @@ public void send(String exchange, String routingKey, Object object) {
 
 <tr>
 <td>Transaction</td>
-<td>事务确认模式:发送线程会立即得到MQ反馈结果，同一线程中，多个发送阻塞进行，同db Transaction一样支持失败回滚等，效率高<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a> 支持同时管理db、mq事务，意味用一个事务中可以操作db、mq，进行提交回滚<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a> 坑：只能标注public不能同类非@Transactional方法调用<a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a><a href="https://my.oschina.net/u/3770144" target="_blank">@Transactional</a>只会对unchecked异常进行事务回滚</td>
+<td>事务确认模式:发送线程会立即得到MQ反馈结果，同一线程中，多个发送阻塞进行，同db Transaction一样支持失败回滚等，效率高<a href="https://my.oschina.net/u/3770144" rel="noreferrer" target="_blank">@Transactional</a> 支持同时管理db、mq事务，意味用一个事务中可以操作db、mq，进行提交回滚<a href="https://my.oschina.net/u/3770144" rel="noreferrer" target="_blank">@Transactional</a> 坑：只能标注public不能同类非@Transactional方法调用<a href="https://my.oschina.net/u/3770144" rel="noreferrer" target="_blank">@Transactional</a><a href="https://my.oschina.net/u/3770144" rel="noreferrer" target="_blank">@Transactional</a>只会对unchecked异常进行事务回滚</td>
 <td>发送线程：由于是事务确认模式，当RabbitMQ Server突然失联，发送线程得不到当前正在发送消息的回执，直接抛出异常假设RabbitMQ Server 接收500挂掉   发送线程：500   实际接收 RabbitMQ Server：500缺点：同步发送，逐条确认，效率低优点：同步发送，发送线程可以立即得到反馈结果，对于主线程消息不丢失</td>
 </tr>
 </tbody>
@@ -329,7 +313,7 @@ public void send(String exchange, String routingKey, Object object) {
 
 <h4 id="rabbitmq-安装">RabbitMQ 安装</h4>
 
-<p>​     RabbitMQ是基于Erlang运行的，首先选择RabbitMQ版本，确定需要的Erlang版本，然后安装Erlang，自行百度、谷歌、<a href="https://www.rabbitmq.com/download.html" target="_blank">RabbitMQ官网</a>或者<a href="https://www.erlang-solutions.com/resources/download.html" target="_blank">Erlang官网</a>都会有相应的资源、教程（ps: Erlang 版本请严格按照所选RabbitMQ版本要求的Erlang范围安装，否则会有各种不治之症）</p>
+<p>​     RabbitMQ是基于Erlang运行的，首先选择RabbitMQ版本，确定需要的Erlang版本，然后安装Erlang，自行百度、谷歌、<a href="https://www.rabbitmq.com/download.html" rel="noreferrer" target="_blank">RabbitMQ官网</a>或者<a href="https://www.erlang-solutions.com/resources/download.html" rel="noreferrer" target="_blank">Erlang官网</a>都会有相应的资源、教程（ps: Erlang 版本请严格按照所选RabbitMQ版本要求的Erlang范围安装，否则会有各种不治之症）</p>
 
 <p>​    本文以 Erlang20.03，RabbitMQ 3.7为例，RabbitMQ为linux 通用包，不同安装方式版本配置文件路径有差异，通用包好处，可移植性、控制性好</p>
 
@@ -383,7 +367,7 @@ management.listener.port    = 15672
 <pre><code>[rabbitmq_management].
 </code></pre>
 
-<p>具体请看官方配置说明, 详细的讲解了rabbitmq-env.conf 和 rabbitmq.conf 配置 <a href="https://www.rabbitmq.com/configure.html" target="_blank">官方配置说明</a></p>
+<p>具体请看官方配置说明, 详细的讲解了rabbitmq-env.conf 和 rabbitmq.conf 配置 <a href="https://www.rabbitmq.com/configure.html" rel="noreferrer" target="_blank">官方配置说明</a></p>
 
 <p>RabbitMQ 常用命令：</p>
 
@@ -474,7 +458,7 @@ NODENAME=rabbit@cluster2
 ./rabbitmqctl -n rabbit@cluster2 start_app
 </code></pre>
 
-<p>普通集群就搭建完成了，普通集群并不是高可用的，基于普通集群升级为镜像集群<a href="https://www.rabbitmq.com/ha.html" target="_blank">RabbitMQ HA方案</a></p>
+<p>普通集群就搭建完成了，普通集群并不是高可用的，基于普通集群升级为镜像集群<a href="https://www.rabbitmq.com/ha.html" rel="noreferrer" target="_blank">RabbitMQ HA方案</a></p>
 
 <pre><code>./rabbitmqctl set_policy &lt;name&gt; [-p &lt;vhost&gt;] &lt;pattern&gt; &lt;definition&gt; [--apply-to &lt;apply-to&gt;]
     name: 策略名称
@@ -513,7 +497,7 @@ eg:
 
 <p>​    RabbitMQ高可用集群还是非常有必要的，高可用的代价就是性能的降低，对可靠性要求比较高的企业务还是值得的，据我测试2R1D镜像集群(非压测, 压测结果绝对更高)，达到1000QPS+还是没问题的，如果开启事务，保证同步发送应答，也可达500QPS+，绝对满足大多数可靠性要求高的业务。</p>
 
-<p>由于工作中可能用到，先转到博客，免得后面找不到了，多谢作者，转自：<a href="https://my.oschina.net/genghz/blog/1840262" target="_blank">https://my.oschina.net/genghz/blog/1840262</a></p>
+<p>由于工作中可能用到，先转到博客，免得后面找不到了，多谢作者，转自：<a href="https://my.oschina.net/genghz/blog/1840262" rel="noreferrer" target="_blank">https://my.oschina.net/genghz/blog/1840262</a></p>
     </div>
 
     

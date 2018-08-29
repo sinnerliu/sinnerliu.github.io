@@ -68,7 +68,7 @@ ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&
       <pubDate>Thu, 12 Jul 2018 16:36:09 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/post/linux-pmap-ldd/</guid>
-      <description>&lt;p&gt;在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看&lt;a href=&#34;https://blog.gofinall.com/categories/linux/&#34; target=&#34;_blank&#34;&gt;linux&lt;/a&gt;下使用pmap和ldd的命令。&lt;/p&gt;
+      <description>&lt;p&gt;在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看&lt;a href=&#34;https://blog.gofinall.com/categories/linux/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;linux&lt;/a&gt;下使用pmap和ldd的命令。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -79,7 +79,7 @@ ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&
       <pubDate>Tue, 10 Jul 2018 15:58:36 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/post/flashplayer-2144-2/</guid>
-      <description>&lt;p&gt;上一篇文章(&lt;a href=&#34;https://blog.gofinall.com/post/flashplayer-2144/&#34; target=&#34;_blank&#34;&gt;解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题&lt;/a&gt;)说了两个解决flash地区不相容 的问题，但是事情比我们想象的要复杂。&lt;/p&gt;
+      <description>&lt;p&gt;上一篇文章(&lt;a href=&#34;https://blog.gofinall.com/post/flashplayer-2144/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题&lt;/a&gt;)说了两个解决flash地区不相容 的问题，但是事情比我们想象的要复杂。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -174,7 +174,7 @@ ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&
       <guid>https://blog.gofinall.com/post/aria2/</guid>
       <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://aria2.github.io/&#34; target=&#34;_blank&#34;&gt;aria2 &lt;/a&gt;是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP/FTP 下载的情况下），BitTorrent 下载每秒2.8M/S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://aria2.github.io/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;aria2 &lt;/a&gt;是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP/FTP 下载的情况下），BitTorrent 下载每秒2.8M/S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。&lt;/p&gt;
 
 &lt;p&gt;很多人在 Windows 可能用过 Internet Download Manager，是很好用的多线程下载工具。Aria2 跟 IDM 类似，不仅可以多线程下载，还可以通过多来源进行下载，简单的说就是从多个镜像服务器同时下载一个文件，Aria2 还支持 BT 协议，弥补了 IDM 只支持 HTTP 和 FTP 的痛点。&lt;/p&gt;
 
@@ -226,7 +226,7 @@ ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&
       <guid>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</guid>
       <description>&lt;p&gt;说明：这个插件可以将构建的产物（例如：Jar）发布到FTP中去。&lt;/p&gt;
 
-&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34; target=&#34;_blank&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
@@ -334,7 +334,7 @@ PostgreSQL的Windows安装包包括：&lt;/p&gt;
       <pubDate>Mon, 26 Feb 2018 15:07:55 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/post/gitlab/</guid>
-      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34; target=&#34;_blank&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
+      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
