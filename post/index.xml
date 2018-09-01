@@ -6,10 +6,21 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 29 Aug 2018 16:17:14 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Sep 2018 11:58:22 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Excel正则提取表格内容</title>
+      <link>https://blog.gofinall.com/post/excel-vb-regexp/</link>
+      <pubDate>Sat, 01 Sep 2018 11:58:22 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/excel-vb-regexp/</guid>
+      <description>&lt;p&gt;下面介绍在excel中如何通过正则表达式提取我们想要的内容。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>robotframework 执行job出现了Unexpected error: UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe6 in position 977: ordinal not in range(128)</title>
