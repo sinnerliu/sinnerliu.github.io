@@ -75,7 +75,7 @@ swap分区的用处：swap是当物理内存不够用的时候，把数据放到
 
 <meta itemprop="datePublished" content="2018-09-27T18:31:37&#43;08:00" />
 <meta itemprop="dateModified" content="2018-09-27T18:31:37&#43;08:00" />
-<meta itemprop="wordCount" content="470">
+<meta itemprop="wordCount" content="511">
 
 
 
@@ -183,13 +183,14 @@ swap分区的用处：swap是当物理内存不够用的时候，把数据放到
 <li>
 <ul>
 <li><a href="#swap空间介绍">swap空间介绍</a></li>
+<li><a href="#查看当前swap空间大小">查看当前swap空间大小</a></li>
 <li><a href="#关闭swap">关闭SWAP</a></li>
 <li><a href="#添加swap分区">添加swap分区</a></li>
 <li><a href="#把增大后的文件变为swap文件">把增大后的文件变为swap文件</a></li>
 <li><a href="#给swap文件赋权限">给swap文件赋权限</a></li>
 <li><a href="#挂载并激活swap分区">挂载并激活swap分区</a></li>
 <li><a href="#设置开机自动挂载该分区">设置开机自动挂载该分区</a></li>
-<li><a href="#查看swap空间是否变大">查看swap空间是否变大</a></li>
+<li><a href="#查看扩容后的swap空间大小">查看扩容后的swap空间大小</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -209,6 +210,15 @@ swap分区的用处：swap是当物理内存不够用的时候，把数据放到
 <p></p>
 
 <p><strong>以下操作均在root用户下操作，使用root用户操作请谨慎</strong></p>
+
+<h3 id="查看当前swap空间大小">查看当前swap空间大小</h3>
+
+<pre><code class="language-shell">[root@localhost /]# free -m
+             total       used       free     shared    buffers     cached
+Mem:         31978      31653        325        869        392      18485
+-/+ buffers/cache:      12775      19203
+Swap:         5519       0          5519
+</code></pre>
 
 <h3 id="关闭swap">关闭SWAP</h3>
 
@@ -242,9 +252,14 @@ swap分区的用处：swap是当物理内存不够用的时候，把数据放到
 /var/swapfile swap swap defaults 0 0
 </code></pre>
 
-<h3 id="查看swap空间是否变大">查看swap空间是否变大</h3>
+<h3 id="查看扩容后的swap空间大小">查看扩容后的swap空间大小</h3>
 
-<p>执行<code>free -m</code>查看swap对用的大小是否变大</p>
+<pre><code class="language-shell">[root@localhost /]# free -m
+             total       used       free     shared    buffers     cached
+Mem:         31978      31653        325        869        392      18485
+-/+ buffers/cache:      12775      19203
+Swap:         6543       0          6543
+</code></pre>
     </div>
 
     
