@@ -83,7 +83,7 @@ tomcat：8.5.34  http
 
 <meta itemprop="datePublished" content="2018-10-11T18:42:18&#43;08:00" />
 <meta itemprop="dateModified" content="2018-10-11T18:42:18&#43;08:00" />
-<meta itemprop="wordCount" content="1545">
+<meta itemprop="wordCount" content="1583">
 
 
 
@@ -373,7 +373,7 @@ tomcat：8.5.34  http
 <p>造成这次错误的原因如下</p>
 
 <ol>
-<li>由于头一天我们的tomcat7.0.72升级到了tomcat8.5.34，之前的tomcat没有对Url进行限制；</li>
+<li>由于头一天我们的tomcat7.0.72升级到了tomcat8.5.34，之前的tomcat没有对Url进行限制，但是新版本的tomcat配置未改，而且我们并不知道tomcat7和8的差异；</li>
 <li>在查看tomcat日志的时候没有仔细，并没有发现用tomcat7和tomcat8的报错的差异；</li>
 </ol>
     </div>
