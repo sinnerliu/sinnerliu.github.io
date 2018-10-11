@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tomcat on 终点站</title>
-    <link>https://blog.gofinall.com/categories/tomcat/</link>
-    <description>Recent content in Tomcat on 终点站</description>
+    <title>Tomcat8 on 终点站</title>
+    <link>https://blog.gofinall.com/tags/tomcat8/</link>
+    <description>Recent content in Tomcat8 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Thu, 11 Oct 2018 18:42:18 +0800</lastBuildDate>
     
-	<atom:link href="https://blog.gofinall.com/categories/tomcat/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.gofinall.com/tags/tomcat8/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -27,19 +27,6 @@
 &lt;/ul&gt;
 
 &lt;p&gt;以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报&lt;code&gt;400 Bad Request&lt;/code&gt;；但是直接通过tomcat访问，该请求正常；&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Tomcat调整Jvm</title>
-      <link>https://blog.gofinall.com/post/tomcat-jvm/</link>
-      <pubDate>Thu, 08 Mar 2018 17:30:05 +0800</pubDate>
-      
-      <guid>https://blog.gofinall.com/post/tomcat-jvm/</guid>
-      <description>&lt;h3 id=&#34;适用场景&#34;&gt;适用场景&lt;/h3&gt;
-
-&lt;p&gt;Tomcat 运行过程遇到Caused by: java.lang.OutOfMemoryError: PermGen space或者java.lang.OutOfMemoryError: Java heap space错误。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

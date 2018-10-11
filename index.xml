@@ -21,6 +21,26 @@
     </item>
     
     <item>
+      <title>记一次nginx&#43;tomcat8请求400错误的坑</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</link>
+      <pubDate>Thu, 11 Oct 2018 18:42:18 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;环境信息&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx：1.4.2   https&lt;/li&gt;
+&lt;li&gt;tomcat：8.5.34  http&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报&lt;code&gt;400 Bad Request&lt;/code&gt;；但是直接通过tomcat访问，该请求正常；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Centos给swap扩容</title>
       <link>https://blog.gofinall.com/post/centos-add-swap/</link>
       <pubDate>Thu, 27 Sep 2018 18:31:37 +0800</pubDate>
