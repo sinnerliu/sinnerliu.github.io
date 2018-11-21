@@ -64,7 +64,7 @@
 
 <meta itemprop="datePublished" content="2018-11-21T19:36:42&#43;08:00" />
 <meta itemprop="dateModified" content="2018-11-21T19:36:42&#43;08:00" />
-<meta itemprop="wordCount" content="438">
+<meta itemprop="wordCount" content="599">
 
 
 
@@ -220,6 +220,8 @@ root      1695  1602  0 19:51 pts/0    00:00:00 sh -x mysql_bak.sh
 1
 [root@localhost ~]# 
 </code></pre>
+
+<p>试用了此方法：<a href="https://www.cnblogs.com/kevingrace/p/9739500.html，文中指出是由于grep匹配的问题，需要grep进行精准匹配，即&quot;grep" rel="noreferrer" target="_blank">https://www.cnblogs.com/kevingrace/p/9739500.html，文中指出是由于grep匹配的问题，需要grep进行精准匹配，即&quot;grep</a> -w&rdquo;，于是修改mysql_bak_num=<code>ps -ef |grep -w mysql_bak.sh  |grep -v grep|wc -l</code>，测试后mysql_bak_num返回的还是2;</p>
 
 <p>查找很久未果，于是将脚本中<code>$mysql_bak_num -eq 1</code>改为<code>$mysql_bak_num -eq 2</code></p>
 
