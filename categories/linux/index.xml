@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 27 Sep 2018 18:31:37 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Nov 2018 19:36:42 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</title>
+      <link>https://blog.gofinall.com/post/shell-grep-wc/</link>
+      <pubDate>Wed, 21 Nov 2018 19:36:42 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/shell-grep-wc/</guid>
+      <description>&lt;p&gt;打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；&lt;/p&gt;
+
+&lt;p&gt;有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Centos给swap扩容</title>
