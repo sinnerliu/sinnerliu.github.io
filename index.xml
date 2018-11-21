@@ -21,6 +21,19 @@
     </item>
     
     <item>
+      <title>如何恢复windows 10系统下git的状态图标显示</title>
+      <link>https://blog.gofinall.com/post/windows-git-ico/</link>
+      <pubDate>Wed, 21 Nov 2018 20:39:17 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-git-ico/</guid>
+      <description>&lt;h3 id=&#34;现象&#34;&gt;现象&lt;/h3&gt;
+
+&lt;p&gt;装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</title>
       <link>https://blog.gofinall.com/post/shell-grep-wc/</link>
       <pubDate>Wed, 21 Nov 2018 19:36:42 +0800</pubDate>

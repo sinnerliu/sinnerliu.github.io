@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑 - 终点站</title>
+  <title>如何恢复windows 10系统下git的状态图标显示 - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,10 +17,10 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+  <meta name="description" content="现象 装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：
 
 " />
-<meta name="keywords" content="grep, shell, wc" />
+<meta name="keywords" content="git" />
 
 
 
@@ -31,7 +31,7 @@
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/post/shell-grep-wc/" />
+<link rel="canonical" href="https://blog.gofinall.com/post/windows-git-ico/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,29 +49,35 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑" />
-<meta property="og:description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta property="og:title" content="如何恢复windows 10系统下git的状态图标显示" />
+<meta property="og:description" content="现象
+
+装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：
 
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.gofinall.com/post/shell-grep-wc/" /><meta property="article:published_time" content="2018-11-21T19:36:42&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-21T19:36:42&#43;08:00"/>
-<meta itemprop="name" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑">
-<meta itemprop="description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta property="og:url" content="https://blog.gofinall.com/post/windows-git-ico/" /><meta property="article:published_time" content="2018-11-21T20:39:17&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-21T20:39:17&#43;08:00"/>
+<meta itemprop="name" content="如何恢复windows 10系统下git的状态图标显示">
+<meta itemprop="description" content="现象
+
+装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：
 
 ">
 
 
-<meta itemprop="datePublished" content="2018-11-21T19:36:42&#43;08:00" />
-<meta itemprop="dateModified" content="2018-11-21T19:36:42&#43;08:00" />
-<meta itemprop="wordCount" content="600">
+<meta itemprop="datePublished" content="2018-11-21T20:39:17&#43;08:00" />
+<meta itemprop="dateModified" content="2018-11-21T20:39:17&#43;08:00" />
+<meta itemprop="wordCount" content="697">
 
 
 
-<meta itemprop="keywords" content="linux,shell," />
+<meta itemprop="keywords" content="git," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑"/>
-<meta name="twitter:description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta name="twitter:title" content="如何恢复windows 10系统下git的状态图标显示"/>
+<meta name="twitter:description" content="现象
+
+装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：
 
 "/>
 
@@ -140,13 +146,13 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</h1>
+      <h1 class="post-title">如何恢复windows 10系统下git的状态图标显示</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2018-11-21 </span>
         <div class="post-category">
             
-              <a href="/categories/linux/"> linux </a>
+              <a href="/categories/git/"> git </a>
             
           </div>
         
@@ -167,7 +173,7 @@
 <li>
 <ul>
 <li><a href="#现象">现象</a></li>
-<li><a href="#解决办法">解决办法</a></li>
+<li><a href="#方法">方法</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -177,59 +183,43 @@
 
     
     <div class="post-content">
-      <p>有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；</p>
+      <h3 id="现象">现象</h3>
+
+<p>装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：</p>
 
 <p></p>
 
-<h3 id="现象">现象</h3>
+<p><img src="https://wx4.sinaimg.cn/large/62d3e37ely1fxfyy2sbnhj20jx07iwf1.jpg" alt="image" /></p>
 
-<p>下面是<code>mysql_bak.sh</code>脚本的一部分</p>
+<h3 id="方法">方法</h3>
 
-<pre><code class="language-shell">mysql_bak_num=`ps -ef |grep mysql_bak.sh  |grep -v grep|wc -l`
-if [ $mysql_bak_num -eq 1 ];then
-    for line in `cat databases_list.log`
-    do
-        fun_mysql_bak $line
-    done
-else
-    echo 'other mysql_bak.sh is runing...'
-    exit 1
-fi
-</code></pre>
+<p>根据这些图标的内容，可以非常明显的分辨出各个目录、文件当前的状态，是否被更改过，是否与仓库内容不一样等等。</p>
 
-<p>但是在执行的时候发现，每次都从else跳出，mysql_bak_num返回的是2;</p>
+<p>但是，有时候会遇到，这些小图标内容不显示的问题，导致无法分辨出文件状态，影响正常使用。该如何处理呢？</p>
 
-<pre><code class="language-shell">[root@localhost tmp]# sh -x mysql_bak.sh 
-++ ps -ef
-++ grep mysql_bak.sh
-++ grep -v grep
-++ wc -l
-+ mysql_bak_num=2
-+ '[' 2 -eq 1 ']'
-+ echo 'other mysql_bak.sh is runing...'
-other mysql_bak.sh is runing...
-+ exit 1
-</code></pre>
+<p>1、在开始菜单的搜索处，输入&rdquo;regedit&rdquo;命令，打开注册表编辑器。</p>
 
-<p>但是后台确实只有一个<code>mysql_bak.sh</code>在执行；</p>
+<p>2、在弹出的注册表编辑器中找到这一项：</p>
 
-<pre><code class="language-shell">[root@localhost ~]# ps -ef|grep mysql_bak.sh 
-root      1695  1602  0 19:51 pts/0    00:00:00 sh -x mysql_bak.sh
+<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers</code></p>
 
-[root@localhost ~]# ps -ef |grep mysql_bak.sh |grep -v grep|wc -l
-1
-[root@localhost ~]# 
-</code></pre>
+<p>3、找到后可以发现在该项下有很多个子项，分别对应的是各个应用程序意图在windows常规图标上进行叠加显示的小图标（Overlay Icon）的注册信息。而Windows Explorer Shell 支持的 Overlay Icon 最多 15 个，Windows 自身使用了 4 个，只剩 11 个可扩展使用。这也就意味着，ShellIconOverlayIdentifiers这个项目中的子项，只有前面11个是有效的。</p>
 
-<p>试用了此方法：<code>https://www.cnblogs.com/kevingrace/p/9739500.html</code>，文中指出是由于grep匹配的问题，需要grep进行精准匹配，即&rdquo;grep -w&rdquo;，于是修改mysql_bak_num=<code>ps -ef |grep -w mysql_bak.sh  |grep -v grep|wc -l</code>，测试后mysql_bak_num返回的还是2;</p>
+<p>【特别说明：经本人实测，对于win10系统而言，其实只剩8个有效的图标，并没有11个那么多！】</p>
 
-<p>查找很久未果，于是将脚本中<code>$mysql_bak_num -eq 1</code>改为<code>$mysql_bak_num -eq 2</code></p>
+<p>4、所以，可以手动修改其中的任意一个项目的名字，单击右键选择“重命名”即可。文件夹前一位用数字或者空格隔开，确保其改名完后的排序能够位于前面11名即可，如下图：</p>
 
-<h3 id="解决办法">解决办法</h3>
+<p><img src="http://wx1.sinaimg.cn/large/62d3e37ely1fxfyzxauowj208u08n75g.jpg" alt="" /></p>
 
-<p>暂时没有找到问题，等遇到高人或者查到资料后再完善这篇文章。</p>
+<p>5、修改完毕后，按F5键刷新显示一下，确认修改结果是否符合预期。</p>
 
-<p>逃ε=ε=ε=┏(゜ロ゜;)┛</p>
+<p>6、修改注册表<code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer</code>，新建一个<code>字符串值</code>名称为 <code>Max Cached Icons</code> 值是 <code>2000</code>，如下图</p>
+
+<p><img src="https://ws3.sinaimg.cn/large/62d3e37ely1fxfz2tfwo3j20s50hrgoc.jpg" alt="image" /></p>
+
+<p>7、重启资源管理器，或者直接注销重新登录，便可生效。</p>
+
+<p>8、搞定，收工！</p>
     </div>
 
     
@@ -241,23 +231,16 @@ root      1695  1602  0 19:51 pts/0    00:00:00 sh -x mysql_bak.sh
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/tags/linux/">linux</a>
-          
-          <a href="/tags/shell/">shell</a>
+          <a href="/tags/git/">git</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/windows-git-ico/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">如何恢复windows 10系统下git的状态图标显示</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
         
-          <a class="next" href="/post/nginx-tomcat8-400-error/">
-            <span class="next-text nav-default">记一次nginx&#43;tomcat8请求400错误的坑</span>
+          <a class="next" href="/post/shell-grep-wc/">
+            <span class="next-text nav-default">记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</span>
             <span class="prev-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on 终点站</title>
-    <link>https://blog.gofinall.com/tags/git/</link>
+    <link>https://blog.gofinall.com/categories/git/</link>
     <description>Recent content in Git on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Wed, 21 Nov 2018 20:39:17 +0800</lastBuildDate>
     
-	<atom:link href="https://blog.gofinall.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.gofinall.com/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <description>&lt;h3 id=&#34;现象&#34;&gt;现象&lt;/h3&gt;
 
 &lt;p&gt;装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>GitLab_本地GitLab服务器搭建</title>
-      <link>https://blog.gofinall.com/post/gitlab/</link>
-      <pubDate>Mon, 26 Feb 2018 15:07:55 +0800</pubDate>
-      
-      <guid>https://blog.gofinall.com/post/gitlab/</guid>
-      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
