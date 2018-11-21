@@ -17,8 +17,7 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；
-有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+  <meta name="description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
 
 " />
 <meta name="keywords" content="grep, shell, wc" />
@@ -51,34 +50,28 @@
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 <meta property="og:title" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑" />
-<meta property="og:description" content="打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；
-
-有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta property="og:description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
 
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.gofinall.com/post/shell-grep-wc/" /><meta property="article:published_time" content="2018-11-21T19:36:42&#43;08:00"/>
 <meta property="article:modified_time" content="2018-11-21T19:36:42&#43;08:00"/>
 <meta itemprop="name" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑">
-<meta itemprop="description" content="打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；
-
-有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta itemprop="description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
 
 ">
 
 
 <meta itemprop="datePublished" content="2018-11-21T19:36:42&#43;08:00" />
 <meta itemprop="dateModified" content="2018-11-21T19:36:42&#43;08:00" />
-<meta itemprop="wordCount" content="551">
+<meta itemprop="wordCount" content="438">
 
 
 
 <meta itemprop="keywords" content="linux,shell," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑"/>
-<meta name="twitter:description" content="打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；
-
-有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
+<meta name="twitter:description" content="有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；
 
 "/>
 
@@ -184,9 +177,7 @@
 
     
     <div class="post-content">
-      <p>打算写一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；</p>
-
-<p>有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；</p>
+      <p>有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；</p>
 
 <p></p>
 
