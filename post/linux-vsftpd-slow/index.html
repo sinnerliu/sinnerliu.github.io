@@ -203,11 +203,15 @@
 
 <p>修改vsftpd配置文件</p>
 
-<p><code>vi /etc/vsftpd/vsftpd.conf</code>
-添加如下参数:
-<code>reverse_lookup_enable=NO</code>
-保存退出后,重启vsftpd服务
-<code>service vsftpd restart</code>
+<p><code>vi /etc/vsftpd/vsftpd.conf</code></p>
+
+<p>添加如下参数:</p>
+
+<p><code>reverse_lookup_enable=NO</code></p>
+
+<p>保存退出后,重启vsftpd服务</p>
+
+<p><code>service vsftpd restart</code>
 或
 <code>/etc/init.d/vsftpd restart</code></p>
 
