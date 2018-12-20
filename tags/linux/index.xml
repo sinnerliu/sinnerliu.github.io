@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 21 Nov 2018 19:36:42 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 20 Dec 2018 18:20:27 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>连接vsftpd的ftp慢的问题解决办法</title>
+      <link>https://blog.gofinall.com/post/linux-vsftpd-slow/</link>
+      <pubDate>Thu, 20 Dec 2018 18:20:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux-vsftpd-slow/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;在Linux安装了一个vsftpd的ftp，在连接的时候很慢，总要等上10多秒才能连接上；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</title>

@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/linux-vsftpd-slow/</loc>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/windows-git-ico/</loc>
     <lastmod>2018-11-21T20:39:17+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -367,6 +374,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/categories/ftp/</loc>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/git/</loc>
     <lastmod>2018-11-21T20:39:17+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -424,14 +438,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/linux/</loc>
-    <lastmod>2018-11-21T19:36:42+08:00</lastmod>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2018-11-21T19:36:42+08:00</lastmod>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -529,7 +543,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2018-11-21T20:39:17+08:00</lastmod>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -649,6 +663,13 @@
   <url>
     <loc>https://blog.gofinall.com/tags/vsftpd/</loc>
     <lastmod>2018-05-28T17:26:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/vsftpd/</loc>
+    <lastmod>2018-12-20T18:20:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

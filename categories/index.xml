@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Ftp</title>
+      <link>https://blog.gofinall.com/categories/ftp/</link>
+      <pubDate>Thu, 20 Dec 2018 18:20:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/categories/ftp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Git</title>
       <link>https://blog.gofinall.com/categories/git/</link>
       <pubDate>Wed, 21 Nov 2018 20:39:17 +0800</pubDate>
@@ -50,7 +59,7 @@
     <item>
       <title>Linux</title>
       <link>https://blog.gofinall.com/categories/linux/</link>
-      <pubDate>Wed, 21 Nov 2018 19:36:42 +0800</pubDate>
+      <pubDate>Thu, 20 Dec 2018 18:20:27 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/categories/linux/</guid>
       <description></description>
@@ -125,6 +134,15 @@
       <pubDate>Thu, 11 Oct 2018 18:42:18 +0800</pubDate>
       
       <guid>https://blog.gofinall.com/categories/tomcat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vsftpd</title>
+      <link>https://blog.gofinall.com/categories/vsftpd/</link>
+      <pubDate>Thu, 20 Dec 2018 18:20:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/categories/vsftpd/</guid>
       <description></description>
     </item>
     
