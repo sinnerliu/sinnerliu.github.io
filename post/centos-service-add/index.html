@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>终点站</title>
+  <title>Centos 将程序添加到 service 并设置开机启动 - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,8 +17,11 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="Hugo theme even example site." />
-  <meta name="keywords" content="技术, linux" />
+  <meta name="description" content="背景 一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+
+" />
+<meta name="keywords" content="centos，服务，开机启动" />
+
 
 
 <meta name="baidu-site-verification" content="YJeWJgGuC5" />
@@ -28,9 +31,7 @@
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/" />
-<link href="https://blog.gofinall.com/index.xml" rel="alternate" type="application/rss+xml" title="终点站" />
-  <link href="https://blog.gofinall.com/index.xml" rel="feed" type="application/rss+xml" title="终点站" />
+<link rel="canonical" href="https://blog.gofinall.com/post/centos-service-add/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -48,17 +49,37 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="终点站" />
-<meta property="og:description" content="Hugo theme even example site." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.gofinall.com/" />
-<meta property="og:updated_time" content="2018-01-16T15:04:03&#43;08:00"/>
-<meta itemprop="name" content="终点站">
-<meta itemprop="description" content="Hugo theme even example site.">
+<meta property="og:title" content="Centos 将程序添加到 service 并设置开机启动" />
+<meta property="og:description" content="背景
 
+一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/centos-service-add/" /><meta property="article:published_time" content="2019-01-03T13:42:24&#43;08:00"/>
+<meta property="article:modified_time" content="2019-01-03T13:42:24&#43;08:00"/>
+<meta itemprop="name" content="Centos 将程序添加到 service 并设置开机启动">
+<meta itemprop="description" content="背景
+
+一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-01-03T13:42:24&#43;08:00" />
+<meta itemprop="dateModified" content="2019-01-03T13:42:24&#43;08:00" />
+<meta itemprop="wordCount" content="569">
+
+
+
+<meta itemprop="keywords" content="linux," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="终点站"/>
-<meta name="twitter:description" content="Hugo theme even example site."/>
+<meta name="twitter:title" content="Centos 将程序添加到 service 并设置开机启动"/>
+<meta name="twitter:description" content="背景
+
+一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+
+"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -122,104 +143,162 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          
-  <section id="posts" class="posts">
+          <article class="post">
     
-    
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/rclone%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/">Rclone远程挂载</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-01-16 </span>
-      <div class="post-category">
-          
-            <a href="/categories/%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/"> 远程挂载 </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h3 id="rclone简介">rclone简介</h3>
+    <header class="post-header">
+      <h1 class="post-title">Centos 将程序添加到 service 并设置开机启动</h1>
 
-<p>rclone能够方便的管理 google drive 、dropbox 等网盘，ftp/sftp等文件存储服，支持挂载盘符与命令行上传下载</p>
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-03 </span>
+        <div class="post-category">
+            
+              <a href="/categories/linux/"> linux </a>
+            
+              <a href="/categories/%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"> 开机启动 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#添加应用到-service">添加应用到 service</a>
+<ul>
+<li><a href="#说明">说明：</a></li>
+</ul></li>
+<li><a href="#设置开机启动">设置开机启动</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。</p>
 
 <p></p>
+
+<h3 id="添加应用到-service">添加应用到 service</h3>
+
+<p>创建脚本 /etc/init.d/darkhttpd 文件（其实也是 /etc/rc.d/init.d/darkhttpd 文件）：</p>
+
+<pre><code>[root@host ~]# vi /etc/init.d/darkhttpd 
+</code></pre>
+
+<p>写入以下内容并保存退出：</p>
+
+<pre><code>#!/bin/sh
+#
+# darkhttpd  start/restart/stop darkhttpd 
+#
+# chkconfig: 2345 85 15
+# description: start darkhttpd  at boot time
+
+start(){
+        darkhttpd -c /etc/darkhttpd.json -d start
+}
+stop(){
+        darkhttpd -c /etc/darkhttpd.json -d stop
+}
+restart(){
+        darkhttpd -c /etc/darkhttpd.json -d restart
+}
+
+case &quot;$1&quot; in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+restart)
+        restart
+        ;;
+*)
+        echo &quot;Usage: $0 {start|restart|stop}&quot;
+        exit 1
+        ;;
+esac
+</code></pre>
+
+<h4 id="说明">说明：</h4>
+
+<p>前面的几行，看起来像注释，特别 chkconfig 那一行，不可删除，否则无法设置开机启动，会提示错误：<code>service darkhttpd does not support chkconfig</code></p>
+
+<p><code>chkconfig: 2345 85 15</code>中，2345 代表在设置在那个 level 中是 on 的。如果一个都不想 on，那就写一个横线”-“，比如：chkconfig: – 85 15。后面两个数字代表S和K的默认排序号</p>
+
+<p>然后增加这个文件的可执行权限：</p>
+
+<p><code>[root@host ~]# chmod +x /etc/init.d/darkhttpd</code></p>
+
+<p>这样就可以在 shell 中直接运行下面的命令开启程序了（重启和停止同理）：</p>
+
+<p><code>[root@host ~]# service darkhttpd start</code></p>
+
+<p>注意：</p>
+
+<p>这里是Centos系统以root权限运行的，其他情况自行解决。</p>
+
+<p>如果不给脚本文件加上其他用户的可执行权限，不带参数运行 service darkhttpd会提示 unrecognized service。</p>
+
+<h3 id="设置开机启动">设置开机启动</h3>
+
+<p>在上面脚本没有问题（也就是保留了前面 10 行，并且语法正确）的情况下，通过下面的命令，就可以设置程序自动启动了：</p>
+
+<p><code>[root@host ~]# chkconfig darkhttpd on</code>
+做到这里我们的程序程序就会自动启动了。</p>
     </div>
-    <div class="read-more">
-      <a href="/post/rclone%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
 
     
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/mysql%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%9D%A5%E9%80%A0%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/">Mysql使用存储过程来造测试数据</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-01-16 </span>
-      <div class="post-category">
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
           
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+          <a href="/tags/linux/">linux</a>
           
         </div>
+
       
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>有时候我们需要对大数据进行测试，本地一般没有那么多数据，就需要我们自己生成一些。下面会借助内存表的特点进行生成百万条测试数据。
-</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/mysql%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%9D%A5%E9%80%A0%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/">linux安装oracle精简版客户端</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-01-16 </span>
-      <div class="post-category">
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>linux安装oracle精简版客户端
-</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-  </section>
-  
-  <nav class="pagination">
-      <a class="prev" href="/page/4/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    
-  </nav>
-
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/hello-2019/">
+            <span class="next-text nav-default">2018再见，2019你好</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
         </div>
         
+  
+
+  
+
+  
       </div>
     </main>
 

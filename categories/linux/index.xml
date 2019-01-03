@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 20 Dec 2018 18:20:27 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 03 Jan 2019 13:42:24 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Centos 将程序添加到 service 并设置开机启动</title>
+      <link>https://blog.gofinall.com/post/centos-service-add/</link>
+      <pubDate>Thu, 03 Jan 2019 13:42:24 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-service-add/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>连接vsftpd的ftp慢的问题解决办法</title>
