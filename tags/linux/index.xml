@@ -19,7 +19,7 @@
       <guid>https://blog.gofinall.com/post/jenkins-kill-tomcat/</guid>
       <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
 
-&lt;p&gt;今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；&lt;/p&gt;
+&lt;p&gt;今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发现后台tomcat进程没有了；&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
