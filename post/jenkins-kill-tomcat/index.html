@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Centos 将程序添加到 service 并设置开机启动 - 终点站</title>
+  <title>解决jenkins自动杀掉衍生进程 - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,10 +17,10 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="背景 一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+  <meta name="description" content="背景 今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline job执行完成后，发下后台tomcat进程没有了；
 
 " />
-<meta name="keywords" content="centos，服务，开机启动" />
+<meta name="keywords" content="jenkins" />
 
 
 
@@ -31,7 +31,7 @@
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/post/centos-service-add/" />
+<link rel="canonical" href="https://blog.gofinall.com/post/jenkins-kill-tomcat/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,35 +49,35 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Centos 将程序添加到 service 并设置开机启动" />
+<meta property="og:title" content="解决jenkins自动杀掉衍生进程" />
 <meta property="og:description" content="背景
 
-一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；
 
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.gofinall.com/post/centos-service-add/" /><meta property="article:published_time" content="2019-01-03T13:42:24&#43;08:00"/>
-<meta property="article:modified_time" content="2019-01-03T13:42:24&#43;08:00"/>
-<meta itemprop="name" content="Centos 将程序添加到 service 并设置开机启动">
+<meta property="og:url" content="https://blog.gofinall.com/post/jenkins-kill-tomcat/" /><meta property="article:published_time" content="2019-01-16T14:23:16&#43;08:00"/>
+<meta property="article:modified_time" content="2019-01-16T14:23:16&#43;08:00"/>
+<meta itemprop="name" content="解决jenkins自动杀掉衍生进程">
 <meta itemprop="description" content="背景
 
-一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；
 
 ">
 
 
-<meta itemprop="datePublished" content="2019-01-03T13:42:24&#43;08:00" />
-<meta itemprop="dateModified" content="2019-01-03T13:42:24&#43;08:00" />
-<meta itemprop="wordCount" content="569">
+<meta itemprop="datePublished" content="2019-01-16T14:23:16&#43;08:00" />
+<meta itemprop="dateModified" content="2019-01-16T14:23:16&#43;08:00" />
+<meta itemprop="wordCount" content="890">
 
 
 
-<meta itemprop="keywords" content="linux," />
+<meta itemprop="keywords" content="jenkins,linux," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Centos 将程序添加到 service 并设置开机启动"/>
+<meta name="twitter:title" content="解决jenkins自动杀掉衍生进程"/>
 <meta name="twitter:description" content="背景
 
-一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。
+今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；
 
 "/>
 
@@ -146,15 +146,13 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Centos 将程序添加到 service 并设置开机启动</h1>
+      <h1 class="post-title">解决jenkins自动杀掉衍生进程</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-01-03 </span>
+        <span class="post-time"> 2019-01-16 </span>
         <div class="post-category">
             
-              <a href="/categories/linux/"> linux </a>
-            
-              <a href="/categories/%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"> 开机启动 </a>
+              <a href="/categories/jenkins/"> jenkins </a>
             
           </div>
         
@@ -175,11 +173,9 @@
 <li>
 <ul>
 <li><a href="#背景">背景</a></li>
-<li><a href="#添加应用到-service">添加应用到 service</a>
-<ul>
-<li><a href="#说明">说明：</a></li>
-</ul></li>
-<li><a href="#设置开机启动">设置开机启动</a></li>
+<li><a href="#jenkins版本号">Jenkins版本号</a></li>
+<li><a href="#pipeline-job解决办法">Pipeline job解决办法</a></li>
+<li><a href="#jenkins普通job-非pipeline-job">jenkins普通job(非Pipeline job)</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -191,80 +187,86 @@
     <div class="post-content">
       <h3 id="背景">背景</h3>
 
-<p>一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。</p>
+<p>今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；</p>
 
 <p></p>
 
-<h3 id="添加应用到-service">添加应用到 service</h3>
+<p>查看官方文档</p>
 
-<p>创建脚本 /etc/init.d/darkhttpd 文件（其实也是 /etc/rc.d/init.d/darkhttpd 文件）：</p>
+<p><a href="https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller" rel="noreferrer" target="_blank">ProcessTreeKiller官方原文</a>如下：</p>
 
-<pre><code>[root@host ~]# vi /etc/init.d/darkhttpd 
+<p>This feature is available since 1.260</p>
+
+<p>To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, you can disable this feature by setting a Java property named “hudson.util.ProcessTree.disable” to the value “true”.</p>
+
+<p>This can be done as a parameter to the “java” binary when starting Jenkins:</p>
+
+<p><code>java -Dhudson.util.ProcessTree.disable=true -jar jenkins.war</code></p>
+
+<p>Depending on how you run your container, this can be different. In the distributed build environment, this system property needs to be set on slave JVMs.</p>
+
+<p>Older versions of Hudson (&lt;1.315) used the Java Property <code>hudson.util.ProcessTree</code><strong>Killer</strong><code>.disable</code>, but the class ProcessTreeKiller has been depecated since. For compatibility reasons, currently both property names are supported (as of version 1.404).</p>
+
+<ul>
+<li>How it works</li>
+</ul>
+
+<p>The ProcessTreeKiller takes advantage of the fact that by default a new process gets a copy of the environment variables of its spawning/creating process.</p>
+
+<p>It sets a specific environment variable in the process executing the build job. Later, when the user requests to stop the build job’s process it gets a list of all processes running on the computer and their environment variables, and looks for the environment variable that it initially set for the build job’s process.</p>
+
+<p>Every job with that environment variable in its environment is then terminated.</p>
+
+<ul>
+<li>If your build wants to leave a daemon running behind…</li>
+</ul>
+
+<p>A convenient way to achieve that is to change the environment variable BUILD_ID which Jenkins’s ProcessTreeKiller is looking for. This will cause Jenkins to assume that your daemon is not spawned by the Jenkins build. For example:</p>
+
+<p><code>BUILD_ID=dontKillMe /usr/apache/bin/httpd</code></p>
+
+<p>In case of Jenkins <code>Pipeline</code> use <code>JENKINS_NODE_COOKIE</code> instead of <code>BUILD_ID</code></p>
+
+<p>意思就大概是Jenkins每次构建完了后要自动杀掉部署过程中的子进程。</p>
+
+<p>Jenkins使用processTreeKiller杀掉了所有子进程，而且这是Jenkins的默认行为。当一次build异常结束，或被人终止时，必然需要结束所有这次build启动的子进程。</p>
+
+<h3 id="jenkins版本号">Jenkins版本号</h3>
+
+<p>Jenkins ver. 2.150.1</p>
+
+<h3 id="pipeline-job解决办法">Pipeline job解决办法</h3>
+
+<p>设置<strong>JENKINS_NODE_COOKIE</strong> 参数的值，使用方法如下</p>
+
+<p>在pipeline的job中，执行启动tomcat的时候，用下面的方法即可</p>
+
+<pre><code class="language-shell">withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+    sh 'sh ${tomcatHome}/bin/startup.sh'
+   }
 </code></pre>
 
-<p>写入以下内容并保存退出：</p>
+<h3 id="jenkins普通job-非pipeline-job">jenkins普通job(非Pipeline job)</h3>
 
-<pre><code>#!/bin/sh
-#
-# darkhttpd  start/restart/stop darkhttpd 
-#
-# chkconfig: 2345 85 15
-# description: start darkhttpd  at boot time
+<ul>
+<li><p>在执行 shell输入框中加入<code>BUILD_ID=dontKillMe</code> ，即可防止jenkins杀死启动的进程</p></li>
 
-start(){
-        darkhttpd -c /etc/darkhttpd.json -d start
-}
-stop(){
-        darkhttpd -c /etc/darkhttpd.json -d stop
-}
-restart(){
-        darkhttpd -c /etc/darkhttpd.json -d restart
-}
+<li><p>临时改变BUILD_ID值，使得jenkins不会找到并结束掉run.sh启动的后台进程</p></li>
+</ul>
 
-case &quot;$1&quot; in
-start)
-        start
-        ;;
-stop)
-        stop
-        ;;
-restart)
-        restart
-        ;;
-*)
-        echo &quot;Usage: $0 {start|restart|stop}&quot;
-        exit 1
-        ;;
-esac
+<p>样例如下：</p>
+
+<pre><code class="language-shell">...
+OLD_BUILD_ID=$BUILD_ID
+echo $OLD_BUILD_ID
+export BUILD_ID=dontKillMe
+#执行tomcat启动脚本
+sh ${tomcatHome}/bin/startup.sh
+#改回原来的BUILD_ID值
+export BUILD_ID=$OLD_BUILD_ID
+echo $BUILD_ID
+...
 </code></pre>
-
-<h4 id="说明">说明：</h4>
-
-<p>前面的几行，看起来像注释，特别 chkconfig 那一行，不可删除，否则无法设置开机启动，会提示错误：<code>service darkhttpd does not support chkconfig</code></p>
-
-<p><code>chkconfig: 2345 85 15</code>中，2345 代表在设置在那个 level 中是 on 的。如果一个都不想 on，那就写一个横线”-“，比如：chkconfig: – 85 15。后面两个数字代表S和K的默认排序号</p>
-
-<p>然后增加这个文件的可执行权限：</p>
-
-<p><code>[root@host ~]# chmod +x /etc/init.d/darkhttpd</code></p>
-
-<p>这样就可以在 shell 中直接运行下面的命令开启程序了（重启和停止同理）：</p>
-
-<p><code>[root@host ~]# service darkhttpd start</code></p>
-
-<p>注意：</p>
-
-<p>这里是Centos系统以root权限运行的，其他情况自行解决。</p>
-
-<p>如果不给脚本文件加上其他用户的可执行权限，不带参数运行 service darkhttpd会提示 unrecognized service。</p>
-
-<h3 id="设置开机启动">设置开机启动</h3>
-
-<p>在上面脚本没有问题（也就是保留了前面 10 行，并且语法正确）的情况下，通过下面的命令，就可以设置程序自动启动了：</p>
-
-<p><code>[root@host ~]# chkconfig darkhttpd on</code></p>
-
-<p>做到这里我们的程序程序就会自动启动了。</p>
     </div>
 
     
@@ -276,6 +278,8 @@ esac
     <footer class="post-footer">
       <div class="post-tags">
           
+          <a href="/tags/jenkins/">jenkins</a>
+          
           <a href="/tags/linux/">linux</a>
           
         </div>
@@ -283,14 +287,9 @@ esac
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/jenkins-kill-tomcat/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">解决jenkins自动杀掉衍生进程</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
         
-          <a class="next" href="/post/hello-2019/">
-            <span class="next-text nav-default">2018再见，2019你好</span>
+          <a class="next" href="/post/centos-service-add/">
+            <span class="next-text nav-default">Centos 将程序添加到 service 并设置开机启动</span>
             <span class="prev-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

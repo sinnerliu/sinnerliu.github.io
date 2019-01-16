@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 03 Jan 2019 13:42:24 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 16 Jan 2019 14:23:16 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>解决jenkins自动杀掉衍生进程</title>
+      <link>https://blog.gofinall.com/post/jenkins-kill-tomcat/</link>
+      <pubDate>Wed, 16 Jan 2019 14:23:16 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jenkins-kill-tomcat/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发下后台tomcat进程没有了；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Centos 将程序添加到 service 并设置开机启动</title>
