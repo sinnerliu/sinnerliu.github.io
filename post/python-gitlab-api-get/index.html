@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="背景 某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。
+
+" />
+<meta name="keywords" content="python, gitlab api" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/python-gitlab-api-get/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据" />
+<meta property="og:description" content="背景
+
+某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/python-gitlab-api-get/" /><meta property="article:published_time" content="2019-01-18T13:53:38&#43;08:00"/>
+<meta property="article:modified_time" content="2019-01-18T13:53:38&#43;08:00"/>
+<meta itemprop="name" content="python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据">
+<meta itemprop="description" content="背景
+
+某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-01-18T13:53:38&#43;08:00" />
+<meta itemprop="dateModified" content="2019-01-18T13:53:38&#43;08:00" />
+<meta itemprop="wordCount" content="1140">
+
+
+
+<meta itemprop="keywords" content="python,gitlab," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据"/>
+<meta name="twitter:description" content="背景
+
+某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/python/"> python </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#脚本内容及注释">脚本内容及注释</a></li>
+<li><a href="#结束">结束</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。</p>
+
+<p></p>
+
+<h3 id="脚本内容及注释">脚本内容及注释</h3>
+
+<p>通过gitlab原生的api来获取当前账号有权限的所有工程、分支和每个分支提交日志，并把数据入库(sqlite)；</p>
+
+<p>用gitlab原生的api好处就是不用把代码拉下来，再通过git log来查看提交日志；网上大部分方法都是用git log来统计提交日志，但是如果工程和分支太多了就比较麻烦。</p>
+
+<ul>
+<li>python版本：3.6.0</li>
+</ul>
+
+<pre><code class="language-python"># -*- coding:utf-8 -*-
+
+import requests,json,sqlite3,uuid
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+}
+#gitlab地址
+git_url='http://x.x.x.x'
+#gitlab的token
+git_token='xxxxxxxxxxxxxxx'
+
+session = requests.Session()
+headers['PRIVATE-TOKEN']=git_token
+session.headers = headers
+git_login=session.get(git_url,headers=headers)
+
+#获取当前账号有权限的全部工程列表
+def gitlab_projects():
+    print(&quot;正在获取gitlab上工程数量...&quot;)
+    projects_api=git_url+'/api/v4/projects?simple=yes&amp;per_page=20'
+    projects_headers=session.head(projects_api).headers
+    projects_num=int(projects_headers['X-Total'])
+    projects_pages=int(projects_headers['X-Total-Pages'])
+    # print(projects_headers)
+    print(&quot;工程总数：&quot;,projects_num)
+    cursor = conn.cursor()
+    cursor.execute('create table if not exists gitlab_projects(id varchar(8),name varchar(128),desc varchar(256),path varchar(128),'
+                   'create_at varchar(64),default_branch varchar(64),branch_num varchar(16),ssh_url_to_repo varchar(128),web_url varchar(128),PRIMARY KEY (&quot;id&quot;))')
+    cursor.execute('delete from gitlab_projects')
+    for i in range(projects_pages):
+        pages=i+1
+        projects_url=projects_api+'&amp;page='+str(pages)
+        projects = session.get(projects_url).text
+        # print(projects)
+        projects_json = json.loads(projects)
+        for project_json in projects_json:
+            project_id=project_json['id']
+            project_name=project_json['name']
+            project_desc=project_json['description']
+            project_path=project_json['path_with_namespace']
+            project_create_at=project_json['created_at']
+            # project_create_at=project_create_at[0:19].replace('T',' ')
+            project_default_branch =project_json['default_branch']
+            project_ssh_url_to_repo=project_json['ssh_url_to_repo']
+            project_web_url=project_json['web_url']
+            cursor.execute('insert into gitlab_projects values(?,?,?,?,?,?,?,?,?)',(project_id,project_name,project_desc,project_path,project_create_at,project_default_branch,'null',project_ssh_url_to_repo,project_web_url))
+    cursor.close()
+    conn.commit()
+    print(&quot;工程获取完成&quot;)
+
+#获取工程分支
+#http://10.1.236.106/api/v4/projects/10/repository/branches
+def gitlab_project_branchs(project_list):
+    print(&quot;获取工程分支信息...&quot;)
+    cursor = conn.cursor()
+    cursor.execute('create table if not exists gitlab_project_branch(id varchar(8),name varchar(128),branch_name varchar(128))')
+    cursor.execute('delete from gitlab_project_branch')
+    project_list=project_list
+    for project_info in project_list:
+        project_id=project_info[0]
+        project_name=project_info[1]
+        # print(project_id,project_name)
+        project_branchs_api = git_url + '/api/v4/projects/'+project_id+'/repository/branches'
+        project_branchs=session.get(project_branchs_api).text
+        project_branchs_json=json.loads(project_branchs)
+        project_branchs_num=len(project_branchs_json)
+        # print(project_branchs_num)
+        for project_branchs in project_branchs_json:
+            prject_branch=project_branchs['name']
+            cursor.execute('insert into gitlab_project_branch values(?,?,?)',(project_id,project_name,prject_branch))
+        cursor.execute('update gitlab_projects set branch_num=? where id=?',(project_branchs_num,project_id))
+    cursor.close()
+    conn.commit()
+    print(&quot;分支信息获取完成&quot;)
+
+#http://10.1.236.106/api/v4/projects/95/repository/commits?ref_name=dev
+#95:project_id
+#ref_name:branch
+def gitlab_project_commits(project_list):
+    print(&quot;获取工程commit日志...&quot;)
+    cursor = conn.cursor()
+    cursor.execute('create table if not exists gitlab_project_commits(xmlid varchar(64),id varchar(8),name varchar(128),branch_name varchar(128),'
+                   'title varchar(512),additions varchar(8),deletions varchar(8),create_at varchar(32),author_name varchar(32),author_email varchar(64),PRIMARY KEY (&quot;xmlid&quot;))')
+    # cursor.execute('delete from gitlab_project_commits')
+    cursor.close()
+    project_list=project_list
+    for project_info in project_list:
+        project_id=project_info[0]
+        project_name=project_info[1]
+        # print(project_id,project_name)
+        cursor = conn.cursor()
+        cursor.execute('select branch_name from gitlab_project_branch where id=? and name=?',(project_id,project_name))
+        project_branch_list = cursor.fetchall()
+        for project_branch in project_branch_list:
+            project_branch_name=project_branch[0]
+            cursor.execute('select max(create_at) from gitlab_project_commits where id=? and branch_name=?',(project_id, project_branch_name))
+            max_create_at= cursor.fetchall()[0][0]
+            since = max_create_at
+            if since:
+                project_branchs_commit_api = git_url + '/api/v4/projects/' + project_id + '/repository/commits?per_page=50&amp;ref_name='+project_branch_name+'&amp;since='+since
+            else:
+                project_branchs_commit_api = git_url + '/api/v4/projects/' + project_id + '/repository/commits?per_page=50&amp;ref_name='+ project_branch_name
+            # print(project_branchs_commit_api)
+            project_branchs_commit_headers = session.head(project_branchs_commit_api).headers
+            projects_num = int(project_branchs_commit_headers['X-Total'])
+            projects_pages = int(project_branchs_commit_headers['X-Total-Pages'])
+            print(&quot;正在增量获取&quot; + project_name + &quot;的&quot;+project_branch_name+&quot;分支的&quot;+str(projects_num)+&quot;条commit日志&quot;)
+            for i in range(projects_pages):
+                page=i+1
+                project_branchs_commit_api_page=project_branchs_commit_api+'&amp;page='+str(page)
+                # print(project_branchs_commit_api_page)
+                project_branchs = session.get(project_branchs_commit_api_page).text
+                project_branchs_commit_json = json.loads(project_branchs)
+                for project_branch_commit_json in project_branchs_commit_json:
+                    # print(project_branch_commit_json)
+                    #id,name,branch_name,title ,create_at ,author_name,author_email
+                    commit_add=0
+                    commit_del=0
+                    commit_id=project_branch_commit_json['id']
+                    commit_title=project_branch_commit_json['title']
+                    commit_create_at=project_branch_commit_json['created_at']
+                    # commit_create_at=commit_create_at[0:19].replace('T',' ')
+                    commit_author_name=project_branch_commit_json['author_name']
+                    commit_author_email=project_branch_commit_json['author_email']
+                    #start 获取每个commit的增加和删除行，太慢了，暂时注释掉
+                    # project_branchs_commit_info_url=git_url+ '/api/v4/projects/' + project_id + '/repository/commits/'+commit_id
+                    # project_branchs_commit_info_re=session.get(project_branchs_commit_info_url).text
+                    # project_branchs_commit_info_json=json.loads(project_branchs_commit_info_re)
+                    # commit_add=project_branchs_commit_info_json['stats']['additions']
+                    # commit_del=project_branchs_commit_info_json['stats']['deletions']
+                    #end
+                    uuid_key=str(uuid.uuid1()).replace('-','')
+                    cursor.execute('insert into gitlab_project_commits values(?,?,?,?,?,?,?,?,?,?)',(uuid_key,project_id,project_name,project_branch_name,commit_title,commit_add,commit_del,commit_create_at,commit_author_name,commit_author_email))
+        cursor.close()
+        conn.commit()
+    print(&quot;分支信息获取完成&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    conn = sqlite3.connect('gitlab.db')
+
+    #获取gitlab上的工程列表
+    gitlab_projects()
+
+    #获取gitlab_projects的id和name
+    cursor = conn.cursor()
+    cursor.execute('select id,name from gitlab_projects')
+    project_list = cursor.fetchall()
+
+    #获取gitlab上每个工程的分支列表
+    gitlab_project_branchs(project_list)
+
+    #增量获取gitlab上每个工程的分支的commit记录
+    gitlab_project_commits(project_list)
+    conn.close()
+
+#获取最近6个月的提交数据
+#select name,branch_name,count(*) from gitlab_project_commits where date(create_at)&gt;date(datetime('now','localtime'),'-6 month') group by name,branch_name;
+#select date(datetime('now','localtime'),'-6 month');
+
+</code></pre>
+
+<h3 id="结束">结束</h3>
+
+<p>说实话统计代码的提交量是毫无意义的，主要还是要看代码质量；</p>
+
+<p>代码有点烂，将就看了，主要是备份下，下次需要的时候再拿出来用。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/python/">python</a>
+          
+          <a href="/tags/gitlab/">gitlab</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/jenkins-kill-tomcat/">
+            <span class="next-text nav-default">解决jenkins自动杀掉衍生进程</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	| Hosted by <a href="https://pages.coding.me" style="font-weight: bold" target="_blank" rel="nofollow">Coding Pages</a>
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

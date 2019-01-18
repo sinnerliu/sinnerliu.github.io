@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gitlab on 终点站</title>
+    <link>https://blog.gofinall.com/tags/gitlab/</link>
+    <description>Recent content in Gitlab on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 18 Jan 2019 13:53:38 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>python3通过gitlab原生api来获取gitlab上的工程名、分支、提交数据</title>
+      <link>https://blog.gofinall.com/post/python-gitlab-api-get/</link>
+      <pubDate>Fri, 18 Jan 2019 13:53:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-gitlab-api-get/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
