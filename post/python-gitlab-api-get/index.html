@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2019-01-18T13:53:38&#43;08:00" />
 <meta itemprop="dateModified" content="2019-01-18T13:53:38&#43;08:00" />
-<meta itemprop="wordCount" content="1138">
+<meta itemprop="wordCount" content="1152">
 
 
 
@@ -251,7 +251,6 @@ def gitlab_projects():
     print(&quot;工程获取完成&quot;)
 
 #获取工程分支
-#http://10.1.236.106/api/v4/projects/10/repository/branches
 def gitlab_project_branchs(project_list):
     print(&quot;获取工程分支信息...&quot;)
     cursor = conn.cursor()
@@ -275,9 +274,7 @@ def gitlab_project_branchs(project_list):
     conn.commit()
     print(&quot;分支信息获取完成&quot;)
 
-#http://10.1.236.106/api/v4/projects/95/repository/commits?ref_name=dev
-#95:project_id
-#ref_name:branch
+#增量获取所有工程所有分支的提交日志
 def gitlab_project_commits(project_list):
     print(&quot;获取工程commit日志...&quot;)
     cursor = conn.cursor()
