@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2019-01-18T13:53:38&#43;08:00" />
 <meta itemprop="dateModified" content="2019-01-18T13:53:38&#43;08:00" />
-<meta itemprop="wordCount" content="1152">
+<meta itemprop="wordCount" content="1483">
 
 
 
@@ -356,6 +356,16 @@ if __name__ == &quot;__main__&quot;:
 #select date(datetime('now','localtime'),'-6 month');
 
 </code></pre>
+
+<ul>
+<li>备注</li>
+</ul>
+
+<p>gitlab的api默认返回数据是20条，比如：<code>http://x.x.x.x/api/v4/projects?simple=yes</code>返回的数据是20条；</p>
+
+<p>可以通过<code>per_page</code>参数来定义返回的数据条数，如果要返回30条数据：<code>http://x.x.x.x/api/v4/projects?simple=yes&amp;per_page=30</code>；</p>
+
+<p>如果要查看所有的数据，需要查看api返回的headers里面的数据，<code>X-Total</code>为数据的总条数，<code>X-Total-Pages</code>为一共有多少页数据，如要以每页30条数据查看第2页的数据：<code>http://x.x.x.x/api/v4/projects?simple=yes&amp;per_page=30&amp;page=2</code>；</p>
 
 <h3 id="结束">结束</h3>
 
