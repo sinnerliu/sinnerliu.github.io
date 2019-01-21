@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Nginx隐藏响应头信息的Server信息和版本信息 - 终点站</title>
+  <title>Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号 - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,10 +17,10 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="背景 当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+  <meta name="description" content="背景 当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。
 
 " />
-<meta name="keywords" content="nginx, 隐藏nginx版本" />
+<meta name="keywords" content="nginx, 隐藏nginx版本, 隐藏tomcat版本号" />
 
 
 
@@ -49,35 +49,35 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Nginx隐藏响应头信息的Server信息和版本信息" />
+<meta property="og:title" content="Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号" />
 <meta property="og:description" content="背景
 
-当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。
 
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.gofinall.com/post/nginx-display-version/" /><meta property="article:published_time" content="2019-01-21T11:43:12&#43;08:00"/>
 <meta property="article:modified_time" content="2019-01-21T11:43:12&#43;08:00"/>
-<meta itemprop="name" content="Nginx隐藏响应头信息的Server信息和版本信息">
+<meta itemprop="name" content="Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号">
 <meta itemprop="description" content="背景
 
-当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。
 
 ">
 
 
 <meta itemprop="datePublished" content="2019-01-21T11:43:12&#43;08:00" />
 <meta itemprop="dateModified" content="2019-01-21T11:43:12&#43;08:00" />
-<meta itemprop="wordCount" content="537">
+<meta itemprop="wordCount" content="1042">
 
 
 
-<meta itemprop="keywords" content="nginx," />
+<meta itemprop="keywords" content="nginx,tomcat," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Nginx隐藏响应头信息的Server信息和版本信息"/>
+<meta name="twitter:title" content="Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号"/>
 <meta name="twitter:description" content="背景
 
-当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。
 
 "/>
 
@@ -146,13 +146,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Nginx隐藏响应头信息的Server信息和版本信息</h1>
+      <h1 class="post-title">Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-01-21 </span>
         <div class="post-category">
             
               <a href="/categories/nginx/"> nginx </a>
+            
+              <a href="/categories/tomcat/"> tomcat </a>
             
           </div>
         
@@ -179,6 +181,7 @@
 <li><a href="#隐藏response-headers中server信息">隐藏Response Headers中server信息</a></li>
 </ul></li>
 <li><a href="#隐藏默认错误页面显示">隐藏默认错误页面显示</a></li>
+<li><a href="#隐藏tomcat版本号">隐藏tomcat版本号</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -190,7 +193,7 @@
     <div class="post-content">
       <h3 id="背景">背景</h3>
 
-<p>当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。</p>
+<p>当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。</p>
 
 <p></p>
 
@@ -260,6 +263,29 @@ static u_char ngx_http_error_tail[] =
 <p>修改完后重新编译nginx，启动nginx；</p>
 
 <p>随便输入一个nginx上不存在的url路径，查看返回的错误页面已经更改，不再返回nginx信息。</p>
+
+<h3 id="隐藏tomcat版本号">隐藏tomcat版本号</h3>
+
+<p>既然提到了nginx隐藏版本号，顺便记录下tomcat的版本号的方法；</p>
+
+<p>在Tomcat的使用中每当发生HTTP错误（未找到错误等）时显示错误页脚，由于版本信息显示在错误屏幕上或者Apache Tomcat的版本信息会显示在部件中，就可以从根据已知的版本的Tomcat的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。</p>
+
+<p>首先将Tomcat解压后找到它的lib文件夹下的<code>catalina.jar</code>，用winrar把catalina.jar里面的<code>/org/apache/catalina/util/ServerInfo.properties</code>文件拖出来；</p>
+
+<p>修改方法：</p>
+
+<pre><code class="language-shell">#原配置
+server.info=Apache Tomcat/8.5.23
+server.number=8.5.23.0
+server.built=Sep 28 2017 10:30:11 UTC
+#修改成
+#把server.info后面的/版本号删掉，把server.number、server.built后面的信息删掉
+server.info=Apache Tomcat
+server.number=
+server.built=
+</code></pre>
+
+<p>保存后，用winrar打开catalina.jar，把<code>ServerInfo.properties</code>拖进目录<code>/org/apache/catalina/util/</code>替换之前的配置文件，重启tomcat即可。</p>
     </div>
 
     
@@ -272,6 +298,8 @@ static u_char ngx_http_error_tail[] =
       <div class="post-tags">
           
           <a href="/tags/nginx/">nginx</a>
+          
+          <a href="/tags/tomcat/">tomcat</a>
           
         </div>
 
