@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2019-01-21T11:43:12&#43;08:00" />
 <meta itemprop="dateModified" content="2019-01-21T11:43:12&#43;08:00" />
-<meta itemprop="wordCount" content="1044">
+<meta itemprop="wordCount" content="1126">
 
 
 
@@ -288,6 +288,16 @@ server.built=
 </code></pre>
 
 <p>保存后，用winrar打开catalina.jar，把<code>ServerInfo.properties</code>拖进目录<code>/org/apache/catalina/util/</code>替换之前的配置文件，重启tomcat即可。</p>
+
+<ul>
+<li>备注</li>
+</ul>
+
+<p>linux下可以直接用vi操作，操作方式如下：</p>
+
+<p><code>vi catalina.jar</code></p>
+
+<p>搜索<code>ServerInfo</code>,找到ServerInfo.properties，回车进去修改，修改完成后<code>:wq</code>即可；</p>
     </div>
 
     
