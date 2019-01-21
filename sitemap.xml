@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/nginx-display-version/</loc>
+    <lastmod>2019-01-21T11:43:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/python-gitlab-api-get/</loc>
     <lastmod>2019-01-18T13:53:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -522,7 +529,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/nginx/</loc>
-    <lastmod>2018-10-11T18:42:18+08:00</lastmod>
+    <lastmod>2019-01-21T11:43:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/nginx/</loc>
+    <lastmod>2019-01-21T11:43:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -585,7 +599,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-01-18T13:53:38+08:00</lastmod>
+    <lastmod>2019-01-21T11:43:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

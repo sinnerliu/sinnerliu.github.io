@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>分类 - 终点站</title>
+  <title>Nginx隐藏响应头信息的Server信息和版本信息 - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,8 +17,11 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="Hugo theme even example site." />
-  <meta name="keywords" content="技术, linux" />
+  <meta name="description" content="背景 当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+
+" />
+<meta name="keywords" content="nginx, 隐藏nginx版本" />
+
 
 
 <meta name="baidu-site-verification" content="YJeWJgGuC5" />
@@ -28,9 +31,7 @@
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/categories/" />
-<link href="https://blog.gofinall.com/categories/index.xml" rel="alternate" type="application/rss+xml" title="终点站" />
-  <link href="https://blog.gofinall.com/categories/index.xml" rel="feed" type="application/rss+xml" title="终点站" />
+<link rel="canonical" href="https://blog.gofinall.com/post/nginx-display-version/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -48,17 +49,37 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Categories" />
-<meta property="og:description" content="Hugo theme even example site." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.gofinall.com/categories/" />
-<meta property="og:updated_time" content="2018-06-04T14:52:50&#43;08:00"/>
-<meta itemprop="name" content="Categories">
-<meta itemprop="description" content="Hugo theme even example site.">
+<meta property="og:title" content="Nginx隐藏响应头信息的Server信息和版本信息" />
+<meta property="og:description" content="背景
 
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/nginx-display-version/" /><meta property="article:published_time" content="2019-01-21T11:43:12&#43;08:00"/>
+<meta property="article:modified_time" content="2019-01-21T11:43:12&#43;08:00"/>
+<meta itemprop="name" content="Nginx隐藏响应头信息的Server信息和版本信息">
+<meta itemprop="description" content="背景
+
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-01-21T11:43:12&#43;08:00" />
+<meta itemprop="dateModified" content="2019-01-21T11:43:12&#43;08:00" />
+<meta itemprop="wordCount" content="537">
+
+
+
+<meta itemprop="keywords" content="nginx," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Categories"/>
-<meta name="twitter:description" content="Hugo theme even example site."/>
+<meta name="twitter:title" content="Nginx隐藏响应头信息的Server信息和版本信息"/>
+<meta name="twitter:description" content="背景
+
+当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。
+
+"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -122,142 +143,158 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          
-  
-    <div class="categories">
-      <div class="categories-title">
-        
-          共计 24 个分类
-        
-      </div>
-      <div class="categories-tags">
-        
-          <a class="category-link" href="/categories/linux/">
-            linux
-            <span class="category-count">16</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-            数据库
-            <span class="category-count">5</span>
-          </a>
-        
-          <a class="category-link" href="/categories/aria2/">
-            aria2
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/jenkins/">
-            jenkins
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/python/">
-            python
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/robotframework/">
-            robotframework
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/tomcat/">
-            tomcat
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
-            开源软件
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">
-            浏览器
-            <span class="category-count">2</span>
-          </a>
-        
-          <a class="category-link" href="/categories/excel/">
-            excel
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/ftp/">
-            ftp
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/git/">
-            git
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/maven/">
-            maven
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/md5/">
-            md5
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/nginx/">
-            nginx
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/plink/">
-            plink
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/rabbitmq/">
-            rabbitmq
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/testlink/">
-            testlink
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/vsftpd/">
-            vsftpd
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E4%BF%9D%E7%95%99/">
-            个人保留
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E5%AE%89%E5%8D%93/">
-            安卓
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/">
-            开机启动
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/">
-            远程挂载
-            <span class="category-count">1</span>
-          </a>
-        
-          <a class="category-link" href="/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">
-            静态博客
-            <span class="category-count">1</span>
-          </a>
-        
-      </div>
-    </div>
-  
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Nginx隐藏响应头信息的Server信息和版本信息</h1>
 
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-21 </span>
+        <div class="post-category">
+            
+              <a href="/categories/nginx/"> nginx </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#修改方法">修改方法</a>
+<ul>
+<li><a href="#隐藏nginx版本信息">隐藏nginx版本信息</a></li>
+<li><a href="#隐藏response-headers中server信息">隐藏Response Headers中server信息</a></li>
+</ul></li>
+<li><a href="#隐藏默认错误页面显示">隐藏默认错误页面显示</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本。</p>
+
+<p></p>
+
+<h3 id="修改方法">修改方法</h3>
+
+<ul>
+<li>nginx版本：1.14.2</li>
+</ul>
+
+<h4 id="隐藏nginx版本信息">隐藏nginx版本信息</h4>
+
+<p>在nginx.conf的http里面加<code>server_tokens off;</code>,重载nginx配置，就可以隐藏版本号。</p>
+
+<h4 id="隐藏response-headers中server信息">隐藏Response Headers中server信息</h4>
+
+<p>实现方案 : <strong>需要重新编译nginx</strong></p>
+
+<p>停止当前的nginx，进入解压出来的nginx <strong>源码</strong> 目录（不是nginx的安装目录）</p>
+
+<p><code>vi src/http/ngx_http_header_filter_module.c  # 49-50行</code></p>
+
+<p>编辑:</p>
+
+<pre><code>原内容：
+static char ngx_http_server_string[] = &quot;Server: nginx&quot; CRLF;
+static char ngx_http_server_full_string[] = &quot;Server: &quot; NGINX_VER CRLF;
+
+更改为：
+static char ngx_http_server_string[] = &quot;Server: Xacp-Web&quot; CRLF;
+static char ngx_http_server_full_string[] = &quot;Server: Xacp-Web &quot; CRLF;
+</code></pre>
+
+<p>修改完后重新编译nginx，启动nginx；</p>
+
+<p>再看Response Headers里面Server信息变成了自定义的名字，不再显示nginx信息了，如下：</p>
+
+<pre><code class="language-shell">Response Headers
+
+Connection: keep-alive
+Date: Mon, 21 Jan 2019 03:41:42 GMT
+ETag: &quot;5c453d16-264&quot;
+Last-Modified: Mon, 21 Jan 2019 03:31:34 GMT
+Server: Xacp-Web
+</code></pre>
+
+<h3 id="隐藏默认错误页面显示">隐藏默认错误页面显示</h3>
+
+<p>停止当前的nginx，进入解压出来的nginx <strong>源码</strong> 目录（不是nginx的安装目录）</p>
+
+<p><code>vi src/http/ngx_http_special_response.c  #36行</code></p>
+
+<p>编辑:</p>
+
+<pre><code class="language-shell">原内容：
+static u_char ngx_http_error_tail[] =
+&quot;&lt;hr&gt;&lt;center&gt;nginx&lt;/center&gt;&quot; CRLF
+&quot;&lt;/body&gt;&quot; CRLF
+&quot;&lt;/html&gt;&quot; CRLF
+
+更改为：
+static u_char ngx_http_error_tail[] =
+&quot;&lt;hr&gt;&lt;center&gt;Xacp-Web&lt;/center&gt;&quot; CRLF
+&quot;&lt;/body&gt;&quot; CRLF
+&quot;&lt;/html&gt;&quot; CRLF
+</code></pre>
+
+<p>修改完后重新编译nginx，启动nginx；</p>
+
+<p>随便输入一个nginx上不存在的url路径，查看返回的错误页面已经更改，不再返回nginx信息。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/nginx/">nginx</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/python-gitlab-api-get/">
+            <span class="next-text nav-default">python3通过gitlab原生api来获取gitlab上的工程名、分支、提交日志</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
         </div>
         
+  
+
+  
+
+  
       </div>
     </main>
 
