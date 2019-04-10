@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/git-add-error-unpopulated/</loc>
+    <lastmod>2019-04-10T17:09:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/windows-mstsc-copy/</loc>
     <lastmod>2019-04-10T16:44:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -438,14 +445,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/git/</loc>
-    <lastmod>2018-11-21T20:39:17+08:00</lastmod>
+    <lastmod>2019-04-10T17:09:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/git/</loc>
-    <lastmod>2018-11-21T20:39:17+08:00</lastmod>
+    <lastmod>2019-04-10T17:09:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -620,7 +627,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-04-10T16:44:16+08:00</lastmod>
+    <lastmod>2019-04-10T17:09:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

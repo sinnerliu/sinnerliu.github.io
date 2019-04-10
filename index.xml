@@ -21,6 +21,19 @@
     </item>
     
     <item>
+      <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>
+      <link>https://blog.gofinall.com/post/git-add-error-unpopulated/</link>
+      <pubDate>Wed, 10 Apr 2019 17:09:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-add-error-unpopulated/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;用hugo搭建了个博客，我把博客的data目录提交到git上做备份，把public提交到pages上。但是在备份data目录的时候有点问题；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Windows远程桌面(mstsc)不能复制粘贴的解决办法</title>
       <link>https://blog.gofinall.com/post/windows-mstsc-copy/</link>
       <pubDate>Wed, 10 Apr 2019 16:44:16 +0800</pubDate>

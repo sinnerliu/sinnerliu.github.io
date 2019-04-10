@@ -6,10 +6,23 @@
     <description>Recent content in Git on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 21 Nov 2018 20:39:17 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Apr 2019 17:09:29 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>
+      <link>https://blog.gofinall.com/post/git-add-error-unpopulated/</link>
+      <pubDate>Wed, 10 Apr 2019 17:09:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-add-error-unpopulated/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;用hugo搭建了个博客，我把博客的data目录提交到git上做备份，把public提交到pages上。但是在备份data目录的时候有点问题；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>如何恢复windows 10系统下git的状态图标显示</title>
