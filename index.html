@@ -129,6 +129,50 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tomcat8-error-cachemaxsize/">Tomcat8启动报there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-04-10 </span>
+      <div class="post-category">
+          
+            <a href="/categories/tomcat/"> tomcat </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>当用tomcat8启动工程的时候，日志报错</p>
+
+<pre><code class="language-shell">09-Dec-2016 10:57:49.150 WARNING [localhost-startStop-1] org.apache.catalina.webresources.Cache.getResource Unable to add the resource at [/WEB-INF/classes/struts/PersonnelActio
+n.xml] to the cache because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+09-Dec-2016 10:57:51.729 SEVERE [localhost-startStop-1] org.apache.catalina.core.ContainerBase.addChildInternal ContainerBase.addChild: start:
+ org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[]]
+        at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:158)
+        at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:724)
+        at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:700)
+        at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:734)
+        at org.apache.catalina.startup.HostConfig.deployDirectory(HostConfig.java:1107)
+        at org.apache.catalina.startup.HostConfig$DeployDirectory.run(HostConfig.java:1841)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at java.lang.Thread.run(Thread.java:745)
+</code></pre>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tomcat8-error-cachemaxsize/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/nginx-display-version/">Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2019-01-21 </span>
@@ -396,38 +440,6 @@
     </div>
     <div class="read-more">
       <a href="/post/nginx-tomcat8-400-error/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/centos-add-swap/">Centos给swap扩容</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-09-27 </span>
-      <div class="post-category">
-          
-            <a href="/categories/linux/"> linux </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h3 id="swap空间介绍">swap空间介绍</h3>
-
-<p>swap分区的用处：swap是当物理内存不够用的时候，把数据放到swap中，所以swap起到了一个虚拟内存的作用，在某种意义上来说也算是加大了内存空间。一般swap分区是在安装系统时设置的，如果安装系统时忘记分swap分区或者分区太小，那也没事，还有补救的方法。下面就讲讲安装完CentOS系统后如何给swap分区扩容。</p>
-
-<p>场景：
-安装完CentOS Linux系统后，安装oracle发下swap大小不够用。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/centos-add-swap/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
