@@ -21,6 +21,21 @@
     </item>
     
     <item>
+      <title>Windows远程桌面(mstsc)不能复制粘贴的解决办法</title>
+      <link>https://blog.gofinall.com/post/windows-mstsc-copy/</link>
+      <pubDate>Wed, 10 Apr 2019 16:44:16 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-mstsc-copy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;原来通过mstsc远程连接Windows能够直接在本地和服务器之间复制、粘贴一些文字和文件，最近突然无法直接复制粘贴了，只能通过远程映射的本地磁盘方式交换文件；&lt;/p&gt;
+
+&lt;p&gt;已经确认远程桌面连接选项“本地资源-》本地设备和资源-》剪贴板”中勾选了剪贴板。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Tomcat8启动报there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache</title>
       <link>https://blog.gofinall.com/post/tomcat8-error-cachemaxsize/</link>
       <pubDate>Wed, 10 Apr 2019 16:29:25 +0800</pubDate>
