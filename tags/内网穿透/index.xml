@@ -6,13 +6,26 @@
     <description>Recent content in 内网穿透 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 17 May 2019 12:01:09 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 17 May 2019 15:19:54 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>内网穿透之n2n介绍及使用说明</title>
+      <title>内网穿透之n2n-点对网</title>
+      <link>https://blog.gofinall.com/post/n2n-p2p-route/</link>
+      <pubDate>Fri, 17 May 2019 15:19:54 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/n2n-p2p-route/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;n2n vpn 其实与 pptp vpn 有类似的一面，都是一种点对点的局域网，所不同的是，n2n 可以建立点与点之间的直连，而 pptp 局域网内通讯的全部流量都必须走中心节点。pptp可以实现点对忘的连接，n2n应该也可以实现。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>内网穿透之n2n-介绍及使用说明</title>
       <link>https://blog.gofinall.com/post/n2n-p2p-introduce/</link>
       <pubDate>Fri, 17 May 2019 12:01:09 +0800</pubDate>
       
