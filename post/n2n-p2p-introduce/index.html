@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>内网穿透之n2n介绍及使用说明 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="介绍 N2N 是一款开源的P2P v&#43;p&#43;n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。
+
+" />
+<meta name="keywords" content="内网穿透, n2n" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/n2n-p2p-introduce/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="内网穿透之n2n介绍及使用说明" />
+<meta property="og:description" content="介绍
+
+N2N 是一款开源的P2P v&#43;p&#43;n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/n2n-p2p-introduce/" /><meta property="article:published_time" content="2019-05-17T12:01:09&#43;08:00"/>
+<meta property="article:modified_time" content="2019-05-17T12:01:09&#43;08:00"/>
+<meta itemprop="name" content="内网穿透之n2n介绍及使用说明">
+<meta itemprop="description" content="介绍
+
+N2N 是一款开源的P2P v&#43;p&#43;n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-05-17T12:01:09&#43;08:00" />
+<meta itemprop="dateModified" content="2019-05-17T12:01:09&#43;08:00" />
+<meta itemprop="wordCount" content="2352">
+
+
+
+<meta itemprop="keywords" content="内网穿透,n2n," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="内网穿透之n2n介绍及使用说明"/>
+<meta name="twitter:description" content="介绍
+
+N2N 是一款开源的P2P v&#43;p&#43;n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">内网穿透之n2n介绍及使用说明</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-05-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"> 内网穿透 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#介绍">介绍</a></li>
+<li><a href="#架构">架构</a></li>
+<li><a href="#与传统的v-p-n的优点">与传统的v+p+n的优点</a></li>
+<li><a href="#安装">安装</a>
+<ul>
+<li><a href="#地址">地址</a></li>
+<li><a href="#安装方法">安装方法</a></li>
+</ul></li>
+<li><a href="#使用方法">使用方法</a>
+<ul>
+<li><a href="#supernode">supernode</a></li>
+<li><a href="#edge">edge</a>
+<ul>
+<li><a href="#edge连接测试">edge连接测试</a></li>
+</ul></li>
+<li><a href="#通讯速度和网络运营商的关系">通讯速度和网络运营商的关系</a></li>
+</ul></li>
+<li><a href="#常见问题">常见问题</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="介绍">介绍</h3>
+
+<p><a href="http://www.ntop.org/products/n2n/" rel="noreferrer" target="_blank">N2N </a>是一款开源的P2P v+p+n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。</p>
+
+<p></p>
+
+<p>N2N 是一个双层架构的v+p+n ，它让用户可以在网络层上开发P2P应用的典型功能，而不是在应用层上开发。这意味着用户可以获取本地IP一样的可见度（比如说，同一个n2n网络内的两台PC机可以相互ping通），并且可以通过n2n虚拟网内的IP地址相互访问，而不必关心当前所属的物理网络地址。可以这样说，OpenV+P+N是把SSL从应用层转移到网络层实现（比如说实现https协议），而n2n则是把P2P的实现从应用层转移到网络层。</p>
+
+<h3 id="架构">架构</h3>
+
+<p>Edge 节点：用户PC 机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。</p>
+
+<p>Supernode 超级节点：它在edge 节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。</p>
+
+<p>Edge 节点间通过虚拟的tap 网卡交互。每个tap网卡都是一个n2n edge节点。每台PC机可以有多个tap网卡，所以，在n2n网络中，同一台PC机可以属于多个网络。</p>
+
+<p><img src="/post/images/n2n1.png" alt="" /></p>
+
+<p>其中super node 提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，super node则还需继续为双方提供数据包的转发;edge node负责数据流的加解密，原理很简单。</p>
+
+<h3 id="与传统的v-p-n的优点">与传统的v+p+n的优点</h3>
+
+<p>大部分v+p+n，都是通过服务器中转，而n2n是通过udp协议，在两边edge的NAT情况比较好的情况下，会建立两个edge之间的直接连接，一个北京和一个重庆的两个edge服务器，如果直连成功，之间的下载速度可以达到2-5MB/s；当网络条件比较恶劣的时候，数据会从supernode中转，速度就靠到supernode的速度决定；</p>
+
+<h3 id="安装">安装</h3>
+
+<h4 id="地址">地址</h4>
+
+<p>官方:</p>
+
+<ul>
+<li><p>v1: <a href="https://github.com/meyerd/n2n/tree/master/n2n_v1" rel="noreferrer" target="_blank">https://github.com/meyerd/n2n/tree/master/n2n_v1</a></p></li>
+
+<li><p>v2: <a href="https://github.com/ntop/n2n" rel="noreferrer" target="_blank">https://github.com/ntop/n2n</a></p></li>
+</ul>
+
+<p>网传v2.1(v2s): <a href="https://github.com/meyerd/n2n/tree/master/n2n_v2" rel="noreferrer" target="_blank">https://github.com/meyerd/n2n/tree/master/n2n_v2</a> <strong>与官方的 v2 不兼容</strong></p>
+
+<p>安卓版本: <a href="https://github.com/switch-iot/hin2n" rel="noreferrer" target="_blank">https://github.com/switch-iot/hin2n</a> (最新版本支持v1、v2、v2s)</p>
+
+<p>通过网友的测试，n2n_v2s直连概率比较高，所以本文暂时只介绍n2n_v2s的安装及使用方法</p>
+
+<h4 id="安装方法">安装方法</h4>
+
+<p>详见 <a href="https://github.com/meyerd/n2n/wiki" rel="noreferrer" target="_blank">https://github.com/meyerd/n2n/wiki</a></p>
+
+<h3 id="使用方法">使用方法</h3>
+
+<h4 id="supernode">supernode</h4>
+
+<p>在有公网的的服务器上安装supernode，为了区分其他版本，重命名为supernode_v2s</p>
+
+<pre><code class="language-shell">[root@localhost ~]# supernode_v2s --help
+supernode_v2s usage
+-l &lt;lport&gt;      Set UDP main listen port to &lt;lport&gt;
+-f              Run in foreground.
+-u &lt;UID&gt;        User ID (numeric) to use when privileges are dropped.
+-g &lt;GID&gt;        Group ID (numeric) to use when privileges are dropped.
+-v              Increase verbosity. Can be used multiple times.
+-h              This help message.
+
+# 启动supernode
+[root@localhost ~]# supernode_v2s -l 10088
+
+[root@localhost ~]# ps -ef|grep supernode_v2s
+root     21024     1  0 Apr25 ?        00:03:59 supernode_v2s -l 10088
+</code></pre>
+
+<h4 id="edge">edge</h4>
+
+<p>在内网电脑上安装edge，为了区分其他版本，重命名为edge_v2s</p>
+
+<pre><code class="language-shell">[root@localhost1 ~]# edge_v2s --help
+Welcome to n2n v.2.1.0 for Linux-2.6.32-642.el6.x86_64
+Built on Jun 12 2018 18:21:36
+Copyright 2007-09 - http://www.ntop.org
+
+edge -d &lt;tun device&gt; -a [static:|dhcp:]&lt;tun IP address&gt; -c &lt;community&gt; [-k &lt;encrypt key&gt; | -K &lt;key file&gt;] [-s &lt;netmask&gt;] [-u &lt;uid&gt; -g &lt;gid&gt;][-f][-m &lt;MAC address&gt;]
+-l &lt;supernode host:port&gt; [-p &lt;local port&gt;] [-M &lt;mtu&gt;] [-r] [-E] [-v] [-t &lt;mgmt port&gt;] [-b] [-h]
+
+-d &lt;tun device&gt;          | tun device name
+-a &lt;mode:address&gt;        | Set interface address. For DHCP use '-r -a dhcp:0.0.0.0'
+-c &lt;community&gt;           | n2n community name the edge belongs to.
+-k &lt;encrypt key&gt;         | Encryption key (ASCII) - also N2N_KEY=&lt;encrypt key&gt;. Not with -K.
+-K &lt;key file&gt;            | Specify a key schedule file to load. Not with -k.
+-s &lt;netmask&gt;             | Edge interface netmask in dotted decimal notation (255.255.255.0).
+-l &lt;supernode host:port&gt; | Supernode IP:port
+-L &lt;local_ip&gt;            | Add local ip to bypass between same nat problem
+-i &lt;interval&gt;            | Set the NAT hole-punch interval (default 20seconds)
+-b                       | Periodically resolve supernode IP
+                         : (when supernodes are running on dynamic IPs)
+-p &lt;local port&gt;          | Fixed local UDP port.
+-u &lt;UID&gt;                 | User ID (numeric) to use when privileges are dropped.
+-g &lt;GID&gt;                 | Group ID (numeric) to use when privileges are dropped.
+-f                       | Do not fork and run as a daemon; rather run in foreground.
+-m &lt;MAC address&gt;         | Fix MAC address for the TAP interface (otherwise it may be random)
+                         : eg. -m 01:02:03:04:05:06
+-M &lt;mtu&gt;                 | Specify n2n MTU of edge interface (default 1400).
+-r                       | Enable packet forwarding through n2n community.
+-E                       | Accept multicast MAC addresses (default=drop).
+-v                       | Make more verbose. Repeat as required.
+-t                       | Management UDP Port (for multiple edges on a machine).
+
+Environment variables:
+  N2N_KEY                | Encryption key (ASCII). Not with -K or -k.
+  
+# 启动edge
+[root@localhost1 ~]# edge_v2s -d n2nedge_v2s -a 172.10.2.200 -c community -u 604 -g 604 -k passwod -l 222.222.222.222:10088 -m 31:29:35:FB:C7:5B -r -L 192.168.1.100
+
+# 查看edge的ip
+[root@localhost1 ~]# ifconfig |grep 172.10.2.200
+n2nedge_v2s   Link encap:Ethernet  HWaddr 31:29:35:FB:C7:5B  
+              inet addr:172.10.2.200  Bcast:172.10.2.255  Mask:255.255.255.0
+              inet6 addr: fe80::fe0c:8eef:f86e:d10/64 Scope:Link
+              TX packets:1096871 errors:0 dropped:0 overruns:0 carrier:0
+              TX packets:470900375 errors:0 dropped:0 overruns:3105 carrier:0
+              RX bytes:11377271 (10.8 MiB)  TX bytes:41626135028 (38.7 GiB)
+</code></pre>
+
+<p>常用参数说明：</p>
+
+<p>-d：虚拟网卡名称</p>
+
+<p>-a：n2n网卡的ip地址，即本机的n2n的ip</p>
+
+<p>-c：n2n组，只有相同组的edge之间才能进行通讯</p>
+
+<p>-u：如果不想用root来运行edge，则可指定本机账号的uid，windows下可忽略</p>
+
+<p>-g：如果不想用root来运行edge，则可指定本机账号的groupid，windows下可忽略</p>
+
+<p>-k：edge的加密密码</p>
+
+<p>-l：supernode的ip和端口</p>
+
+<p>-m：n2n虚拟网卡的MAC地址</p>
+
+<p>-r：运行edge进行数据转发</p>
+
+<p>-L：本机的内网地址，可以帮助同一个内网之间的通讯为直连，目前是v2s版本特有参数，官方版本暂无</p>
+
+<p>-b：解析域名对应的ip，适用于supernode的ip使用域名来进行连接</p>
+
+<p>在内网的另外一台机器上安装edge_v2s，启动的参数除了-u、-g、-m、-L与另一个edge参数不同外，其他参数要一致，如<code>edge_v2s -d n2nedge_v2s -a 172.10.2.210 -c community -u 500 -g 500 -k passwod -l 222.222.222.222:10088 -m 8B:2A:76:3F:C0:7B -r -L 192.168.1.110</code></p>
+
+<p>附一个MAC地址在线生成：<a href="http://www.99cankao.com/digital-computation/mac-address-generator.php" rel="noreferrer" target="_blank">http://www.99cankao.com/digital-computation/mac-address-generator.php</a></p>
+
+<h5 id="edge连接测试">edge连接测试</h5>
+
+<p>在多个edge之间相互ping看是否能通，然后通过n2n的内网ip访问下载服务，查看下载速度；</p>
+
+<h4 id="通讯速度和网络运营商的关系">通讯速度和网络运营商的关系</h4>
+
+<p>目前来看，电信+电信直连概率大，速度快；最差的是移动；</p>
+
+<h3 id="常见问题">常见问题</h3>
+
+<ul>
+<li>怎么知道自己的 edge 是否已经与中心节点 supernode 连接成功了？</li>
+</ul>
+
+<p>针对 N2N_V2 每两分钟显示一条，V2s 则每 25s 一条下面的信息
+  关键字：Rx REGISTER_SUPER_ACK myMAC</p>
+
+<pre><code class="language-shell">  Rx REGISTER_SUPER_ACK myMAC=EE:DC:38:99:C9:42 [123.249.20.254:10086] (external 218.89.10.162:50021). Attempts 2
+</code></pre>
+
+<ul>
+<li>如果中心节点 supernode 失效了会是什么样子呢？</li>
+</ul>
+
+<p>针对 edge_v1，则每分钟显示</p>
+
+<pre><code>Registering with supernode
+</code></pre>
+
+<p>针对 edge_v2，则每 40 秒显示，针对 edge_v2s，则每 20 秒显示</p>
+
+<pre><code>WARNING: Supernode not responding - moving to 0 of 1
+</code></pre>
+
+<ul>
+<li>如果 edge 与 supernode 的版本对应错了，会是什么样子的？</li>
+</ul>
+
+<p>edge_v1 试图与 supernode_v2 或 v2s 连接（每分钟出现一条下面的信息）</p>
+
+<p><code>Registering with supernode</code></p>
+
+<p>edge_v2 或 v2s 试图与 supernode_v1 连接时，反复出现如下信息（V2 每 40 秒，v2s 每 20 秒）</p>
+
+<p><code>WARNING: Supernode not responding - moving to 0 of 1</code></p>
+
+<p>edge_v2 试图与 supernode_v2s（v2s 试图与 V2）连接时，反复出现如下信息（V2 每 10 秒，v2s 每 5 秒）</p>
+
+<pre><code class="language-shell">  Rx REGISTER_SUPER_ACK myMAC=1D:C9:00:00:00:00 [123.249.20.254:10088] (external 218.89.10.162:42858). Attempts 2
+  WARNING: Rx REGISTER_SUPER_ACK with wrong or old cookie.
+</code></pre>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">内网穿透</a>
+          
+          <a href="/tags/n2n/">n2n</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/git-add-error-unpopulated/">
+            <span class="next-text nav-default">git add出现in unpopulated submodule &#39;themes&#39;问题</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>
