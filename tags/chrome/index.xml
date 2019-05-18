@@ -19,7 +19,7 @@
       <guid>https://blog.gofinall.com/post/chrome-install-crx/</guid>
       <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
 
-&lt;p&gt;在最新版 chrome 73 版本上，通过打开开发者模式，通过拖入crx文件来安装扩展，会出现「程序包无效 CRX_HEADER_INVALID」的报错。&lt;/p&gt;
+&lt;p&gt;在最新版 chrome 73 版本上，通过打开开发者模式，通过拖入crx文件来安装扩展，会出现「程序包无效 CRX_HEADER_INVALID」的报错，不想把crx解压了直接加载安装。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
