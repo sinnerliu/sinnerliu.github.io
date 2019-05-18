@@ -21,6 +21,19 @@
     </item>
     
     <item>
+      <title>chrome 73 版本上安装crx插件出现「程序包无效 CRX_HEADER_INVALID」的报错解决办法</title>
+      <link>https://blog.gofinall.com/post/chrome-install-crx/</link>
+      <pubDate>Sat, 18 May 2019 11:00:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/chrome-install-crx/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;在最新版 chrome 73 版本上，通过打开开发者模式，通过拖入crx文件来安装扩展，会出现「程序包无效 CRX_HEADER_INVALID」的报错。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>内网穿透之n2n-点对网</title>
       <link>https://blog.gofinall.com/post/n2n-p2p-route/</link>
       <pubDate>Fri, 17 May 2019 15:19:54 +0800</pubDate>

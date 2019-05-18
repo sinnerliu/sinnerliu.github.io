@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/chrome-install-crx/</loc>
+    <lastmod>2019-05-18T11:00:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/n2n-p2p-route/</loc>
     <lastmod>2019-05-17T15:19:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -409,6 +416,20 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/chrome/</loc>
+    <lastmod>2019-05-18T11:00:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/chrome/</loc>
+    <lastmod>2019-05-18T11:00:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/excel/</loc>
     <lastmod>2018-09-01T11:58:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -648,7 +669,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-05-17T15:19:54+08:00</lastmod>
+    <lastmod>2019-05-18T11:00:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
