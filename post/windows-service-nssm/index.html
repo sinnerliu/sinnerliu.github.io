@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Windows使用NSSM将任意exe封装为服务 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="介绍 NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：
+ 支持普通exe程序（控制台程序或者带界面的Windows程序都可以） 安装简单，修改方便 可以重定向输出（并且支持Rotation） 可以自动守护封装了的服务，程序挂掉了后可以自动重启 可以自定义环境变量  
+" />
+<meta name="keywords" content="windows服务, nssm" />
+
+
+
+<meta name="baidu-site-verification" content="YJeWJgGuC5" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/windows-service-nssm/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Windows使用NSSM将任意exe封装为服务" />
+<meta property="og:description" content="介绍
+
+NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：
+
+
+支持普通exe程序（控制台程序或者带界面的Windows程序都可以）
+安装简单，修改方便
+可以重定向输出（并且支持Rotation）
+可以自动守护封装了的服务，程序挂掉了后可以自动重启
+可以自定义环境变量
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/windows-service-nssm/" /><meta property="article:published_time" content="2019-05-23T14:32:58&#43;08:00"/>
+<meta property="article:modified_time" content="2019-05-23T14:32:58&#43;08:00"/>
+<meta itemprop="name" content="Windows使用NSSM将任意exe封装为服务">
+<meta itemprop="description" content="介绍
+
+NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：
+
+
+支持普通exe程序（控制台程序或者带界面的Windows程序都可以）
+安装简单，修改方便
+可以重定向输出（并且支持Rotation）
+可以自动守护封装了的服务，程序挂掉了后可以自动重启
+可以自定义环境变量
+
+
+">
+
+
+<meta itemprop="datePublished" content="2019-05-23T14:32:58&#43;08:00" />
+<meta itemprop="dateModified" content="2019-05-23T14:32:58&#43;08:00" />
+<meta itemprop="wordCount" content="975">
+
+
+
+<meta itemprop="keywords" content="windows服务,nssm," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows使用NSSM将任意exe封装为服务"/>
+<meta name="twitter:description" content="介绍
+
+NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：
+
+
+支持普通exe程序（控制台程序或者带界面的Windows程序都可以）
+安装简单，修改方便
+可以重定向输出（并且支持Rotation）
+可以自动守护封装了的服务，程序挂掉了后可以自动重启
+可以自定义环境变量
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Windows使用NSSM将任意exe封装为服务</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-05-23 </span>
+        <div class="post-category">
+            
+              <a href="/categories/windows/"> windows </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#介绍">介绍</a></li>
+<li><a href="#官网">官网</a></li>
+<li><a href="#使用">使用</a>
+<ul>
+<li><a href="#服务管理">服务管理</a></li>
+<li><a href="#修改参数">修改参数</a></li>
+<li><a href="#服务删除">服务删除</a></li>
+<li><a href="#命令行">命令行</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="介绍">介绍</h3>
+
+<p>NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：</p>
+
+<ol>
+<li>支持普通exe程序（控制台程序或者带界面的Windows程序都可以）</li>
+<li>安装简单，修改方便</li>
+<li>可以重定向输出（并且支持Rotation）</li>
+<li>可以自动守护封装了的服务，程序挂掉了后可以自动重启</li>
+<li>可以自定义环境变量</li>
+</ol>
+
+<p></p>
+
+<h3 id="官网">官网</h3>
+
+<p><a href="http://nssm.cc/" rel="noreferrer" target="_blank">http://nssm.cc</a></p>
+
+<h3 id="使用">使用</h3>
+
+<ol>
+<li>下载最新版本<a href="http://nssm.cc/ci/nssm-2.24-103-gdee49fc.zip" rel="noreferrer" target="_blank">nssm</a>，也可以下载最新release版本；</li>
+<li>根据自己的平台，将32/64位nssm.exe文件解压至任意文件夹。</li>
+<li>cmd定位至nssm.exe所在目录。</li>
+<li>输入 <code>nssm install {服务名称}</code>，即注册服务的名称。注册服务弹出如下NSSM界面。
+<img src="/post/images/nssm.png" alt="" /></li>
+<li>Application标签设置：</li>
+</ol>
+
+<ul>
+<li>Application Path: 选择系统安装的exe。</li>
+<li>Startup directory: 选择exe项目的根目录。</li>
+<li>Arguments: 输入启动参数</li>
+</ul>
+
+<ol>
+<li><p>上述步骤操作完成，即可点击Install service来注册服务。我们在系统的服务中即可找到刚刚注册的服务。</p></li>
+
+<li><p>在系统服务中找到刚刚注册的服务，右键<code>属性 - 恢复</code>即可设置此服务挂掉重启等内容。</p></li>
+</ol>
+
+<p>其它界面的是高级参数的配置，可以根据需要自行选择。</p>
+
+<p>参数填完后执行&rdquo;install service&rdquo;按钮即可将服务安装到系统，可以使用系统的服务管理工具查看了。</p>
+
+<p>当然，如果要自动化安装，可以直接带上程序路径：<code>nssm install &lt;servicename&gt; &lt;program&gt; [&lt;arguments&gt;]</code></p>
+
+<p>NSSM本身win7及以上的系统基本都是支持的，我测试过win7，2008,2016系统，都是没有问题的，如果安装失败，请首先检查是否装了某国产管家或国产杀毒软件。</p>
+
+<p>安装完成后，服务还没有启动，需要通过下面的服务管理的命令启动服务。</p>
+
+<h4 id="服务管理">服务管理</h4>
+
+<p>服务管理主要有启动、停止和重启，其命令如下：</p>
+
+<ul>
+<li>启动服务：<code>nssm start &lt;servicename&gt;</code></li>
+<li>停止服务： <code>nssm stop &lt;servicename&gt;</code></li>
+<li>重启服务:    <code>nssm restart &lt;servicename&gt;</code></li>
+</ul>
+
+<p>当然，也可以使用系统自带的服务管理器操作和使用系统的命令。</p>
+
+<h4 id="修改参数">修改参数</h4>
+
+<p>NSSM安装的服务修改起来非常方便，命令如下：</p>
+
+<p><code>nssm edit &lt;servicename&gt;</code></p>
+
+<p>会自动启动操作界面，直接更改即可。</p>
+
+<h4 id="服务删除">服务删除</h4>
+
+<p>服务删除可以使用如下命令之一：</p>
+
+<ul>
+<li><code>nssm remove &lt;servicename&gt;</code></li>
+<li><code>nssm remove &lt;servicename&gt; confirm</code></li>
+</ul>
+
+<p>功能没有大的区别，后面的命令是自动确认的，没有交互界面。</p>
+
+<h4 id="命令行">命令行</h4>
+
+<p>服务自动化需要使用更多的命令行，具体参看官方文档： <a href="https://nssm.cc/commands" rel="noreferrer" target="_blank">https://nssm.cc/commands</a></p>
+
+<p>如下是一个官方安装Jenkins服务的示例：</p>
+
+<pre><code class="language-shell">nssm install Jenkins %PROGRAMFILES%\Java\jre7\bin\java.exe
+nssm set Jenkins AppParameters -jar slave.jar -jnlpUrl https://jenkins/computer/%COMPUTERNAME%/slave-agent.jnlp -secret redacted
+nssm set Jenkins AppDirectory C:\Jenkins
+nssm set Jenkins AppStdout C:\Jenkins\jenkins.log
+nssm set Jenkins AppStderr C:\Jenkins\jenkins.log
+nssm set Jenkins AppStopMethodSkip 6
+nssm set Jenkins AppStopMethodConsole 1000
+nssm set Jenkins AppThrottle 5000
+nssm start Jenkins
+</code></pre>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/windows%E6%9C%8D%E5%8A%A1/">windows服务</a>
+          
+          <a href="/tags/nssm/">nssm</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/chrome-install-crx/">
+            <span class="next-text nav-default">chrome 73 版本上安装crx插件出现「程序包无效 CRX_HEADER_INVALID」的报错解决办法</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>
