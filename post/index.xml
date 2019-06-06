@@ -6,10 +6,28 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 23 May 2019 14:32:58 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2019 14:33:31 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>利用Proxychains在终端使用socks5/http代理</title>
+      <link>https://blog.gofinall.com/post/proxychains-ng/</link>
+      <pubDate>Thu, 06 Jun 2019 14:33:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/proxychains-ng/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在国内的服务器上从github上拉代码或者go get的时候非常慢(网络受阻)的时候。&lt;/li&gt;
+&lt;li&gt;当内网的某些服务器不能上外网，但是内网中有一台电脑能上外网，想让不能上外网的服务器上外网的时候。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;proxychains可以非常简单快速的设置好代理，让其它不能上网的服务器通过能上网的服务器进行上网。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Windows使用NSSM将任意exe封装为服务</title>

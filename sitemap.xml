@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/proxychains-ng/</loc>
+    <lastmod>2019-06-06T14:33:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/windows-service-nssm/</loc>
     <lastmod>2019-05-23T14:32:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -557,7 +564,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/categories/linux/</loc>
-    <lastmod>2019-01-03T13:42:24+08:00</lastmod>
+    <lastmod>2019-06-06T14:33:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -683,7 +690,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-05-23T14:32:58+08:00</lastmod>
+    <lastmod>2019-06-06T14:33:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/proxychains/</loc>
+    <lastmod>2019-06-06T14:33:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
