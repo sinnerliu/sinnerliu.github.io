@@ -6,10 +6,23 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 06 Jun 2019 14:33:31 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jul 2019 18:24:50 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Nginx反代Websocket 403报错</title>
+      <link>https://blog.gofinall.com/post/nginx-websocket/</link>
+      <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-websocket/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器对外只有一个端口，需要用nginx把服务器上多个tomcat的地址代理出来，工程中需要用Websocket，按照网上常规配置后，部分Websocket访问报403错误，部分Websocket正常。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>利用Proxychains在终端使用socks5/http代理</title>

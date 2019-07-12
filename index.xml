@@ -31,6 +31,50 @@
     </item>
     
     <item>
+      <title>Nginx反代Websocket 403报错</title>
+      <link>https://blog.gofinall.com/post/nginx-websocket/</link>
+      <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/nginx-websocket/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器对外只有一个端口，需要用nginx把服务器上多个tomcat的地址代理出来，工程中需要用Websocket，按照网上常规配置后，部分Websocket访问报403错误，部分Websocket正常。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;nginx版本&#34;&gt;nginx版本&lt;/h3&gt;
+
+&lt;p&gt;1.14.2&lt;/p&gt;
+
+&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
+
+&lt;p&gt;最开始的配置如下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置后，部分Websocket访问报403错误，部分Websocket正常。经过google后，参考&lt;a href=&#34;https://github.com/drone/drone/issues/767&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;websocket problem when deployed behind nginx&lt;/a&gt;，后新增如下配置，重启nginx就好了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;proxy_set_header Origin &#39;&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完整的配置如下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt; location /api/stream {
+        proxy_pass http://127.0.0.1:8000;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
+
+        proxy_set_header Origin &#39;&#39;;
+    }
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
       <title>利用Proxychains在终端使用socks5/http代理</title>
       <link>https://blog.gofinall.com/post/proxychains-ng/</link>
       <pubDate>Thu, 06 Jun 2019 14:33:31 +0800</pubDate>
@@ -674,121 +718,6 @@ n.xml] to the cache because there was insufficient free space available after ev
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;&amp;lt;Resources cachingAllowed=&amp;quot;true&amp;quot; cacheMaxSize=&amp;quot;1000000&amp;quot; /&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;</description>
-    </item>
-    
-    <item>
-      <title>Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号</title>
-      <link>https://blog.gofinall.com/post/nginx-display-version/</link>
-      <pubDate>Mon, 21 Jan 2019 11:43:12 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/nginx-display-version/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;修改方法&#34;&gt;修改方法&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;nginx版本：1.14.2&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;隐藏nginx版本信息&#34;&gt;隐藏nginx版本信息&lt;/h4&gt;
-
-&lt;p&gt;在nginx.conf的http里面加&lt;code&gt;server_tokens off;&lt;/code&gt;,重载nginx配置，就可以隐藏版本号。&lt;/p&gt;
-
-&lt;h4 id=&#34;隐藏response-headers中server信息&#34;&gt;隐藏Response Headers中server信息&lt;/h4&gt;
-
-&lt;p&gt;实现方案 : &lt;strong&gt;需要重新编译nginx&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;停止当前的nginx，进入解压出来的nginx &lt;strong&gt;源码&lt;/strong&gt; 目录（不是nginx的安装目录）&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;vi src/http/ngx_http_header_filter_module.c  # 49-50行&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;编辑:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;原内容：
-static char ngx_http_server_string[] = &amp;quot;Server: nginx&amp;quot; CRLF;
-static char ngx_http_server_full_string[] = &amp;quot;Server: &amp;quot; NGINX_VER CRLF;
-
-更改为：
-static char ngx_http_server_string[] = &amp;quot;Server: Xacp-Web&amp;quot; CRLF;
-static char ngx_http_server_full_string[] = &amp;quot;Server: Xacp-Web &amp;quot; CRLF;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;修改完后重新编译nginx，启动nginx；&lt;/p&gt;
-
-&lt;p&gt;再看Response Headers里面Server信息变成了自定义的名字，不再显示nginx信息了，如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Response Headers
-
-Connection: keep-alive
-Date: Mon, 21 Jan 2019 03:41:42 GMT
-ETag: &amp;quot;5c453d16-264&amp;quot;
-Last-Modified: Mon, 21 Jan 2019 03:31:34 GMT
-Server: Xacp-Web
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;隐藏默认错误页面显示&#34;&gt;隐藏默认错误页面显示&lt;/h3&gt;
-
-&lt;p&gt;停止当前的nginx，进入解压出来的nginx &lt;strong&gt;源码&lt;/strong&gt; 目录（不是nginx的安装目录）&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;vi src/http/ngx_http_special_response.c  #36行&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;编辑:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;原内容：
-static u_char ngx_http_error_tail[] =
-&amp;quot;&amp;lt;hr&amp;gt;&amp;lt;center&amp;gt;nginx&amp;lt;/center&amp;gt;&amp;quot; CRLF
-&amp;quot;&amp;lt;/body&amp;gt;&amp;quot; CRLF
-&amp;quot;&amp;lt;/html&amp;gt;&amp;quot; CRLF
-
-更改为：
-static u_char ngx_http_error_tail[] =
-&amp;quot;&amp;lt;hr&amp;gt;&amp;lt;center&amp;gt;Xacp-Web&amp;lt;/center&amp;gt;&amp;quot; CRLF
-&amp;quot;&amp;lt;/body&amp;gt;&amp;quot; CRLF
-&amp;quot;&amp;lt;/html&amp;gt;&amp;quot; CRLF
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;修改完后重新编译nginx，启动nginx；&lt;/p&gt;
-
-&lt;p&gt;随便输入一个nginx上不存在的url路径，查看返回的错误页面已经更改，不再返回nginx信息。&lt;/p&gt;
-
-&lt;h3 id=&#34;隐藏tomcat版本号&#34;&gt;隐藏tomcat版本号&lt;/h3&gt;
-
-&lt;p&gt;既然提到了nginx隐藏版本号，顺便记录下tomcat的版本号的方法；&lt;/p&gt;
-
-&lt;p&gt;在Tomcat的使用中每当发生HTTP错误（未找到错误等）时显示错误页脚，由于版本信息显示在错误屏幕上或者Apache Tomcat的版本信息会显示在部件中，就可以从根据已知的版本的Tomcat的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。&lt;/p&gt;
-
-&lt;p&gt;首先将Tomcat解压后找到它的lib文件夹下的&lt;code&gt;catalina.jar&lt;/code&gt;，用winrar把catalina.jar里面的&lt;code&gt;/org/apache/catalina/util/ServerInfo.properties&lt;/code&gt;文件拖出来；&lt;/p&gt;
-
-&lt;p&gt;修改方法：&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;vi ServerInfo.properties&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#原配置
-server.info=Apache Tomcat/8.5.23
-server.number=8.5.23.0
-server.built=Sep 28 2017 10:30:11 UTC
-#修改成
-#把server.info后面的/版本号删掉，把server.number、server.built后面的信息删掉
-server.info=Apache Tomcat
-server.number=
-server.built=
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;保存后，用winrar打开catalina.jar，把&lt;code&gt;ServerInfo.properties&lt;/code&gt;拖进目录&lt;code&gt;/org/apache/catalina/util/&lt;/code&gt;替换之前的配置文件，重启tomcat即可。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;备注&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;linux下可以直接用vi操作，操作方式如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;vi catalina.jar&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;搜索&lt;code&gt;ServerInfo&lt;/code&gt;,找到ServerInfo.properties，回车进去修改，修改完成后&lt;code&gt;:wq&lt;/code&gt;即可；&lt;/p&gt;</description>
     </item>
     
   </channel>
