@@ -99,6 +99,10 @@
 
 &lt;p&gt;下载好adb相关的工具&lt;/p&gt;
 
+&lt;p&gt;相关工具下载可用&lt;a href=&#34;https://cnone.lty.fun/home/工具库/N1&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://cnone.lty.fun/home/%E5%B7%A5%E5%85%B7%E5%BA%93/N1&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;感谢&lt;a href=&#34;https://luotianyi.vc/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Luminous&lt;/a&gt;提供和分享相关工具。&lt;/p&gt;
+
 &lt;h4 id=&#34;降级&#34;&gt;降级&lt;/h4&gt;
 
 &lt;p&gt;当n1的系统版本在 V2.19 以上的都必须先降级才能刷机，由于我为了少折腾，直接买的是刷好了yyf的精简固件的，降级教程网上很多，此文章就忽略了。&lt;/p&gt;
@@ -163,7 +167,9 @@ dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
 
 &lt;p&gt;可以安装的应用挺多的，现在很多软件都有arm的，如：frp、n2n、php、nginx、docker等，等有空了把我阿里云上的typecho博客迁移到N1上来。&lt;/p&gt;
 
-&lt;p&gt;人生在于折腾。&lt;/p&gt;</description>
+&lt;p&gt;人生在于折腾。&lt;/p&gt;
+
+&lt;p&gt;参考:&lt;a href=&#34;https://luotianyi.vc/1306.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://luotianyi.vc/1306.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
