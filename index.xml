@@ -149,9 +149,7 @@ dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
 
 &lt;h5 id=&#34;初始化系统&#34;&gt;初始化系统&lt;/h5&gt;
 
-&lt;p&gt;如果有键盘，插入另一个usb口，输入登录账号&lt;code&gt;root&lt;/code&gt;，root密码为&lt;code&gt;1234&lt;/code&gt;，登录后提示创建用户，直接&lt;code&gt;ctrl+c&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;取消即可。&lt;/p&gt;
+&lt;p&gt;如果有键盘，插入另一个usb口，输入登录账号&lt;code&gt;root&lt;/code&gt;，root密码为&lt;code&gt;1234&lt;/code&gt;，登录后提示创建用户，直接&lt;code&gt;ctrl+c&lt;/code&gt;取消即可。&lt;/p&gt;
 
 &lt;p&gt;如果没有键盘，可以用&lt;code&gt;ScanPort.exe&lt;/code&gt;来扫描网段内22端口的ip，或者直接去路由器上查看盒子的ip地址&lt;/p&gt;
 
