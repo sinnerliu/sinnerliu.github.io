@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>斐讯N1折腾记1-刷入armbian - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="N1介绍 斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。
+如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。
+
+" />
+<meta name="keywords" content="linux, n1" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/feixun-n1-1/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="斐讯N1折腾记1-刷入armbian" />
+<meta property="og:description" content="N1介绍
+
+斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。
+
+如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/feixun-n1-1/" /><meta property="article:published_time" content="2019-07-23T10:26:06&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-23T10:26:06&#43;08:00"/>
+<meta itemprop="name" content="斐讯N1折腾记1-刷入armbian">
+<meta itemprop="description" content="N1介绍
+
+斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。
+
+如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-07-23T10:26:06&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-23T10:26:06&#43;08:00" />
+<meta itemprop="wordCount" content="1505">
+
+
+
+<meta itemprop="keywords" content="n1,armbian," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="斐讯N1折腾记1-刷入armbian"/>
+<meta name="twitter:description" content="N1介绍
+
+斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。
+
+如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">斐讯N1折腾记1-刷入armbian</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-23 </span>
+        <div class="post-category">
+            
+              <a href="/categories/n1/"> n1 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#n1介绍">N1介绍</a>
+<ul>
+<li><a href="#硬件配置">硬件配置</a></li>
+</ul></li>
+<li><a href="#用途">用途</a></li>
+<li><a href="#折腾准备">折腾准备</a>
+<ul>
+<li><a href="#环境准备">环境准备</a></li>
+<li><a href="#降级">降级</a></li>
+<li><a href="#刷入armbian">刷入armbian</a>
+<ul>
+<li><a href="#系统选择">系统选择</a></li>
+<li><a href="#制作u盘系统">制作U盘系统</a></li>
+<li><a href="#修改引导dtb">修改引导dtb</a></li>
+<li><a href="#修改系统可从u盘启动">修改系统可从U盘启动</a></li>
+<li><a href="#初始化系统">初始化系统</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#安装应用">安装应用</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="n1介绍">N1介绍</h3>
+
+<p>斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。</p>
+
+<p>如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。</p>
+
+<p></p>
+
+<h4 id="硬件配置">硬件配置</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">N1</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">CPU</td>
+<td align="center">Amlogic S905D, 4-Core Cortex-A53, 1.8Ghz</td>
+</tr>
+
+<tr>
+<td align="left">GPU</td>
+<td align="center">Mail-450</td>
+</tr>
+
+<tr>
+<td align="left">RAM</td>
+<td align="center">2G</td>
+</tr>
+
+<tr>
+<td align="left">Storage</td>
+<td align="center">8G EMMC</td>
+</tr>
+
+<tr>
+<td align="left">Network</td>
+<td align="center">BT4, 802.11 n/ac</td>
+</tr>
+
+<tr>
+<td align="left">Interface</td>
+<td align="center">HDMI * 1, USB * 2, 1000M Ethernet * 1</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="用途">用途</h3>
+
+<p>N1的核心功能就是看网络电视，主系统是Android 7，下载电视版APP可以看很多节目、电影等，如果通过刷机可以获得更多功能。刷Linux系统可以获得一台小型服务器，配合内网穿透和DDNS可以当一个低功耗小型服务器。可以作为下载服务器，有专门的下载优化固件，专注下载。N1的接口有: 网线接口、HDMI接口和两个USB2.0接口，需要大量文件传输的话速度比较一般。</p>
+
+<p>上周从PDD上买入N1，84元，价格还算可以。</p>
+
+<h3 id="折腾准备">折腾准备</h3>
+
+<h4 id="环境准备">环境准备</h4>
+
+<p>下载好adb相关的工具</p>
+
+<h4 id="降级">降级</h4>
+
+<p>当n1的系统版本在 V2.19 以上的都必须先降级才能刷机，由于我为了少折腾，直接买的是刷好了yyf的精简固件的，降级教程网上很多，此文章就忽略了。</p>
+
+<h4 id="刷入armbian">刷入armbian</h4>
+
+<h5 id="系统选择">系统选择</h5>
+
+<p>网上大神制作的N1系统有：debian、ubuntu、centos，参考网上反馈使用的稳定性，最终选择了ubuntu，</p>
+
+<p><code>Armbian_5.77_Aml-s905_Ubuntu_bionic_default_5.0.2_20190401.img.xz</code></p>
+
+<h5 id="制作u盘系统">制作U盘系统</h5>
+
+<p>本人使用的是闪迪的cz33，听说兼容性好点；</p>
+
+<p>使用<code>usbit</code>或者<code>win32diskimager</code>烧录固件到U盘，本文使用<code>usbit</code></p>
+
+<p><img src="/post/images/n1-1.jpg" alt="" /></p>
+
+<p><strong>注意此操作会格式化U盘</strong>，将一个8G以上的U盘插入电脑，在左侧选择U盘，然后再点击Restore，然后选择刚才解压出来的.img镜像，一路yes就会开始写入U盘，等着写入结束即可，当写入结束后，<strong>windows系统会弹出一个格式化的提示，此时不要点格式化，否则写入的系统会被清掉</strong></p>
+
+<h5 id="修改引导dtb">修改引导dtb</h5>
+
+<p>如果不修改dtb，可能会导致系统负载长期在2.0以上。</p>
+
+<p>刻录完的U盘会有一个可读取分区和一个不可读取分区，进入可读取的那个分区，把<code>meson-gxl-s905d-phicomm-n1-xiangsm.dtb</code>放到U盘的可读分区的dtb目录下，用<code>Notepad++</code>编辑uEnv.ini，<strong>切记不可用windows自带的记事本</strong>，把文件里的dtb_name后面的文件名换成<code>meson-gxl-s905d-phicomm-n1-xiangsm.dtb</code></p>
+
+<pre><code class="language-shell">#dtb_name=/dtb/meson-gxm-khadas-vim2.dtb
+dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
+</code></pre>
+
+<h5 id="修改系统可从u盘启动">修改系统可从U盘启动</h5>
+
+<ul>
+<li><p>把盒子插上显示器，查看盒子的ip地址，如：<code>192.168.1.100</code></p></li>
+
+<li><p>进入包含<code>adb.exe</code>目录，按住<code>shift</code>然后再点击右键，选择<code>在此处打开PowerShell窗口</code>，在打开的PowerShell窗口先后运行这两条指令</p></li>
+</ul>
+
+<pre><code class="language-shell">.\adb.exe connect 192.168.1.100
+.\adb.exe shell reboot update
+</code></pre>
+
+<ul>
+<li>执行完成后，看到显示器上盒子已经在重启阶段，迅速把U盘插到靠近hdmi口的usb口(听说这个口兼容性好点，具体未实验)，等待系统重启进入linux系统，<strong>此步骤中，切记不能开着盒子插入U盘，在安卓系统下插入U盘会导致U盘上的文件属组改变，可以等上面的adb命令执行完成后，关闭盒子，再插入U盘，再启动盒子</strong></li>
+</ul>
+
+<h5 id="初始化系统">初始化系统</h5>
+
+<p>如果有键盘，插入另一个usb口，输入登录账号<code>root</code>，root密码为<code>1234</code>，登录后提示创建用户，直接<code>ctrl+c</code></p>
+
+<p>取消即可。</p>
+
+<p>如果没有键盘，可以用<code>ScanPort.exe</code>来扫描网段内22端口的ip，或者直接去路由器上查看盒子的ip地址</p>
+
+<p>如果不需要把系统写入盒子的emmc中，整个过程就结束了</p>
+
+<p>用putty登录linux，如下</p>
+
+<p><img src="/post/images/n1-2.png" alt="" /></p>
+
+<h3 id="安装应用">安装应用</h3>
+
+<p>可以安装的应用挺多的，现在很多软件都有arm的，如：frp、n2n、php、nginx、docker等，等有空了把我阿里云上的typecho博客迁移到N1上来。</p>
+
+<p>人生在于折腾。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/n1/">n1</a>
+          
+          <a href="/tags/armbian/">armbian</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/nginx-websocket/">
+            <span class="next-text nav-default">Nginx反代Websocket 403报错</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><p>评论</p>
+		<div id="comment"></div>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	    
+		
+    <script type="text/javascript" src="/dist/Valine.min-1.1.9-beta3.js"></script>
+	
+    <script>
+		new Valine({
+			el: '#comment' ,
+			notify:false, 
+			verify:false, 
+			appId: 'oiStP1637Pxcj1BraQdcoSVS-gzGzoHsz',
+			appKey: '6r81YRVbRbjbfsLeLuU7DaxV',
+			placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+			path:window.location.pathname, 
+			avatar:'wavatar' 
+		});
+    </script>
+</body>
+</html>

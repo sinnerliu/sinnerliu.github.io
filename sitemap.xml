@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/feixun-n1-1/</loc>
+    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/nginx-websocket/</loc>
     <lastmod>2019-07-12T18:24:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -416,6 +423,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/armbian/</loc>
+    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/categories/</loc>
     <lastmod>2018-06-04T14:52:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -612,6 +626,20 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/n1/</loc>
+    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/n1/</loc>
+    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/n2n/</loc>
     <lastmod>2019-05-17T15:19:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -697,7 +725,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-07-12T18:24:50+08:00</lastmod>
+    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

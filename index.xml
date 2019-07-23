@@ -31,6 +31,144 @@
     </item>
     
     <item>
+      <title>斐讯N1折腾记1-刷入armbian</title>
+      <link>https://blog.gofinall.com/post/feixun-n1-1/</link>
+      <pubDate>Tue, 23 Jul 2019 10:26:06 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/feixun-n1-1/</guid>
+      <description>&lt;h3 id=&#34;n1介绍&#34;&gt;N1介绍&lt;/h3&gt;
+
+&lt;p&gt;斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。&lt;/p&gt;
+
+&lt;p&gt;如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;硬件配置&#34;&gt;硬件配置&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;N1&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;CPU&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Amlogic S905D, 4-Core Cortex-A53, 1.8Ghz&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;GPU&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Mail-450&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;RAM&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2G&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Storage&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;8G EMMC&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Network&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;BT4, 802.11 n/ac&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Interface&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;HDMI * 1, USB * 2, 1000M Ethernet * 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&#34;用途&#34;&gt;用途&lt;/h3&gt;
+
+&lt;p&gt;N1的核心功能就是看网络电视，主系统是Android 7，下载电视版APP可以看很多节目、电影等，如果通过刷机可以获得更多功能。刷Linux系统可以获得一台小型服务器，配合内网穿透和DDNS可以当一个低功耗小型服务器。可以作为下载服务器，有专门的下载优化固件，专注下载。N1的接口有: 网线接口、HDMI接口和两个USB2.0接口，需要大量文件传输的话速度比较一般。&lt;/p&gt;
+
+&lt;p&gt;上周从PDD上买入N1，84元，价格还算可以。&lt;/p&gt;
+
+&lt;h3 id=&#34;折腾准备&#34;&gt;折腾准备&lt;/h3&gt;
+
+&lt;h4 id=&#34;环境准备&#34;&gt;环境准备&lt;/h4&gt;
+
+&lt;p&gt;下载好adb相关的工具&lt;/p&gt;
+
+&lt;h4 id=&#34;降级&#34;&gt;降级&lt;/h4&gt;
+
+&lt;p&gt;当n1的系统版本在 V2.19 以上的都必须先降级才能刷机，由于我为了少折腾，直接买的是刷好了yyf的精简固件的，降级教程网上很多，此文章就忽略了。&lt;/p&gt;
+
+&lt;h4 id=&#34;刷入armbian&#34;&gt;刷入armbian&lt;/h4&gt;
+
+&lt;h5 id=&#34;系统选择&#34;&gt;系统选择&lt;/h5&gt;
+
+&lt;p&gt;网上大神制作的N1系统有：debian、ubuntu、centos，参考网上反馈使用的稳定性，最终选择了ubuntu，&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Armbian_5.77_Aml-s905_Ubuntu_bionic_default_5.0.2_20190401.img.xz&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;制作u盘系统&#34;&gt;制作U盘系统&lt;/h5&gt;
+
+&lt;p&gt;本人使用的是闪迪的cz33，听说兼容性好点；&lt;/p&gt;
+
+&lt;p&gt;使用&lt;code&gt;usbit&lt;/code&gt;或者&lt;code&gt;win32diskimager&lt;/code&gt;烧录固件到U盘，本文使用&lt;code&gt;usbit&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/n1-1.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意此操作会格式化U盘&lt;/strong&gt;，将一个8G以上的U盘插入电脑，在左侧选择U盘，然后再点击Restore，然后选择刚才解压出来的.img镜像，一路yes就会开始写入U盘，等着写入结束即可，当写入结束后，&lt;strong&gt;windows系统会弹出一个格式化的提示，此时不要点格式化，否则写入的系统会被清掉&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;修改引导dtb&#34;&gt;修改引导dtb&lt;/h5&gt;
+
+&lt;p&gt;如果不修改dtb，可能会导致系统负载长期在2.0以上。&lt;/p&gt;
+
+&lt;p&gt;刻录完的U盘会有一个可读取分区和一个不可读取分区，进入可读取的那个分区，把&lt;code&gt;meson-gxl-s905d-phicomm-n1-xiangsm.dtb&lt;/code&gt;放到U盘的可读分区的dtb目录下，用&lt;code&gt;Notepad++&lt;/code&gt;编辑uEnv.ini，&lt;strong&gt;切记不可用windows自带的记事本&lt;/strong&gt;，把文件里的dtb_name后面的文件名换成&lt;code&gt;meson-gxl-s905d-phicomm-n1-xiangsm.dtb&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#dtb_name=/dtb/meson-gxm-khadas-vim2.dtb
+dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;修改系统可从u盘启动&#34;&gt;修改系统可从U盘启动&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;把盒子插上显示器，查看盒子的ip地址，如：&lt;code&gt;192.168.1.100&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;进入包含&lt;code&gt;adb.exe&lt;/code&gt;目录，按住&lt;code&gt;shift&lt;/code&gt;然后再点击右键，选择&lt;code&gt;在此处打开PowerShell窗口&lt;/code&gt;，在打开的PowerShell窗口先后运行这两条指令&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;.\adb.exe connect 192.168.1.100
+.\adb.exe shell reboot update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;执行完成后，看到显示器上盒子已经在重启阶段，迅速把U盘插到靠近hdmi口的usb口(听说这个口兼容性好点，具体未实验)，等待系统重启进入linux系统，&lt;strong&gt;此步骤中，切记不能开着盒子插入U盘，在安卓系统下插入U盘会导致U盘上的文件属组改变，可以等上面的adb命令执行完成后，关闭盒子，再插入U盘，再启动盒子&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;初始化系统&#34;&gt;初始化系统&lt;/h5&gt;
+
+&lt;p&gt;如果有键盘，插入另一个usb口，输入登录账号&lt;code&gt;root&lt;/code&gt;，root密码为&lt;code&gt;1234&lt;/code&gt;，登录后提示创建用户，直接&lt;code&gt;ctrl+c&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;取消即可。&lt;/p&gt;
+
+&lt;p&gt;如果没有键盘，可以用&lt;code&gt;ScanPort.exe&lt;/code&gt;来扫描网段内22端口的ip，或者直接去路由器上查看盒子的ip地址&lt;/p&gt;
+
+&lt;p&gt;如果不需要把系统写入盒子的emmc中，整个过程就结束了&lt;/p&gt;
+
+&lt;p&gt;用putty登录linux，如下&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/n1-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;安装应用&#34;&gt;安装应用&lt;/h3&gt;
+
+&lt;p&gt;可以安装的应用挺多的，现在很多软件都有arm的，如：frp、n2n、php、nginx、docker等，等有空了把我阿里云上的typecho博客迁移到N1上来。&lt;/p&gt;
+
+&lt;p&gt;人生在于折腾。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Nginx反代Websocket 403报错</title>
       <link>https://blog.gofinall.com/post/nginx-websocket/</link>
       <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
@@ -670,54 +808,6 @@ themes/
 &lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
 
 &lt;p&gt;目前未知，本文留作记录，下次遇到了直接操作。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Tomcat8启动报there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache</title>
-      <link>https://blog.gofinall.com/post/tomcat8-error-cachemaxsize/</link>
-      <pubDate>Wed, 10 Apr 2019 16:29:25 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/tomcat8-error-cachemaxsize/</guid>
-      <description>&lt;p&gt;当用tomcat8启动工程的时候，日志报错&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;09-Dec-2016 10:57:49.150 WARNING [localhost-startStop-1] org.apache.catalina.webresources.Cache.getResource Unable to add the resource at [/WEB-INF/classes/struts/PersonnelActio
-n.xml] to the cache because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
-09-Dec-2016 10:57:51.729 SEVERE [localhost-startStop-1] org.apache.catalina.core.ContainerBase.addChildInternal ContainerBase.addChild: start:
- org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[]]
-        at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:158)
-        at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:724)
-        at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:700)
-        at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:734)
-        at org.apache.catalina.startup.HostConfig.deployDirectory(HostConfig.java:1107)
-        at org.apache.catalina.startup.HostConfig$DeployDirectory.run(HostConfig.java:1841)
-        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-        at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-        at java.lang.Thread.run(Thread.java:745)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
-
-&lt;p&gt;console警告缓存不够。&lt;/p&gt;
-
-&lt;p&gt;根据apache官方文档：
-&lt;a href=&#34;http://tomcat.apache.org/tomcat-8.0-doc/config/resources.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://tomcat.apache.org/tomcat-8.0-doc/config/resources.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The maximum size of the static resource cache in kilobytes. If not specified, the default value is 10240 (10 megabytes). This value may be changed while the web application is running (e.g. via JMX). If the cache is using more memory than the new limit the cache will attempt to reduce in size over time to meet the new limit. If necessary, cacheObjectMaxSize will be reduced to ensure that it is no larger than cacheMaxSize/20.&lt;/p&gt;
-
-&lt;p&gt;静态资源缓存的最大大小，以&lt;strong&gt;千字节&lt;/strong&gt;为单位。如果未指定，则默认值为&lt;strong&gt;10240（10兆字节）&lt;/strong&gt;。在Web应用程序运行时（例如，通过JMX），可能需要更改此值。如果缓存使用的内存大于新的限制，则缓存将尝试缩小规模以适应新的限制。如有必要，cacheObjectMaxSize将被缩小以确保它不大于设置的cacheMaxSize 值的1/ 20。&lt;/p&gt;
-
-&lt;h3 id=&#34;解决办法&#34;&gt;解决办法&lt;/h3&gt;
-
-&lt;p&gt;tomcat8以上对resource采取了cache，而默认的大小是10M. 可能超过了此限制。&lt;/p&gt;
-
-&lt;p&gt;解决的办法是在context.xml中调大缓存即可，加在&lt;code&gt;&amp;lt;/context&amp;gt;&lt;/code&gt;前就行。具体如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;&amp;lt;Resources cachingAllowed=&amp;quot;true&amp;quot; cacheMaxSize=&amp;quot;1000000&amp;quot; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

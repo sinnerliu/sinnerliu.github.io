@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Armbian on 终点站</title>
+    <link>https://blog.gofinall.com/tags/armbian/</link>
+    <description>Recent content in Armbian on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 23 Jul 2019 10:26:06 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/armbian/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>斐讯N1折腾记1-刷入armbian</title>
+      <link>https://blog.gofinall.com/post/feixun-n1-1/</link>
+      <pubDate>Tue, 23 Jul 2019 10:26:06 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/feixun-n1-1/</guid>
+      <description>&lt;h3 id=&#34;n1介绍&#34;&gt;N1介绍&lt;/h3&gt;
+
+&lt;p&gt;斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。&lt;/p&gt;
+
+&lt;p&gt;如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
