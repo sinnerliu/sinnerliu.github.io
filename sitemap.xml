@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/changchun-1/</loc>
+    <lastmod>2019-08-13T16:42:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/feixun-n1-1/</loc>
     <lastmod>2019-07-23T10:26:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -725,7 +732,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2019-07-23T10:26:06+08:00</lastmod>
+    <lastmod>2019-08-13T16:42:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -999,6 +1006,20 @@
   <url>
     <loc>https://blog.gofinall.com/categories/%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/</loc>
     <lastmod>2018-01-16T15:04:03+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/%E9%97%B2%E8%B0%88/</loc>
+    <lastmod>2019-08-13T16:42:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/%E9%97%B2%E8%B0%88/</loc>
+    <lastmod>2019-08-13T16:42:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

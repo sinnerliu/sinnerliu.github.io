@@ -31,6 +31,41 @@
     </item>
     
     <item>
+      <title>又一次长春出差后的感想</title>
+      <link>https://blog.gofinall.com/post/changchun-1/</link>
+      <pubDate>Tue, 13 Aug 2019 16:42:11 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/changchun-1/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;又一次长春出差，直达的飞机差不多5小时，本就疲惫不堪，但是下飞机后打出租车更让人心累；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;经历&#34;&gt;经历&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2014年的时候，去过一次长春，从机场打出租车到市区，出租车司机不按照打表的价格收费，要价150，实际打表的价格在110多点，由于出差，需要发票报销，出租车司机说给定额票，在人家地盘上，我也不敢说啥；&lt;/li&gt;
+&lt;li&gt;2015年的时候，又去了一次长春，打出租车照旧喊价，但是不是给的定额票，司机直接从车里拿出另一个‘计价器’，问要好多的票，他们直接用这个‘计价器’打出来；&lt;/li&gt;
+&lt;li&gt;2016年的时候，又又去了一次长春，打车还是老规矩，更要命的是去机场的时候，把我和另一个同事直接丢路上，让我们去坐另外的出租车，上车一看，车上已经有两个去机场，然后我们四个大老爷们挤着去了机场，但这次是按照打表给的票；&lt;/li&gt;
+&lt;li&gt;前段时间，又又又去了一次长春，上出租车，师傅说打表，心想着这次出租车良心了，但是到了目的地后，打表的价格是160多，记得上次打表才110左右，我也不敢问，给钱拿票走人；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;感想&#34;&gt;感想&lt;/h3&gt;
+
+&lt;p&gt;出租车是一个城市的门面，尤其是跑机场、火车站，外地人来了接触的第一个本地事物，不应该有喊价、调表(猜测)、强制拼车等行为，给人留下的印象不好；又加上大部分东北爷们脾气暴躁(网传)，又不敢给他们理论，也就只有默默的接受了。&lt;/p&gt;
+
+&lt;h3 id=&#34;建议&#34;&gt;建议&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;网约车：去机场和到市区，可以打网约车，价格是平台订的，相对透明，不坑；&lt;/li&gt;
+&lt;li&gt;城际火车：不赶时间的，或者去市中心附近的，可以坐城际火车，价格便宜(10块左右)，时间快(10多分钟)，城际火车大概是1个小时一趟，可以直接在机场下面坐，或者从市中心的火车站坐到机场。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上是个人实际经历，勿怼。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>斐讯N1折腾记1-刷入armbian</title>
       <link>https://blog.gofinall.com/post/feixun-n1-1/</link>
       <pubDate>Tue, 23 Jul 2019 10:26:06 +0800</pubDate>
@@ -783,35 +818,6 @@ themes/
 &lt;p&gt;git push origin master&lt;/p&gt;
 
 &lt;p&gt;去远程git库看一下，已经提交上去了。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Windows远程桌面(mstsc)不能复制粘贴的解决办法</title>
-      <link>https://blog.gofinall.com/post/windows-mstsc-copy/</link>
-      <pubDate>Wed, 10 Apr 2019 16:44:16 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/windows-mstsc-copy/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;原来通过mstsc远程连接Windows能够直接在本地和服务器之间复制、粘贴一些文字和文件，最近突然无法直接复制粘贴了，只能通过远程映射的本地磁盘方式交换文件；&lt;/p&gt;
-
-&lt;p&gt;已经确认远程桌面连接选项“本地资源-》本地设备和资源-》剪贴板”中勾选了剪贴板。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;解决办法&#34;&gt;解决办法&lt;/h3&gt;
-
-&lt;p&gt;在远程Windows服务器中重启“rdpclip.exe”进程即可。&lt;/p&gt;
-
-&lt;p&gt;1、打开资源管理器，杀掉rdpclip.exe进程；&lt;/p&gt;
-
-&lt;p&gt;2、开始——》运行，输入：rdpclip.exe，回车重启该进程。&lt;/p&gt;
-
-&lt;p&gt;3、此时粘贴文件或者文字发现已经可以粘贴了。&lt;/p&gt;
-
-&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
-
-&lt;p&gt;目前未知，本文留作记录，下次遇到了直接操作。&lt;/p&gt;</description>
     </item>
     
   </channel>
