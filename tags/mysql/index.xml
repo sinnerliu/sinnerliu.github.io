@@ -6,10 +6,23 @@
     <description>Recent content in Mysql on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 02 Mar 2018 14:51:39 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 17:15:21 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL的json使用记录</title>
+      <link>https://blog.gofinall.com/post/mysql-json/</link>
+      <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-json/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>MySQL中utf8和utf8mb4的区别</title>

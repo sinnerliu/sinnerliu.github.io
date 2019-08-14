@@ -31,6 +31,59 @@
     </item>
     
     <item>
+      <title>MySQL的json使用记录</title>
+      <link>https://blog.gofinall.com/post/mysql-json/</link>
+      <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/mysql-json/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;常用使用方法&#34;&gt;常用使用方法&lt;/h3&gt;
+
+&lt;h4 id=&#34;创建有json字段的表&#34;&gt;创建有json字段的表&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 创建表
+CREATE TABLE table_json(id INT PRIMARY KEY, sname VARCHAR(20) , info  JSON);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;查询记录&#34;&gt;查询记录&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 查询记录
+SELECT sname,JSON_EXTRACT(info,&#39;$.age&#39;) FROM table_json;
+SELECT sname,info-&amp;gt;&#39;$.age&#39; FROM table_json;
+-- 查询key
+SELECT id,json_keys(info) FROM table_json;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;修改记录&#34;&gt;修改记录&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 增加键
+UPDATE table_json SET info = json_set(info,&#39;$.ip&#39;,&#39;192.168.1.1&#39;) WHERE id = 2;
+
+-- 变更值
+UPDATE table_json SET info = json_set(info,&#39;$.ip&#39;,&#39;192.168.1.2&#39;) WHERE id = 2;
+
+-- 删除键
+UPDATE table_json SET info = json_remove(info,&#39;$.ip&#39;) WHERE id = 2;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;插入&#34;&gt;插入&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;UPDATE table_json SET info = JSON_INSERT(info,&#39;$.user-agent&#39;,&#39;chrome&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/ooo0/p/9309277.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.cnblogs.com/ooo0/p/9309277.html&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>又一次长春出差后的感想</title>
       <link>https://blog.gofinall.com/post/changchun-1/</link>
       <pubDate>Tue, 13 Aug 2019 16:42:11 +0800</pubDate>
@@ -774,50 +827,6 @@ n2nedge_v2s   Link encap:Ethernet  HWaddr 31:29:35:FB:C7:5B
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  Rx REGISTER_SUPER_ACK myMAC=1D:C9:00:00:00:00 [123.249.20.254:10088] (external 218.89.10.162:42858). Attempts 2
   WARNING: Rx REGISTER_SUPER_ACK with wrong or old cookie.
 &lt;/code&gt;&lt;/pre&gt;</description>
-    </item>
-    
-    <item>
-      <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>
-      <link>https://blog.gofinall.com/post/git-add-error-unpopulated/</link>
-      <pubDate>Wed, 10 Apr 2019 17:09:29 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/git-add-error-unpopulated/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;用hugo搭建了个博客，我把博客的data目录提交到git上做备份，把public提交到pages上。但是在备份data目录的时候有点问题；&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;目录结构如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;D:\hugo\data
-archetypes/ 
-config.toml 
-content/    
-data/       
-layouts/    
-public/     
-readme.md   
-resources/  
-static/     
-themes/     
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我在 data/ 目录下add commit push 后发现远程仓库内并没有themes/的内容，于是我在themes/ 下执行 ”git add .” 提示：“in unpopulated submodule ‘themes’ ”&lt;/p&gt;
-
-&lt;h3 id=&#34;解决方法&#34;&gt;解决方法&lt;/h3&gt;
-
-&lt;p&gt;在 data/ 下输入”git rm -r –cached themes/“&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;注意：是themes/ ，意为themes目录及子目录&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;在 data/ 下输入”git add themes”&lt;/p&gt;
-
-&lt;p&gt;git commit -m “ ”&lt;/p&gt;
-
-&lt;p&gt;git push origin master&lt;/p&gt;
-
-&lt;p&gt;去远程git库看一下，已经提交上去了。&lt;/p&gt;</description>
     </item>
     
   </channel>
