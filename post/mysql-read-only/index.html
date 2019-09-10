@@ -74,7 +74,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 
 <meta itemprop="datePublished" content="2019-09-10T15:48:06&#43;08:00" />
 <meta itemprop="dateModified" content="2019-09-10T15:48:06&#43;08:00" />
-<meta itemprop="wordCount" content="332">
+<meta itemprop="wordCount" content="340">
 
 
 
@@ -207,9 +207,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 
 <p>mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下</p>
 
-<ol>
-<li>查看mysql的事物隔离级别  <code>SHOW VARIABLES LIKE '%iso%';</code></li>
-</ol>
+<p>1.查看mysql的事物隔离级别  <code>SHOW VARIABLES LIKE '%iso%';</code></p>
 
 <pre><code class="language-shell">mysql&gt; SHOW VARIABLES LIKE '%iso%';
 +------------------------+-----------------+
@@ -221,9 +219,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 2 row in set (0.00 sec)
 </code></pre>
 
-<ol>
-<li>修改mysql事务隔离级别</li>
-</ol>
+<p>2.修改mysql事务隔离级别</p>
 
 <pre><code class="language-shell">mysql&gt; SET GLOBAL tx_isolation='READ-COMMITTED'; 
 Query OK,0 rows affected (0.00 sec)
@@ -232,15 +228,11 @@ mysql&gt; SET GLOBAL transaction_isolation='READ-COMMITTED';
 Query OK,0 rows affected (0.00 sec)
 </code></pre>
 
-<ol>
-<li>修改my.cnf，让配置永久生效</li>
-</ol>
+<p>3.修改my.cnf，让配置永久生效</p>
 
 <p>在<code>/etc/my.cnf</code>(位置可能不一样)的<code>[mysqld]</code>后面添加<code>transaction_isolation = READ-COMMITTED</code></p>
 
-<ol>
-<li>检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；</li>
-</ol>
+<p>4.检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；</p>
 
 <pre><code class="language-shell">mysql&gt; SHOW VARIABLES LIKE '%iso%';
 +------------------------+-----------------+

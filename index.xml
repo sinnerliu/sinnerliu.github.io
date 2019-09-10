@@ -51,9 +51,7 @@
 
 &lt;p&gt;mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下&lt;/p&gt;
 
-&lt;ol&gt;
-&lt;li&gt;查看mysql的事物隔离级别  &lt;code&gt;SHOW VARIABLES LIKE &#39;%iso%&#39;;&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;1.查看mysql的事物隔离级别  &lt;code&gt;SHOW VARIABLES LIKE &#39;%iso%&#39;;&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
 +------------------------+-----------------+
@@ -65,9 +63,7 @@
 2 row in set (0.00 sec)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;ol&gt;
-&lt;li&gt;修改mysql事务隔离级别&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;2.修改mysql事务隔离级别&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SET GLOBAL tx_isolation=&#39;READ-COMMITTED&#39;; 
 Query OK,0 rows affected (0.00 sec)
@@ -76,15 +72,11 @@ mysql&amp;gt; SET GLOBAL transaction_isolation=&#39;READ-COMMITTED&#39;;
 Query OK,0 rows affected (0.00 sec)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;ol&gt;
-&lt;li&gt;修改my.cnf，让配置永久生效&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;3.修改my.cnf，让配置永久生效&lt;/p&gt;
 
 &lt;p&gt;在&lt;code&gt;/etc/my.cnf&lt;/code&gt;(位置可能不一样)的&lt;code&gt;[mysqld]&lt;/code&gt;后面添加&lt;code&gt;transaction_isolation = READ-COMMITTED&lt;/code&gt;&lt;/p&gt;
 
-&lt;ol&gt;
-&lt;li&gt;检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;4.检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
 +------------------------+-----------------+
