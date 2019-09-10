@@ -31,6 +31,73 @@
     </item>
     
     <item>
+      <title>Mysql出现Could not retrieve transaction read-only status from server报错</title>
+      <link>https://blog.gofinall.com/post/mysql-read-only/</link>
+      <pubDate>Tue, 10 Sep 2019 15:48:06 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/mysql-read-only/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;mysql在java连接数据库的时候，&lt;code&gt;偶发性&lt;/code&gt;的出现如下错误：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;解决办法&#34;&gt;解决办法&lt;/h3&gt;
+
+&lt;p&gt;mysql版本：&lt;code&gt;5.7.25&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;查看mysql的事物隔离级别  &lt;code&gt;SHOW VARIABLES LIKE &#39;%iso%&#39;;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
++------------------------+-----------------+
+| Variable_name          | Value           |
++------------------------+-----------------+
+| transaction_isolation  | REPEATABLE-READ |
+| tx_isolation           | REPEATABLE-READ |
++------------------------+-----------------+
+2 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;修改mysql事务隔离级别&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SET GLOBAL tx_isolation=&#39;READ-COMMITTED&#39;; 
+Query OK,0 rows affected (0.00 sec)
+
+mysql&amp;gt; SET GLOBAL transaction_isolation=&#39;READ-COMMITTED&#39;; 
+Query OK,0 rows affected (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;修改my.cnf，让配置永久生效&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在&lt;code&gt;/etc/my.cnf&lt;/code&gt;(位置可能不一样)的&lt;code&gt;[mysqld]&lt;/code&gt;后面添加&lt;code&gt;transaction_isolation = READ-COMMITTED&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
++------------------------+-----------------+
+| Variable_name          | Value           |
++------------------------+-----------------+
+| transaction_isolation  | READ-COMMITTED |
+| tx_isolation           | READ-COMMITTED |
++------------------------+-----------------+
+2 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
       <title>MySQL常用json方法使用记录</title>
       <link>https://blog.gofinall.com/post/mysql-json/</link>
       <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
@@ -623,210 +690,6 @@ iptables -t nat -A POSTROUTING -j MASQUERADE
 &lt;ul&gt;
 &lt;li&gt;验证，在配置路由表的电脑上ping内网的ip&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>内网穿透之n2n-介绍及使用说明</title>
-      <link>https://blog.gofinall.com/post/n2n-p2p-introduce/</link>
-      <pubDate>Fri, 17 May 2019 12:01:09 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/n2n-p2p-introduce/</guid>
-      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.ntop.org/products/n2n/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;N2N &lt;/a&gt;是一款开源的P2P v+p+n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;N2N 是一个双层架构的v+p+n ，它让用户可以在网络层上开发P2P应用的典型功能，而不是在应用层上开发。这意味着用户可以获取本地IP一样的可见度（比如说，同一个n2n网络内的两台PC机可以相互ping通），并且可以通过n2n虚拟网内的IP地址相互访问，而不必关心当前所属的物理网络地址。可以这样说，OpenV+P+N是把SSL从应用层转移到网络层实现（比如说实现https协议），而n2n则是把P2P的实现从应用层转移到网络层。&lt;/p&gt;
-
-&lt;h3 id=&#34;架构&#34;&gt;架构&lt;/h3&gt;
-
-&lt;p&gt;Edge 节点：用户PC 机上安装的用于建立n2n网络的软件。几乎每个edge节点都会建立一个tun/tap设备，作为接入n2n网络的入口。&lt;/p&gt;
-
-&lt;p&gt;Supernode 超级节点：它在edge 节点间建立握手，或为位于防火墙之后的节点中转数据。它的基础作用是注册节点的网络路径，并为不能直通的节点做路由，能够直通的节点间通信，是P2P的。&lt;/p&gt;
-
-&lt;p&gt;Edge 节点间通过虚拟的tap 网卡交互。每个tap网卡都是一个n2n edge节点。每台PC机可以有多个tap网卡，所以，在n2n网络中，同一台PC机可以属于多个网络。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/n2n1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;其中super node 提供场所，让两个位于NAT/防火墙之后的edge node进行会面，一旦双方完成首次握手，剩下的数据流就之发生在两个edge node之间，如果有一方的NAT属于对称型(symmetrical)，super node则还需继续为双方提供数据包的转发;edge node负责数据流的加解密，原理很简单。&lt;/p&gt;
-
-&lt;h3 id=&#34;与传统的v-p-n的优点&#34;&gt;与传统的v+p+n的优点&lt;/h3&gt;
-
-&lt;p&gt;大部分v+p+n，都是通过服务器中转，而n2n是通过udp协议，在两边edge的NAT情况比较好的情况下，会建立两个edge之间的&lt;strong&gt;直接连接&lt;/strong&gt;，一个北京和一个重庆的两个edge服务器，如果直连成功，之间的下载速度可以达到 n MB/s；当网络条件比较恶劣的时候，数据会从supernode中转，速度就靠到supernode的速度决定；&lt;/p&gt;
-
-&lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
-
-&lt;h4 id=&#34;地址&#34;&gt;地址&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;v1: &lt;a href=&#34;https://github.com/meyerd/n2n/tree/master/n2n_v1&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/meyerd/n2n/tree/master/n2n_v1&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;v2: &lt;a href=&#34;https://github.com/ntop/n2n&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/ntop/n2n&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;v2.1(v2s): &lt;a href=&#34;https://github.com/meyerd/n2n/tree/master/n2n_v2&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/meyerd/n2n/tree/master/n2n_v2&lt;/a&gt; &lt;strong&gt;非官方版本，与官方的 v2 不兼容&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安卓版本: &lt;a href=&#34;https://github.com/switch-iot/hin2n&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/switch-iot/hin2n&lt;/a&gt; (最新版本支持v1、v2、v2s)&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;通过网友的测试，n2n_v2s直连概率比较高，所以本文暂时只介绍n2n_v2s的安装及使用方法&lt;/p&gt;
-
-&lt;h4 id=&#34;安装方法&#34;&gt;安装方法&lt;/h4&gt;
-
-&lt;p&gt;详见 &lt;a href=&#34;https://github.com/meyerd/n2n/wiki&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/meyerd/n2n/wiki&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;使用方法&#34;&gt;使用方法&lt;/h3&gt;
-
-&lt;h4 id=&#34;supernode&#34;&gt;supernode&lt;/h4&gt;
-
-&lt;p&gt;在有公网的的服务器上安装supernode，为了区分其他版本，重命名为supernode_v2s&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[root@localhost ~]# supernode_v2s --help
-supernode_v2s usage
--l &amp;lt;lport&amp;gt;      Set UDP main listen port to &amp;lt;lport&amp;gt;
--f              Run in foreground.
--u &amp;lt;UID&amp;gt;        User ID (numeric) to use when privileges are dropped.
--g &amp;lt;GID&amp;gt;        Group ID (numeric) to use when privileges are dropped.
--v              Increase verbosity. Can be used multiple times.
--h              This help message.
-
-# 启动supernode
-[root@localhost ~]# supernode_v2s -l 10088
-
-[root@localhost ~]# ps -ef|grep supernode_v2s
-root     21024     1  0 Apr25 ?        00:03:59 supernode_v2s -l 10088
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;edge&#34;&gt;edge&lt;/h4&gt;
-
-&lt;p&gt;在内网电脑上安装edge，为了区分其他版本，重命名为edge_v2s&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[root@localhost1 ~]# edge_v2s --help
-Welcome to n2n v.2.1.0 for Linux-2.6.32-642.el6.x86_64
-Built on Jun 12 2018 18:21:36
-Copyright 2007-09 - http://www.ntop.org
-
-edge -d &amp;lt;tun device&amp;gt; -a [static:|dhcp:]&amp;lt;tun IP address&amp;gt; -c &amp;lt;community&amp;gt; [-k &amp;lt;encrypt key&amp;gt; | -K &amp;lt;key file&amp;gt;] [-s &amp;lt;netmask&amp;gt;] [-u &amp;lt;uid&amp;gt; -g &amp;lt;gid&amp;gt;][-f][-m &amp;lt;MAC address&amp;gt;]
--l &amp;lt;supernode host:port&amp;gt; [-p &amp;lt;local port&amp;gt;] [-M &amp;lt;mtu&amp;gt;] [-r] [-E] [-v] [-t &amp;lt;mgmt port&amp;gt;] [-b] [-h]
-
--d &amp;lt;tun device&amp;gt;          | tun device name
--a &amp;lt;mode:address&amp;gt;        | Set interface address. For DHCP use &#39;-r -a dhcp:0.0.0.0&#39;
--c &amp;lt;community&amp;gt;           | n2n community name the edge belongs to.
--k &amp;lt;encrypt key&amp;gt;         | Encryption key (ASCII) - also N2N_KEY=&amp;lt;encrypt key&amp;gt;. Not with -K.
--K &amp;lt;key file&amp;gt;            | Specify a key schedule file to load. Not with -k.
--s &amp;lt;netmask&amp;gt;             | Edge interface netmask in dotted decimal notation (255.255.255.0).
--l &amp;lt;supernode host:port&amp;gt; | Supernode IP:port
--L &amp;lt;local_ip&amp;gt;            | Add local ip to bypass between same nat problem
--i &amp;lt;interval&amp;gt;            | Set the NAT hole-punch interval (default 20seconds)
--b                       | Periodically resolve supernode IP
-                         : (when supernodes are running on dynamic IPs)
--p &amp;lt;local port&amp;gt;          | Fixed local UDP port.
--u &amp;lt;UID&amp;gt;                 | User ID (numeric) to use when privileges are dropped.
--g &amp;lt;GID&amp;gt;                 | Group ID (numeric) to use when privileges are dropped.
--f                       | Do not fork and run as a daemon; rather run in foreground.
--m &amp;lt;MAC address&amp;gt;         | Fix MAC address for the TAP interface (otherwise it may be random)
-                         : eg. -m 01:02:03:04:05:06
--M &amp;lt;mtu&amp;gt;                 | Specify n2n MTU of edge interface (default 1400).
--r                       | Enable packet forwarding through n2n community.
--E                       | Accept multicast MAC addresses (default=drop).
--v                       | Make more verbose. Repeat as required.
--t                       | Management UDP Port (for multiple edges on a machine).
-
-Environment variables:
-  N2N_KEY                | Encryption key (ASCII). Not with -K or -k.
-  
-# 启动edge
-[root@localhost1 ~]# edge_v2s -d n2nedge_v2s -a 172.10.2.200 -c community -u 604 -g 604 -k passwod -l 222.222.222.222:10088 -m 31:29:35:FB:C7:5B -r -L 192.168.1.100
-
-# 查看edge的ip
-[root@localhost1 ~]# ifconfig |grep 172.10.2.200
-n2nedge_v2s   Link encap:Ethernet  HWaddr 31:29:35:FB:C7:5B  
-              inet addr:172.10.2.200  Bcast:172.10.2.255  Mask:255.255.255.0
-              inet6 addr: fe80::fe0c:8eef:f86e:d10/64 Scope:Link
-              TX packets:1096871 errors:0 dropped:0 overruns:0 carrier:0
-              TX packets:470900375 errors:0 dropped:0 overruns:3105 carrier:0
-              RX bytes:11377271 (10.8 MiB)  TX bytes:41626135028 (38.7 GiB)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;常用参数说明：&lt;/p&gt;
-
-&lt;p&gt;-d：虚拟网卡名称&lt;/p&gt;
-
-&lt;p&gt;-a：n2n网卡的ip地址，即本机的n2n的ip&lt;/p&gt;
-
-&lt;p&gt;-c：n2n组，只有相同组的edge之间才能进行通讯&lt;/p&gt;
-
-&lt;p&gt;-u：如果不想用root来运行edge，则可指定本机账号的uid，windows下可忽略&lt;/p&gt;
-
-&lt;p&gt;-g：如果不想用root来运行edge，则可指定本机账号的groupid，windows下可忽略&lt;/p&gt;
-
-&lt;p&gt;-k：edge的加密密码&lt;/p&gt;
-
-&lt;p&gt;-l：supernode的ip和端口&lt;/p&gt;
-
-&lt;p&gt;-m：n2n虚拟网卡的MAC地址&lt;/p&gt;
-
-&lt;p&gt;-r：运行edge进行数据转发&lt;/p&gt;
-
-&lt;p&gt;-L：本机的内网地址，可以帮助同一个内网之间的通讯为直连，目前是v2s版本特有参数，官方版本暂无&lt;/p&gt;
-
-&lt;p&gt;-b：解析域名对应的ip，适用于supernode的ip使用域名来进行连接&lt;/p&gt;
-
-&lt;p&gt;在内网的另外一台机器上安装edge_v2s，启动的参数除了-u、-g、-m、-L与另一个edge参数不同外，其他参数要一致，如&lt;code&gt;edge_v2s -d n2nedge_v2s -a 172.10.2.210 -c community -u 500 -g 500 -k passwod -l 222.222.222.222:10088 -m 8B:2A:76:3F:C0:7B -r -L 192.168.1.110&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;附一个MAC地址在线生成：&lt;a href=&#34;http://www.99cankao.com/digital-computation/mac-address-generator.php&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://www.99cankao.com/digital-computation/mac-address-generator.php&lt;/a&gt;&lt;/p&gt;
-
-&lt;h5 id=&#34;edge连接测试&#34;&gt;edge连接测试&lt;/h5&gt;
-
-&lt;p&gt;在多个edge之间相互ping看是否能通，然后通过n2n的内网ip访问下载服务，查看下载速度；&lt;/p&gt;
-
-&lt;h4 id=&#34;通讯速度和网络运营商的关系&#34;&gt;通讯速度和网络运营商的关系&lt;/h4&gt;
-
-&lt;p&gt;目前来看，电信+电信直连概率大，速度快；最差的是移动；&lt;/p&gt;
-
-&lt;h3 id=&#34;常见问题&#34;&gt;常见问题&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;怎么知道自己的 edge 是否已经与中心节点 supernode 连接成功了？&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;针对 N2N_V2 每两分钟显示一条，V2s 则每 25s 一条下面的信息
-  关键字：Rx REGISTER_SUPER_ACK myMAC&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  Rx REGISTER_SUPER_ACK myMAC=EE:DC:38:99:C9:42 [123.249.20.254:10086] (external 218.89.10.162:50021). Attempts 2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;如果中心节点 supernode 失效了会是什么样子呢？&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;针对 edge_v1，则每分钟显示&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Registering with supernode
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;针对 edge_v2，则每 40 秒显示，针对 edge_v2s，则每 20 秒显示&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;WARNING: Supernode not responding - moving to 0 of 1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;如果 edge 与 supernode 的版本对应错了，会是什么样子的？&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;edge_v1 试图与 supernode_v2 或 v2s 连接（每分钟出现一条下面的信息）&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Registering with supernode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;edge_v2 或 v2s 试图与 supernode_v1 连接时，反复出现如下信息（V2 每 40 秒，v2s 每 20 秒）&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;WARNING: Supernode not responding - moving to 0 of 1&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;edge_v2 试图与 supernode_v2s（v2s 试图与 V2）连接时，反复出现如下信息（V2 每 10 秒，v2s 每 5 秒）&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  Rx REGISTER_SUPER_ACK myMAC=1D:C9:00:00:00:00 [123.249.20.254:10088] (external 218.89.10.162:42858). Attempts 2
-  WARNING: Rx REGISTER_SUPER_ACK with wrong or old cookie.
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

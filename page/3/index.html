@@ -52,7 +52,7 @@
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.gofinall.com/" />
-<meta property="og:updated_time" content="2018-10-11T18:42:18&#43;08:00"/>
+<meta property="og:updated_time" content="2018-11-21T19:36:42&#43;08:00"/>
 <meta itemprop="name" content="终点站">
 <meta itemprop="description" content="Hugo theme even example site.">
 
@@ -126,6 +126,33 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/shell-grep-wc/">记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-11-21 </span>
+      <div class="post-category">
+          
+            <a href="/categories/linux/"> linux </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/shell-grep-wc/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     
       <article class="post">
   <header class="post-header">
@@ -390,35 +417,6 @@ ERROR：Fatal error in launcher: Unable to create process using '&quot;'
     </div>
     <div class="read-more">
       <a href="/post/flashplayer-2144-2/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/centos-rc.local/">Centos7下rc.local文件开机不执行</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-07-09 </span>
-      <div class="post-category">
-          
-            <a href="/categories/linux/"> linux </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h3 id="背景">背景</h3>
-
-<p>centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/centos-rc.local/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
