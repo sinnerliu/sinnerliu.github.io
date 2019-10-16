@@ -74,7 +74,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 
 <meta itemprop="datePublished" content="2019-09-10T15:48:06&#43;08:00" />
 <meta itemprop="dateModified" content="2019-09-10T15:48:06&#43;08:00" />
-<meta itemprop="wordCount" content="340">
+<meta itemprop="wordCount" content="553">
 
 
 
@@ -183,6 +183,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 <ul>
 <li><a href="#问题现象">问题现象</a></li>
 <li><a href="#解决办法">解决办法</a></li>
+<li><a href="#后续问题">后续问题</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -204,6 +205,8 @@ Could not retrieve transaction read-only status from server, nested exception is
 <h3 id="解决办法">解决办法</h3>
 
 <p>mysql版本：<code>5.7.25</code></p>
+
+<p>mysql jdbc驱动包：mysql-connector-java-5.1.47.jar</p>
 
 <p>mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下</p>
 
@@ -243,6 +246,17 @@ Query OK,0 rows affected (0.00 sec)
 +------------------------+-----------------+
 2 row in set (0.00 sec)
 </code></pre>
+
+<h3 id="后续问题">后续问题</h3>
+
+<p>经过上面的修改，一段时间后还是出现了该问题，偶发出现，尝试方法有两个：</p>
+
+<ul>
+<li>把驱动包降到5.1.30还是有问题，尝试把驱动包升到mysql-connector-java-8.0.17.jar</li>
+<li>在jdbc串后面加参数：<code>failOverReadOnly=false</code>  <strong>自动重连成功后，连接是否设置为只读</strong></li>
+</ul>
+
+<p>通过上面两种方式修改后，再观察下。/(ㄒoㄒ)/~~</p>
     </div>
 
     

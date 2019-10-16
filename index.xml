@@ -49,6 +49,8 @@
 
 &lt;p&gt;mysql版本：&lt;code&gt;5.7.25&lt;/code&gt;&lt;/p&gt;
 
+&lt;p&gt;mysql jdbc驱动包：mysql-connector-java-5.1.47.jar&lt;/p&gt;
+
 &lt;p&gt;mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下&lt;/p&gt;
 
 &lt;p&gt;1.查看mysql的事物隔离级别  &lt;code&gt;SHOW VARIABLES LIKE &#39;%iso%&#39;;&lt;/code&gt;&lt;/p&gt;
@@ -86,7 +88,18 @@ Query OK,0 rows affected (0.00 sec)
 | tx_isolation           | READ-COMMITTED |
 +------------------------+-----------------+
 2 row in set (0.00 sec)
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;后续问题&#34;&gt;后续问题&lt;/h3&gt;
+
+&lt;p&gt;经过上面的修改，一段时间后还是出现了该问题，偶发出现，尝试方法有两个：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;把驱动包降到5.1.30还是有问题，尝试把驱动包升到mysql-connector-java-8.0.17.jar&lt;/li&gt;
+&lt;li&gt;在jdbc串后面加参数：&lt;code&gt;failOverReadOnly=false&lt;/code&gt;  &lt;strong&gt;自动重连成功后，连接是否设置为只读&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;通过上面两种方式修改后，再观察下。/(ㄒoㄒ)/~~&lt;/p&gt;</description>
     </item>
     
     <item>
