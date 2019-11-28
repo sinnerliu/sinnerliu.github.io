@@ -31,6 +31,80 @@
     </item>
     
     <item>
+      <title>MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</title>
+      <link>https://blog.gofinall.com/post/mysql-localhost/</link>
+      <pubDate>Thu, 28 Nov 2019 13:23:54 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/mysql-localhost/</guid>
+      <description>&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
+
+&lt;p&gt;Whenever you specify &amp;ldquo;localhost&amp;rdquo; or &amp;ldquo;localhost:port&amp;rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &amp;ldquo;127.0.0.1&amp;rdquo; instead of &amp;ldquo;localhost&amp;rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.&lt;/p&gt;
+
+&lt;p&gt;localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;为什么我使用-localhost-一直没出问题&#34;&gt;为什么我使用 localhost 一直没出问题&lt;/h3&gt;
+
+&lt;p&gt;因为你的本机中只有一个 mysql 进程， 如果你有一个 node1 运行在 3306， 有一个 node2 运行在 3307&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u root -h localhost -P 3306
+mysql -u root -h localhost -P 3307
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;都会连接到同一个 mysql 进程， 因为 localhost 使用 Linux socket， 所以 -P 字段直接被忽略了， 等价于&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u root -h localhost 
+mysql -u root -h localhost 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;而 -h 默认是 localhost， 又等价于&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u root 
+mysql -u root 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了避免这种情况（比如你在本地开发只有一个 mysql 进程，线上或者 qa 环境有多个 mysql 进程）最好的方式就是使用 IP&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u root -h 127.0.0.1 -P 3307
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;使用localhost地址的strace&#34;&gt;使用localhost地址的strace&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;strace mysql -h localhost -P 3306 -u root &amp;amp;&amp;gt; /tmp/strace_mysql.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;execve(&amp;quot;/opt/app/mysql/bin/mysql&amp;quot;, [&amp;quot;mysql&amp;quot;, &amp;quot;-h&amp;quot;, &amp;quot;localhost&amp;quot;, &amp;quot;-P&amp;quot;, &amp;quot;3306&amp;quot;, &amp;quot;-u&amp;quot;, &amp;quot;root&amp;quot;], [/* 25 vars */]) = 0
+
+......
+
+socket(AF_LOCAL, SOCK_STREAM, 0)        = 3
+connect(3, {sa_family=AF_LOCAL, sun_path=&amp;quot;/tmp/mysql.sock&amp;quot;}, 110) = 0 // 这里
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;使用ip地址的strace&#34;&gt;使用ip地址的strace&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;strace mysql -h 127.0.0.1 -P 3306 -u root &amp;amp;&amp;gt; /tmp/strace_mysql_use_ip.txt
+execve(&amp;quot;/opt/app/mysql/bin/mysql&amp;quot;, [&amp;quot;mysql&amp;quot;, &amp;quot;-h&amp;quot;, &amp;quot;127.0.0.1&amp;quot;, &amp;quot;-P&amp;quot;, &amp;quot;3306&amp;quot;, &amp;quot;-u&amp;quot;, &amp;quot;root&amp;quot;], [/* 25 vars */]) = 0
+
+....
+
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
+connect(3, {sa_family=AF_INET, sin_port=htons(3306), sin_addr=inet_addr(&amp;quot;127.0.0.1&amp;quot;)}, 16) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之前遇到过这个问题，但是没有找到原因，今天看到网友分享了经验，记录下&lt;/p&gt;
+
+&lt;p&gt;转自：&lt;a href=&#34;https://www.v2ex.com/t/623596&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt; https://www.v2ex.com/t/623596 &lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Mysql出现Could not retrieve transaction read-only status from server报错</title>
       <link>https://blog.gofinall.com/post/mysql-read-only/</link>
       <pubDate>Tue, 10 Sep 2019 15:48:06 +0800</pubDate>
@@ -578,123 +652,6 @@ nssm start Jenkins
 &lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/uBlock Origin-v1.19.2.crx&#34;&gt;uBlock Origin-v1.19.2.crx&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/Tampermonkey-v4.8.41.crx&#34;&gt;Tampermonkey-v4.8.41.crx&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>内网穿透之n2n-点对网</title>
-      <link>https://blog.gofinall.com/post/n2n-p2p-route/</link>
-      <pubDate>Fri, 17 May 2019 15:19:54 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/n2n-p2p-route/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;n2n v+p+n 其实与 pptp v+p+n 有类似的一面，都是一种点对点的局域网，所不同的是，n2n 可以建立点与点之间的直连，而 pptp 局域网内通讯的全部流量都必须走中心节点。pptp可以实现点对忘的连接，n2n应该也可以实现。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;原理&#34;&gt;原理&lt;/h3&gt;
-
-&lt;p&gt;一台edge服务器充当&amp;rsquo;网关&amp;rsquo;角色，另外的edge服务器配置路由表，让内网的ip走指定的网关，就能达到在edge端的电脑上实现直接访问内网的ip。&lt;/p&gt;
-
-&lt;h3 id=&#34;服务端edge服务器信息&#34;&gt;服务端edge服务器信息&lt;/h3&gt;
-
-&lt;p&gt;centos 7 X86_64&lt;/p&gt;
-
-&lt;h3 id=&#34;n2n版本&#34;&gt;n2n版本&lt;/h3&gt;
-
-&lt;p&gt;v2s&lt;/p&gt;
-
-&lt;h3 id=&#34;服务端edge配置&#34;&gt;服务端edge配置&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;在n2n客户端(edge)上面(linux)开启转发功能&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vi /etc/sysctl.conf
-#net.ipv4.ip_forward = 1 #将前面的#删除后保存退出
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;执行&lt;code&gt;sysctl -p&lt;/code&gt;让刚刚修改的信息生效&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;调整centos7的防火墙&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;由于对centos7默认的防火墙firewalld不熟悉，我们关闭firewalld，安装iptables防火墙&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#停止firewalld服务
-systemctl stop firewalld
-
-#禁止firewalld服务自启动
-systemctl disable firewalld
-
-#安装iptables防火墙
-yum -y install iptables-services
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;对iptables进行初始化工作&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#清空filter表
-iptables -F
-
-#清空nat表
-iptables -t nat -F
-
-#默认允许所有传出连接
-iptables -P OUTPUT ACCEPT
-
-#允许环回接口的传入连接
-iptables -A INPUT -i lo -j ACCEPT
-
-#允许已建立的传入连接
-iptables -t nat -A POSTROUTING -j MASQUERADE
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;保存iptables配置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;iptables-save &amp;gt; /etc/sysconfig/iptables
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;启动iptables&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;systemctl start iptables
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;开机自动启动iptables&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;systemctl enable iptables
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;客户端edge配置&#34;&gt;客户端edge配置&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;正常启动edge，确认能访问内网edge的ip&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;配置路由表&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;windows&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  route add -p 192.168.1.0(需要连接的内网网段) MASK 255.255.255.0 192.168.5.6(n2n的edge服务端ip)
-  -p: 为当前Windows系统路由列表中永久添加一条静态路由,重启系统依然有效，如果不需要静态路由，添加路由时去掉-p参数。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;linux&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  route add -net 192.168.1.0(需要连接的内网网段) netmask 255.255.255.0 gw 192.168.5.6(n2n的edge服务端ip)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;验证，在配置路由表的电脑上ping内网的ip&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

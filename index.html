@@ -129,6 +129,37 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/mysql-localhost/">MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-11-28 </span>
+      <div class="post-category">
+          
+            <a href="/categories/mysql/"> mysql </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h3 id="原因">原因</h3>
+
+<p>Whenever you specify &ldquo;localhost&rdquo; or &ldquo;localhost:port&rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &ldquo;127.0.0.1&rdquo; instead of &ldquo;localhost&rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.</p>
+
+<p>localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/mysql-localhost/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/mysql-read-only/">Mysql出现Could not retrieve transaction read-only status from server报错</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2019-09-10 </span>
@@ -401,35 +432,6 @@
     </div>
     <div class="read-more">
       <a href="/post/n2n-p2p-route/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/n2n-p2p-introduce/">内网穿透之n2n-介绍及使用说明</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-05-17 </span>
-      <div class="post-category">
-          
-            <a href="/categories/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"> 内网穿透 </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h3 id="介绍">介绍</h3>
-
-<p><a href="http://www.ntop.org/products/n2n/" rel="noreferrer" target="_blank">N2N </a>是一款开源的P2P v+p+n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/n2n-p2p-introduce/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

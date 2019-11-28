@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Mysql出现Could not retrieve transaction read-only status from server报错 - 终点站</title>
+  <title>MySQL 连接时尽量使用 127.0.0.1 而不是 localhost - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,10 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="死性不改" />
-  <meta name="description" content="问题现象 mysql在java连接数据库的时候，偶发性的出现如下错误：
-Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server  
-" />
+<meta name="author" content="死性不改" /><meta name="description" content="mysql" />
 <meta name="keywords" content="mysql" />
 
 
@@ -31,7 +28,7 @@ Could not retrieve transaction read-only status from server, nested exception is
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/post/mysql-read-only/" />
+<link rel="canonical" href="https://blog.gofinall.com/post/mysql-localhost/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,46 +46,25 @@ Could not retrieve transaction read-only status from server, nested exception is
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Mysql出现Could not retrieve transaction read-only status from server报错" />
-<meta property="og:description" content="问题现象
-
-mysql在java连接数据库的时候，偶发性的出现如下错误：
-
-Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
-
-
-" />
+<meta property="og:title" content="MySQL 连接时尽量使用 127.0.0.1 而不是 localhost" />
+<meta property="og:description" content="mysql" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.gofinall.com/post/mysql-read-only/" /><meta property="article:published_time" content="2019-09-10T15:48:06&#43;08:00"/>
-<meta property="article:modified_time" content="2019-09-10T15:48:06&#43;08:00"/>
-<meta itemprop="name" content="Mysql出现Could not retrieve transaction read-only status from server报错">
-<meta itemprop="description" content="问题现象
-
-mysql在java连接数据库的时候，偶发性的出现如下错误：
-
-Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
+<meta property="og:url" content="https://blog.gofinall.com/post/mysql-localhost/" /><meta property="article:published_time" content="2019-11-28T13:23:54&#43;08:00"/>
+<meta property="article:modified_time" content="2019-11-28T13:23:54&#43;08:00"/>
+<meta itemprop="name" content="MySQL 连接时尽量使用 127.0.0.1 而不是 localhost">
+<meta itemprop="description" content="mysql">
 
 
-">
-
-
-<meta itemprop="datePublished" content="2019-09-10T15:48:06&#43;08:00" />
-<meta itemprop="dateModified" content="2019-09-10T15:48:06&#43;08:00" />
-<meta itemprop="wordCount" content="553">
+<meta itemprop="datePublished" content="2019-11-28T13:23:54&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-28T13:23:54&#43;08:00" />
+<meta itemprop="wordCount" content="502">
 
 
 
 <meta itemprop="keywords" content="mysql," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Mysql出现Could not retrieve transaction read-only status from server报错"/>
-<meta name="twitter:description" content="问题现象
-
-mysql在java连接数据库的时候，偶发性的出现如下错误：
-
-Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
-
-
-"/>
+<meta name="twitter:title" content="MySQL 连接时尽量使用 127.0.0.1 而不是 localhost"/>
+<meta name="twitter:description" content="mysql"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -155,10 +131,10 @@ Could not retrieve transaction read-only status from server, nested exception is
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Mysql出现Could not retrieve transaction read-only status from server报错</h1>
+      <h1 class="post-title">MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-09-10 </span>
+        <span class="post-time"> 2019-11-28 </span>
         <div class="post-category">
             
               <a href="/categories/mysql/"> mysql </a>
@@ -181,9 +157,10 @@ Could not retrieve transaction read-only status from server, nested exception is
 <ul>
 <li>
 <ul>
-<li><a href="#问题现象">问题现象</a></li>
-<li><a href="#解决办法">解决办法</a></li>
-<li><a href="#后续问题">后续问题</a></li>
+<li><a href="#原因">原因</a></li>
+<li><a href="#为什么我使用-localhost-一直没出问题">为什么我使用 localhost 一直没出问题</a></li>
+<li><a href="#使用localhost地址的strace">使用localhost地址的strace</a></li>
+<li><a href="#使用ip地址的strace">使用ip地址的strace</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -193,70 +170,72 @@ Could not retrieve transaction read-only status from server, nested exception is
 
     
     <div class="post-content">
-      <h3 id="问题现象">问题现象</h3>
+      <h3 id="原因">原因</h3>
 
-<p>mysql在java连接数据库的时候，<code>偶发性</code>的出现如下错误：</p>
+<p>Whenever you specify &ldquo;localhost&rdquo; or &ldquo;localhost:port&rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &ldquo;127.0.0.1&rdquo; instead of &ldquo;localhost&rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.</p>
 
-<pre><code class="language-shell">Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
-</code></pre>
+<p>localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip</p>
 
 <p></p>
 
-<h3 id="解决办法">解决办法</h3>
+<h3 id="为什么我使用-localhost-一直没出问题">为什么我使用 localhost 一直没出问题</h3>
 
-<p>mysql版本：<code>5.7.25</code></p>
+<p>因为你的本机中只有一个 mysql 进程， 如果你有一个 node1 运行在 3306， 有一个 node2 运行在 3307</p>
 
-<p>mysql jdbc驱动包：mysql-connector-java-5.1.47.jar</p>
-
-<p>mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下</p>
-
-<p>1.查看mysql的事物隔离级别  <code>SHOW VARIABLES LIKE '%iso%';</code></p>
-
-<pre><code class="language-shell">mysql&gt; SHOW VARIABLES LIKE '%iso%';
-+------------------------+-----------------+
-| Variable_name          | Value           |
-+------------------------+-----------------+
-| transaction_isolation  | REPEATABLE-READ |
-| tx_isolation           | REPEATABLE-READ |
-+------------------------+-----------------+
-2 row in set (0.00 sec)
+<pre><code>mysql -u root -h localhost -P 3306
+mysql -u root -h localhost -P 3307
 </code></pre>
 
-<p>2.修改mysql事务隔离级别</p>
+<p>都会连接到同一个 mysql 进程， 因为 localhost 使用 Linux socket， 所以 -P 字段直接被忽略了， 等价于</p>
 
-<pre><code class="language-shell">mysql&gt; SET GLOBAL tx_isolation='READ-COMMITTED'; 
-Query OK,0 rows affected (0.00 sec)
-
-mysql&gt; SET GLOBAL transaction_isolation='READ-COMMITTED'; 
-Query OK,0 rows affected (0.00 sec)
+<pre><code>mysql -u root -h localhost 
+mysql -u root -h localhost 
 </code></pre>
 
-<p>3.修改my.cnf，让配置永久生效</p>
+<p>而 -h 默认是 localhost， 又等价于</p>
 
-<p>在<code>/etc/my.cnf</code>(位置可能不一样)的<code>[mysqld]</code>后面添加<code>transaction_isolation = READ-COMMITTED</code></p>
-
-<p>4.检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；</p>
-
-<pre><code class="language-shell">mysql&gt; SHOW VARIABLES LIKE '%iso%';
-+------------------------+-----------------+
-| Variable_name          | Value           |
-+------------------------+-----------------+
-| transaction_isolation  | READ-COMMITTED |
-| tx_isolation           | READ-COMMITTED |
-+------------------------+-----------------+
-2 row in set (0.00 sec)
+<pre><code>mysql -u root 
+mysql -u root 
 </code></pre>
 
-<h3 id="后续问题">后续问题</h3>
+<p>为了避免这种情况（比如你在本地开发只有一个 mysql 进程，线上或者 qa 环境有多个 mysql 进程）最好的方式就是使用 IP</p>
 
-<p>经过上面的修改，一段时间后还是出现了该问题，偶发出现，尝试方法有两个：</p>
+<pre><code>mysql -u root -h 127.0.0.1 -P 3307
+</code></pre>
 
-<ul>
-<li>把驱动包降到5.1.30还是有问题，尝试把驱动包升到mysql-connector-java-8.0.17.jar</li>
-<li>在jdbc串后面加参数：<code>failOverReadOnly=false</code>  <strong>自动重连成功后，连接是否设置为只读</strong></li>
-</ul>
+<h3 id="使用localhost地址的strace">使用localhost地址的strace</h3>
 
-<p>通过上面两种方式修改后，再观察下。/(ㄒoㄒ)/~~</p>
+<pre><code>strace mysql -h localhost -P 3306 -u root &amp;&gt; /tmp/strace_mysql.txt
+</code></pre>
+
+<p>结果：</p>
+
+<pre><code>execve(&quot;/opt/app/mysql/bin/mysql&quot;, [&quot;mysql&quot;, &quot;-h&quot;, &quot;localhost&quot;, &quot;-P&quot;, &quot;3306&quot;, &quot;-u&quot;, &quot;root&quot;], [/* 25 vars */]) = 0
+
+......
+
+socket(AF_LOCAL, SOCK_STREAM, 0)        = 3
+connect(3, {sa_family=AF_LOCAL, sun_path=&quot;/tmp/mysql.sock&quot;}, 110) = 0 // 这里
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+</code></pre>
+
+<h3 id="使用ip地址的strace">使用ip地址的strace</h3>
+
+<pre><code>strace mysql -h 127.0.0.1 -P 3306 -u root &amp;&gt; /tmp/strace_mysql_use_ip.txt
+execve(&quot;/opt/app/mysql/bin/mysql&quot;, [&quot;mysql&quot;, &quot;-h&quot;, &quot;127.0.0.1&quot;, &quot;-P&quot;, &quot;3306&quot;, &quot;-u&quot;, &quot;root&quot;], [/* 25 vars */]) = 0
+
+....
+
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
+connect(3, {sa_family=AF_INET, sin_port=htons(3306), sin_addr=inet_addr(&quot;127.0.0.1&quot;)}, 16) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+</code></pre>
+
+<p>之前遇到过这个问题，但是没有找到原因，今天看到网友分享了经验，记录下</p>
+
+<p>转自：<a href="https://www.v2ex.com/t/623596" rel="noreferrer" target="_blank"> https://www.v2ex.com/t/623596 </a></p>
     </div>
 
     
@@ -275,14 +254,9 @@ Query OK,0 rows affected (0.00 sec)
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/mysql-localhost/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
         
-          <a class="next" href="/post/mysql-json/">
-            <span class="next-text nav-default">MySQL常用json方法使用记录</span>
+          <a class="next" href="/post/mysql-read-only/">
+            <span class="next-text nav-default">Mysql出现Could not retrieve transaction read-only status from server报错</span>
             <span class="prev-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
