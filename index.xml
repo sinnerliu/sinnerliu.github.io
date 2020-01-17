@@ -122,7 +122,7 @@ tincd -n vbn
 tincd -n vbn -D -d3
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;编译客户端&#34;&gt;编译客户端&lt;/h3&gt;
+&lt;h4 id=&#34;编译客户端&#34;&gt;编译客户端&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;cd tinc-1.1pre17
 ./configure
@@ -130,7 +130,7 @@ make
 make install
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;配置客户端&#34;&gt;配置客户端&lt;/h3&gt;
+&lt;h4 id=&#34;配置客户端&#34;&gt;配置客户端&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 创建pid文件生成路径
 mkdir /var/run/
