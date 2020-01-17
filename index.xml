@@ -190,7 +190,15 @@ ip link set $INTERFACE up
 route add -net 10.1.231.0 netmask 255.255.255.0 gw 10.10.1.2
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;此时可以在其他的客户端上直接上10.1.231.x网段的ip了&lt;/p&gt;</description>
+&lt;p&gt;此时可以在其他的客户端上直接上10.1.231.x网段的ip了&lt;/p&gt;
+
+&lt;h3 id=&#34;参考文档&#34;&gt;参考文档&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/wenerme/wener/blob/master/tricks/ops/network/private/tinc.md&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/wenerme/wener/blob/master/tricks/ops/network/private/tinc.md&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://nwgat.ninja/quick-easy-tinc-1-1-2/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://nwgat.ninja/quick-easy-tinc-1-1-2/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://lala.im/6209.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://lala.im/6209.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
