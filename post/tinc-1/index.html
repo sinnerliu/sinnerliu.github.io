@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>tinc-1.1pre17在linux下的部署 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="介绍 TincV&#43;P&#43;N是一个P2PV&#43;P&#43;N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。
+
+" />
+<meta name="keywords" content="tinc" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/tinc-1/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="tinc-1.1pre17在linux下的部署" />
+<meta property="og:description" content="介绍
+
+TincV&#43;P&#43;N是一个P2PV&#43;P&#43;N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/tinc-1/" /><meta property="article:published_time" content="2020-01-17T16:34:44&#43;08:00"/>
+<meta property="article:modified_time" content="2020-01-17T16:34:44&#43;08:00"/>
+<meta itemprop="name" content="tinc-1.1pre17在linux下的部署">
+<meta itemprop="description" content="介绍
+
+TincV&#43;P&#43;N是一个P2PV&#43;P&#43;N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。
+
+">
+
+
+<meta itemprop="datePublished" content="2020-01-17T16:34:44&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-17T16:34:44&#43;08:00" />
+<meta itemprop="wordCount" content="1213">
+
+
+
+<meta itemprop="keywords" content="内网穿透,tinc," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="tinc-1.1pre17在linux下的部署"/>
+<meta name="twitter:description" content="介绍
+
+TincV&#43;P&#43;N是一个P2PV&#43;P&#43;N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">tinc-1.1pre17在linux下的部署</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"> 内网穿透 </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#介绍">介绍</a></li>
+<li><a href="#官网">官网</a></li>
+<li><a href="#部署">部署</a>
+<ul>
+<li><a href="#安装编译依赖环境">安装编译依赖环境</a></li>
+<li><a href="#解压">解压</a></li>
+<li><a href="#编译安装">编译安装</a></li>
+<li><a href="#配置server">配置server</a></li>
+</ul></li>
+<li><a href="#编译客户端">编译客户端</a></li>
+<li><a href="#配置客户端">配置客户端</a></li>
+<li><a href="#高级玩法">高级玩法</a>
+<ul>
+<li><a href="#路由表">路由表</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="介绍">介绍</h3>
+
+<p>TincV+P+N是一个P2PV+P+N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。</p>
+
+<p></p>
+
+<h3 id="官网">官网</h3>
+
+<p><a href="https://www.tinc-vpn.org/" rel="noreferrer" target="_blank">https://www.tinc-vpn.org/</a></p>
+
+<p>本次使用1.1pre17 版本部署</p>
+
+<pre><code># 推荐使用 tinc-pre 1.1 版本
+# 配置更方便使用更简单
+</code></pre>
+
+<p>下载地址：</p>
+
+<p>linux: <a href="https://www.tinc-vpn.org/packages/tinc-1.1pre17.tar.gz" rel="noreferrer" target="_blank">https://www.tinc-vpn.org/packages/tinc-1.1pre17.tar.gz</a></p>
+
+<p>Windows XP/Vista/7/8/10: <a href="https://www.tinc-vpn.org/packages/windows/tinc-1.1pre17-install.exe" rel="noreferrer" target="_blank">https://www.tinc-vpn.org/packages/windows/tinc-1.1pre17-install.exe</a></p>
+
+<h3 id="部署">部署</h3>
+
+<p>本次部署系统环境: <code>centos7</code>，后面操作均在root下操作；</p>
+
+<h4 id="安装编译依赖环境">安装编译依赖环境</h4>
+
+<p><code>yum -y install gcc readline-devel zlib-devel lzo-devel openssl-devel ncurses-devel</code></p>
+
+<h4 id="解压">解压</h4>
+
+<p><code>tar -xvf tinc-1.1pre17.tar.gz</code></p>
+
+<h4 id="编译安装">编译安装</h4>
+
+<pre><code class="language-shell">cd tinc-1.1pre17
+./configure
+make
+make install
+</code></pre>
+
+<h4 id="配置server">配置server</h4>
+
+<p>开放防火墙端口655，方法略，本文的环境已经关闭了防火墙</p>
+
+<pre><code class="language-shell"># 创建pid文件生成路径
+mkdir /var/run/
+# 创建配置文件路径
+mkdir /etc/tinc
+# 初始化server，格式: tinc -n 网络名称 init server名
+tinc -n vbn init server
+# 启动tinc
+tincd -n vbn
+# 配置tinc的网段
+tinc -n vpn add subnet 10.10.1.1
+# 配置tinc启动后的网卡
+echo 'ip addr add 10.10.1.1/24 dev $INTERFACE' &gt; /etc/tinc/vbn/tinc-up
+echo 'ip link set $INTERFACE up' &gt;&gt; /etc/tinc/vbn/tinc-up
+# 配置server的外网ip
+echo 'Address=服务器的外网ip' &gt;&gt; /etc/tinc/vbn/tinc.conf
+# 配置加密方式(可选)
+echo 'Cipher=aes-256-cbc' &gt;&gt; /etc/tinc/vbn/tinc.conf
+echo 'Digest=sha512' &gt;&gt; /etc/tinc/vbn/tinc.conf
+# 设置广播包发到其他节点的方式, 所有节点需要使用相同的方式, 否则可能会产生路由循环
+# no 不发送广播包 
+# mst 使用 Minimum Spanning Tree, 保证发往每个节点
+# direct 只发送给直接访问的节点, 从其他节点接收到的不转发. 如果设置了 IndirectData, 广播包也会发送给有 meta 链接的节点
+# 试验阶段
+# no | mst | direct
+# 可选
+echo 'Broadcast = mst' &gt;&gt; /etc/tinc/vbn/tinc.conf
+# 尝试发现本机网络中的节点
+# 允许与本地节点地址建立直接连接
+# 目前, 本地发现机制是通过在 UDP 发现阶段发送本地地址的方式
+# 可选
+echo 'LocalDiscovery = yes' &gt;&gt; /etc/tinc/vbn/tinc.conf
+
+# 重启server
+pkill -9 tincd
+# daemonize方式启动
+tincd -n vbn
+# debug方式启动
+tincd -n vbn -D -d3
+</code></pre>
+
+<h3 id="编译客户端">编译客户端</h3>
+
+<pre><code class="language-shell">cd tinc-1.1pre17
+./configure
+make
+make install
+</code></pre>
+
+<h3 id="配置客户端">配置客户端</h3>
+
+<pre><code class="language-shell"># 创建pid文件生成路径
+mkdir /var/run/
+# 创建配置文件路径
+mkdir /etc/tinc
+# server服务器上生成邀请连接 tinc -n 网络名称 invite 客户端名称
+tinc -n vbn invite client1
+# 要求连接 server的外网ip/随机码
+222.222.222.222/swgz4VsseZKhF1dsd1LnVp-yfIJ-iVT47u44feu8w3uP7VYQD7It
+
+# 客户端加入server
+[root@localhost sbin]# tinc join 222.222.222.222/swgz4VsseZKhF1dsd1LnVp-yfIJ-iVT47u44feu8w3uP7VYQD7It
+Connected to 222.222.222.222 port 655...
+..................................................................+++ p
+....................................................+++ q
+Configuration stored in: /etc/tinc/vbn
+Invitation successfully accepted.
+
+# 启动tinc
+tincd -n vbn
+# 配置客户端的ip,需要和server的不一样,可以直接加1即可
+tinc -n vbn add subnet 10.10.1.2
+# 配置tinc启动后的网卡,下面的ip需要和上一步一样
+echo 'ip addr add 10.10.1.2/24 dev $INTERFACE' &gt; /etc/tinc/vbn/tinc-up
+echo 'ip link set $INTERFACE up' &gt;&gt; /etc/tinc/vbn/tinc-up
+
+# 配置加密方式(可选)
+echo 'Cipher=aes-256-cbc' &gt;&gt; /etc/tinc/vbn/tinc.conf
+echo 'Digest=sha512' &gt;&gt; /etc/tinc/vbn/tinc.conf
+# 尝试发现本机网络中的节点
+# 允许与本地节点地址建立直接连接
+# 目前, 本地发现机制是通过在 UDP 发现阶段发送本地地址的方式
+# 可选
+echo 'LocalDiscovery = yes' &gt;&gt; /etc/tinc/vbn/tinc.conf
+
+# 重启server
+pkill -9 tincd
+# daemonize方式启动
+tincd -n vbn
+# debug方式启动
+tincd -n vbn -D -d3
+</code></pre>
+
+<p>安装上面方法添加多个客户端，然后相互ping客户端的ip即可</p>
+
+<p>注意：某个客户端如果配置了<code>Cipher</code>、<code>Digest</code>、<code>LocalDiscovery</code>这三个参数，则其他所有的客户端都需要配置这三个参数，否则会不通。</p>
+
+<h3 id="高级玩法">高级玩法</h3>
+
+<h4 id="路由表">路由表</h4>
+
+<p>如果某个客户端(10.10.1.2)启用了路由转发，可以在其他客户端的<code>tinc-up</code>中添加路由配置，如下：</p>
+
+<pre><code class="language-shell">[root@localhost vbn]# more tinc-up 
+ip addr add 10.10.1.3/24 dev $INTERFACE
+ip link set $INTERFACE up
+route add -net 10.1.231.0 netmask 255.255.255.0 gw 10.10.1.2
+</code></pre>
+
+<p>此时可以在其他的客户端上直接上10.1.231.x网段的ip了</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">内网穿透</a>
+          
+          <a href="/tags/tinc/">tinc</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/mysql-localhost/">
+            <span class="next-text nav-default">MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+</body>
+</html>

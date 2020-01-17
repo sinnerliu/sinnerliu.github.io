@@ -6,10 +6,23 @@
     <description>Recent content in 内网穿透 on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 17 May 2019 15:19:54 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jan 2020 16:34:44 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>tinc-1.1pre17在linux下的部署</title>
+      <link>https://blog.gofinall.com/post/tinc-1/</link>
+      <pubDate>Fri, 17 Jan 2020 16:34:44 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tinc-1/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;TincV+P+N是一个P2PV+P+N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>内网穿透之n2n-点对网</title>
