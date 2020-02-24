@@ -56,6 +56,8 @@
 
 &lt;p&gt;&lt;code&gt;docker pull elleflorio/svn-server&lt;/code&gt;&lt;/p&gt;
 
+&lt;p&gt;github地址: &lt;a href=&#34;https://github.com/elleFlorio/svn-docker&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/elleFlorio/svn-docker&lt;/a&gt;&lt;/p&gt;
+
 &lt;h3 id=&#34;启动&#34;&gt;启动&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;docker run --name svn-server -d --restart=always -v /home/docker/svn:/home/svn/ -p 80:80  -p 3690:3690 elleflorio/svn-server&lt;/code&gt;&lt;/p&gt;
