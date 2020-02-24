@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/docker-svn-server/</loc>
+    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/tinc-1/</loc>
     <lastmod>2020-01-17T16:34:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -500,6 +507,20 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/tags/docker/</loc>
+    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/docker/</loc>
+    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/tags/excel/</loc>
     <lastmod>2018-09-01T11:58:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -774,7 +795,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2020-01-17T16:34:44+08:00</lastmod>
+    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -845,6 +866,13 @@
   <url>
     <loc>https://blog.gofinall.com/tags/shell/</loc>
     <lastmod>2018-11-21T19:36:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/tags/svn/</loc>
+    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

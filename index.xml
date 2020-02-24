@@ -31,6 +31,94 @@
     </item>
     
     <item>
+      <title>Docker搭建Svn Server</title>
+      <link>https://blog.gofinall.com/post/docker-svn-server/</link>
+      <pubDate>Mon, 24 Feb 2020 12:25:31 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/docker-svn-server/</guid>
+      <description>&lt;h3 id=&#34;基础环境&#34;&gt;基础环境&lt;/h3&gt;
+
+&lt;p&gt;系统版本: centos-7.6(linux)&lt;/p&gt;
+
+&lt;p&gt;环境依赖: Docker&lt;/p&gt;
+
+&lt;p&gt;系统要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;关闭selinux&lt;/li&gt;
+&lt;li&gt;防火墙放行80、3690端口(或者关闭防火墙)&lt;/li&gt;
+&lt;li&gt;服务器的80和3690端口没有被占用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;拉取镜像&#34;&gt;拉取镜像&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;docker pull elleflorio/svn-server&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;启动&#34;&gt;启动&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;docker run --name svn-server -d --restart=always -v /home/docker/svn:/home/svn/ -p 80:80  -p 3690:3690 elleflorio/svn-server&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;把容器中的svn目录挂载到物理机的/home/docker/svn&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;创建仓库&#34;&gt;创建仓库&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# 进入镜像
+docker exec -it svn-server /bin/sh
+
+# 创建仓库名为test_svn的仓库
+svnadmin create /home/svn/test_svn
+
+# 在容器中需要修改一下这个目录的权限，因为默认是root创建的仓库，在window端没有权限访问，否则会报错：can&#39;t open file db/txn-current-lock:permission
+chmod 777 -R /home/svn/test_svn/db
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;修改权限控制&#34;&gt;修改权限控制&lt;/h3&gt;
+
+&lt;p&gt;镜像默认没有对权限进行控制，修改一下配置文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;vi /etc/apache2/conf.d/dav_svn.conf
+&amp;lt;Location /svn&amp;gt;
+     DAV svn
+     SVNParentPath /home/svn
+     SVNListParentPath On
+     AuthType Basic
+     AuthName &amp;quot;Subversion Repository&amp;quot;
+     AuthUserFile /home/svn/passwd.conf
+     AuthzSVNAccessFile /home/svn/auth.conf 
+     Require valid-user
+&amp;lt;/Location&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后重启svn-server容器&lt;/p&gt;
+
+&lt;h3 id=&#34;创建第一个用户&#34;&gt;创建第一个用户&lt;/h3&gt;
+
+&lt;p&gt;在物理机上执行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker exec -t svn-server htpasswd -b /etc/subversion/passwd &amp;lt;username&amp;gt; &amp;lt;password&amp;gt;
+# Adding password for user &amp;lt;username&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;利用webui-svnadmin-配置权限&#34;&gt;利用webui(svnadmin)配置权限&lt;/h3&gt;
+
+&lt;p&gt;the image provides a graphical ui using the &lt;a href=&#34;https://github.com/mfreiholz/iF.SVNAdmin&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;SVNADMIN&lt;/a&gt; interface via &lt;code&gt;http://svnserver-ip/svnadmin&lt;/code&gt;. You&amp;rsquo;ll be prompted with a setup page, remember to test every step on the page then save the configuration.&lt;/p&gt;
+
+&lt;p&gt;浏览器地址输入&lt;a href=&#34;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;images/docker-svn-server.png&#34; alt=&#34;svnadmin&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;登陆后我们可以在“Repositories”下“add”，添加项目目录；&lt;/p&gt;
+
+&lt;p&gt;在&amp;rdquo;Users&amp;rdquo;下添加用户；&lt;/p&gt;
+
+&lt;p&gt;在“Access-Paths”下关联对应项目的用户，并分配相关读写权限。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>tinc-1.1pre17在linux下的部署</title>
       <link>https://blog.gofinall.com/post/tinc-1/</link>
       <pubDate>Fri, 17 Jan 2020 16:34:44 +0800</pubDate>
@@ -684,112 +772,6 @@ curl: (6) Couldn&#39;t resolve host &#39;ifconfig.me&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;使用curl、yum、git clone、go get等命令的时候，都只要在前面加上proxychains，就都可以通过192.168.137.130的网络进行访问。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Windows使用NSSM将任意exe封装为服务</title>
-      <link>https://blog.gofinall.com/post/windows-service-nssm/</link>
-      <pubDate>Thu, 23 May 2019 14:32:58 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/windows-service-nssm/</guid>
-      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
-
-&lt;p&gt;NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;支持普通exe程序（控制台程序或者带界面的Windows程序都可以）&lt;/li&gt;
-&lt;li&gt;安装简单，修改方便&lt;/li&gt;
-&lt;li&gt;可以重定向输出（并且支持Rotation）&lt;/li&gt;
-&lt;li&gt;可以自动守护封装了的服务，程序挂掉了后可以自动重启&lt;/li&gt;
-&lt;li&gt;可以自定义环境变量&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;官网&#34;&gt;官网&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://nssm.cc/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://nssm.cc&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;使用&#34;&gt;使用&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;下载最新版本&lt;a href=&#34;http://nssm.cc/ci/nssm-2.24-103-gdee49fc.zip&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;nssm&lt;/a&gt;，也可以下载最新release版本；&lt;/li&gt;
-&lt;li&gt;根据自己的平台，将32/64位nssm.exe文件解压至任意文件夹。&lt;/li&gt;
-&lt;li&gt;cmd定位至nssm.exe所在目录。&lt;/li&gt;
-&lt;li&gt;输入 &lt;code&gt;nssm install {服务名称}&lt;/code&gt;，即注册服务的名称。注册服务弹出如下NSSM界面。
-&lt;img src=&#34;https://blog.gofinall.com/post/images/nssm.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
-&lt;li&gt;Application标签设置：&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Application Path: 选择系统安装的exe。&lt;/li&gt;
-&lt;li&gt;Startup directory: 选择exe项目的根目录。&lt;/li&gt;
-&lt;li&gt;Arguments: 输入启动参数&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;上述步骤操作完成，即可点击Install service来注册服务。我们在系统的服务中即可找到刚刚注册的服务。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在系统服务中找到刚刚注册的服务，右键&lt;code&gt;属性 - 恢复&lt;/code&gt;即可设置此服务挂掉重启等内容。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;其它界面的是高级参数的配置，可以根据需要自行选择。&lt;/p&gt;
-
-&lt;p&gt;参数填完后执行&amp;rdquo;install service&amp;rdquo;按钮即可将服务安装到系统，可以使用系统的服务管理工具查看了。&lt;/p&gt;
-
-&lt;p&gt;当然，如果要自动化安装，可以直接带上程序路径：&lt;code&gt;nssm install &amp;lt;servicename&amp;gt; &amp;lt;program&amp;gt; [&amp;lt;arguments&amp;gt;]&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;NSSM本身win7及以上的系统基本都是支持的，我测试过win7，2008,2016系统，都是没有问题的，如果安装失败，请首先检查是否装了某国产管家或国产杀毒软件。&lt;/p&gt;
-
-&lt;p&gt;安装完成后，服务还没有启动，需要通过下面的服务管理的命令启动服务。&lt;/p&gt;
-
-&lt;h4 id=&#34;服务管理&#34;&gt;服务管理&lt;/h4&gt;
-
-&lt;p&gt;服务管理主要有启动、停止和重启，其命令如下：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;启动服务：&lt;code&gt;nssm start &amp;lt;servicename&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;停止服务： &lt;code&gt;nssm stop &amp;lt;servicename&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;重启服务:    &lt;code&gt;nssm restart &amp;lt;servicename&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;当然，也可以使用系统自带的服务管理器操作和使用系统的命令。&lt;/p&gt;
-
-&lt;h4 id=&#34;修改参数&#34;&gt;修改参数&lt;/h4&gt;
-
-&lt;p&gt;NSSM安装的服务修改起来非常方便，命令如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nssm edit &amp;lt;servicename&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;会自动启动操作界面，直接更改即可。&lt;/p&gt;
-
-&lt;h4 id=&#34;服务删除&#34;&gt;服务删除&lt;/h4&gt;
-
-&lt;p&gt;服务删除可以使用如下命令之一：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;nssm remove &amp;lt;servicename&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;nssm remove &amp;lt;servicename&amp;gt; confirm&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;功能没有大的区别，后面的命令是自动确认的，没有交互界面。&lt;/p&gt;
-
-&lt;h4 id=&#34;命令行&#34;&gt;命令行&lt;/h4&gt;
-
-&lt;p&gt;服务自动化需要使用更多的命令行，具体参看官方文档： &lt;a href=&#34;https://nssm.cc/commands&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://nssm.cc/commands&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;如下是一个官方安装Jenkins服务的示例：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;nssm install Jenkins %PROGRAMFILES%\Java\jre7\bin\java.exe
-nssm set Jenkins AppParameters -jar slave.jar -jnlpUrl https://jenkins/computer/%COMPUTERNAME%/slave-agent.jnlp -secret redacted
-nssm set Jenkins AppDirectory C:\Jenkins
-nssm set Jenkins AppStdout C:\Jenkins\jenkins.log
-nssm set Jenkins AppStderr C:\Jenkins\jenkins.log
-nssm set Jenkins AppStopMethodSkip 6
-nssm set Jenkins AppStopMethodConsole 1000
-nssm set Jenkins AppThrottle 5000
-nssm start Jenkins
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>
