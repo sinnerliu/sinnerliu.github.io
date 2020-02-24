@@ -109,7 +109,7 @@ chmod 777 -R /home/svn/test_svn/db
 
 &lt;p&gt;浏览器地址输入&lt;a href=&#34;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;images/docker-svn-server.png&#34; alt=&#34;svnadmin&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/docker-svn-server.png&#34; alt=&#34;svnadmin&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;登陆后我们可以在“Repositories”下“add”，添加项目目录；&lt;/p&gt;
 
