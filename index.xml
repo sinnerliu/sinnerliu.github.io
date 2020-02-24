@@ -111,7 +111,7 @@ chmod 777 -R /home/svn/test_svn/db
 
 &lt;p&gt;the image provides a graphical ui using the &lt;a href=&#34;https://github.com/mfreiholz/iF.SVNAdmin&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;SVNADMIN&lt;/a&gt; interface via &lt;code&gt;http://svnserver-ip/svnadmin&lt;/code&gt;. You&amp;rsquo;ll be prompted with a setup page, remember to test every step on the page then save the configuration.&lt;/p&gt;
 
-&lt;p&gt;浏览器地址输入&lt;a href=&#34;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://ip/svnadmin出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;浏览器地址输入&lt;code&gt;http://ip/svnadmin&lt;/code&gt;出现配置界面，输入下图中配置信息，输入每个配置信息可以点击旁边的Test测试是否输入正确，最后保存配置&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/docker-svn-server.png&#34; alt=&#34;svnadmin&#34; /&gt;&lt;/p&gt;
 
