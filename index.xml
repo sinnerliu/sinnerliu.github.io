@@ -54,6 +54,8 @@
 
 &lt;h3 id=&#34;拉取镜像&#34;&gt;拉取镜像&lt;/h3&gt;
 
+&lt;p&gt;推荐&lt;code&gt;elleflorio/svn-server&lt;/code&gt;的镜像，包含了http和webui(svnadmin)&lt;/p&gt;
+
 &lt;p&gt;&lt;code&gt;docker pull elleflorio/svn-server&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;github地址: &lt;a href=&#34;https://github.com/elleFlorio/svn-docker&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/elleFlorio/svn-docker&lt;/a&gt;&lt;/p&gt;
