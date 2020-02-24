@@ -103,7 +103,7 @@ chmod 777 -R /home/svn/test_svn/db
 
 &lt;p&gt;在物理机上执行&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;docker exec -t svn-server htpasswd -b /etc/subversion/passwd &amp;lt;username&amp;gt; &amp;lt;password&amp;gt;
+&lt;pre&gt;&lt;code&gt;docker exec -t svn-server htpasswd -b /home/svn/passwd.conf &amp;lt;username&amp;gt; &amp;lt;password&amp;gt;
 # Adding password for user &amp;lt;username&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
