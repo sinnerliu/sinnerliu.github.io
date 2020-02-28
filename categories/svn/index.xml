@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Svn on 终点站</title>
-    <link>https://blog.gofinall.com/tags/svn/</link>
+    <link>https://blog.gofinall.com/categories/svn/</link>
     <description>Recent content in Svn on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 28 Feb 2020 13:24:39 +0800</lastBuildDate>
     
-	<atom:link href="https://blog.gofinall.com/tags/svn/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.gofinall.com/categories/svn/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,29 +22,6 @@
 &lt;p&gt;鉴于有些人在提交代码的时候并不写注释，而且没有固定格式，所以准备给svn提交时增加强制注释。&lt;/p&gt;
 
 &lt;p&gt;按照网上的教程只能识别提交日志为纯数字(123)、纯字母(abc)、数字和字母组合(123abc)，但是不能识别中文，按照下面的配置方法可以正确识别中文，如: &lt;code&gt;123abc中文&lt;/code&gt; 识别出来长度为: &lt;code&gt;8&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Docker搭建Svn Server</title>
-      <link>https://blog.gofinall.com/post/docker-svn-server/</link>
-      <pubDate>Mon, 24 Feb 2020 12:25:31 +0800</pubDate>
-      
-      <guid>https://blog.gofinall.com/post/docker-svn-server/</guid>
-      <description>&lt;h3 id=&#34;基础环境&#34;&gt;基础环境&lt;/h3&gt;
-
-&lt;p&gt;系统版本: centos-7.6(linux)&lt;/p&gt;
-
-&lt;p&gt;环境依赖: Docker&lt;/p&gt;
-
-&lt;p&gt;系统要求：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;关闭selinux&lt;/li&gt;
-&lt;li&gt;防火墙放行80、3690端口(或者关闭防火墙)&lt;/li&gt;
-&lt;li&gt;服务器的80和3690端口没有被占用&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

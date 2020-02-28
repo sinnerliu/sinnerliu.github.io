@@ -31,6 +31,150 @@
     </item>
     
     <item>
+      <title>限制svn提交时必须添加注释</title>
+      <link>https://blog.gofinall.com/post/svn-pre-commit/</link>
+      <pubDate>Fri, 28 Feb 2020 13:24:39 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/svn-pre-commit/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;鉴于有些人在提交代码的时候并不写注释，而且没有固定格式，所以准备给svn提交时增加强制注释。&lt;/p&gt;
+
+&lt;p&gt;按照网上的教程只能识别提交日志为纯数字(123)、纯字母(abc)、数字和字母组合(123abc)，但是不能识别中文，按照下面的配置方法可以正确识别中文，如: &lt;code&gt;123abc中文&lt;/code&gt; 识别出来长度为: &lt;code&gt;8&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;p&gt;centos 7&lt;/p&gt;
+
+&lt;p&gt;svn server&lt;/p&gt;
+
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;进入代码仓库路径下的hooks，&lt;code&gt;cp pre-commit.tmpl pre-commit&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改pre-commit文件如下&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#!/bin/sh
+# 需要添加下面这行，来正确统计中文个数
+export LANG=zh_CN.utf-8
+# PRE-COMMIT HOOK
+#
+# The pre-commit hook is invoked before a Subversion txn is
+# committed.  Subversion runs this hook by invoking a program
+# (script, executable, binary, etc.) named &#39;pre-commit&#39; (for which
+# this file is a template), with the following ordered arguments:
+#
+#   [1] REPOS-PATH   (the path to this repository)
+#   [2] TXN-NAME     (the name of the txn about to be committed)
+#
+#   [STDIN] LOCK-TOKENS ** the lock tokens are passed via STDIN.
+#
+#   If STDIN contains the line &amp;quot;LOCK-TOKENS:\n&amp;quot; (the &amp;quot;\n&amp;quot; denotes a
+#   single newline), the lines following it are the lock tokens for
+#   this commit.  The end of the list is marked by a line containing
+#   only a newline character.
+#
+#   Each lock token line consists of a URI-escaped path, followed
+#   by the separator character &#39;|&#39;, followed by the lock token string,
+#   followed by a newline.
+#
+# If the hook program exits with success, the txn is committed; but
+# if it exits with failure (non-zero), the txn is aborted, no commit
+# takes place, and STDERR is returned to the client.   The hook
+# program can use the &#39;svnlook&#39; utility to help it examine the txn.
+#
+#   ***  NOTE: THE HOOK PROGRAM MUST NOT MODIFY THE TXN, EXCEPT  ***
+#   ***  FOR REVISION PROPERTIES (like svn:log or svn:author).   ***
+#
+#   This is why we recommend using the read-only &#39;svnlook&#39; utility.
+#   In the future, Subversion may enforce the rule that pre-commit
+#   hooks should not modify the versioned data in txns, or else come
+#   up with a mechanism to make it safe to do so (by informing the
+#   committing client of the changes).  However, right now neither
+#   mechanism is implemented, so hook writers just have to be careful.
+#
+# The default working directory for the invocation is undefined, so
+# the program should set one explicitly if it cares.
+#                           
+# On a Unix system, the normal procedure is to have &#39;pre-commit&#39;
+# invoke other programs to do the real work, though it may do the
+# work itself too.
+#
+# Note that &#39;pre-commit&#39; must be executable by the user(s) who will
+# invoke it (typically the user httpd runs as), and that user must
+# have filesystem-level permission to access the repository.
+#
+# On a Windows system, you should name the hook program
+# &#39;pre-commit.bat&#39; or &#39;pre-commit.exe&#39;,
+# but the basic idea is the same.
+#
+# The hook program runs in an empty environment, unless the server is
+# explicitly configured otherwise.  For example, a common problem is for
+# the PATH environment variable to not be set to its usual value, so
+# that subprograms fail to launch unless invoked via absolute path.
+# If you&#39;re having unexpected problems with a hook program, the
+# culprit may be unusual (or missing) environment variables.
+#
+# CAUTION:
+# For security reasons, you MUST always properly quote arguments when
+# you use them, as those arguments could contain whitespace or other
+# problematic characters. Additionally, you should delimit the list
+# of options with &amp;quot;--&amp;quot; before passing the arguments, so malicious
+# clients cannot bootleg unexpected options to the commands your
+# script aims to execute.
+# For similar reasons, you should also add a trailing @ to URLs which
+# are passed to SVN commands accepting URLs with peg revisions.
+#
+# Here is an example hook script, for a Unix /bin/sh interpreter.
+# For more examples and pre-written hooks, see those in
+# the Subversion repository at
+# http://svn.apache.org/repos/asf/subversion/trunk/tools/hook-scripts/ and
+# http://svn.apache.org/repos/asf/subversion/trunk/contrib/hook-scripts/
+
+
+REPOS=&amp;quot;$1&amp;quot;
+TXN=&amp;quot;$2&amp;quot;
+
+# Make sure that the log message contains some text.
+SVNLOOK=/usr/bin/svnlook
+# 提交日志可以为：123、123abc、123abc中文
+# 正确识别出来的长度为：3、6、8
+# 网上常规配置为：LOGMSG=`$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot; | grep &amp;quot;[a-zA-Z0-9]&amp;quot; | wc -c`
+# 网上配置不能识别中文，固进行下面的改进
+LOGMSG=`$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot;`
+LOGMSG_LENGTH=`echo ${#LOGMSG}`
+# 提交日志长度小于5就不让提交
+if [ &amp;quot;$LOGMSG_LENGTH&amp;quot; -lt 5 ];then 
+   echo &amp;quot;Failed submission: comments must not be less than 5 characters&amp;quot; 1&amp;gt;&amp;amp;2 
+   exit 1
+fi
+#$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot; | \
+#   grep &amp;quot;[a-zA-Z0-9]&amp;quot; &amp;gt; /dev/null || exit 1
+
+# Check that the author of this commit has the rights to perform
+# the commit on the files and directories being modified.
+#commit-access-control.pl &amp;quot;$REPOS&amp;quot; &amp;quot;$TXN&amp;quot; commit-access-control.cfg || exit 1
+
+# All checks passed, so allow the commit.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;然后 给pre-commit文件添加755权限：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  chmod 755 pre-commit 或 chmod +x pre-commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果没有添加权限， 则会报：&lt;/p&gt;
+
+&lt;p&gt;Commit blocked by pre-commit hook (exit code 255) with no output 错误。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Docker搭建Svn Server</title>
       <link>https://blog.gofinall.com/post/docker-svn-server/</link>
       <pubDate>Mon, 24 Feb 2020 12:25:31 +0800</pubDate>
@@ -711,71 +855,6 @@ dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
         proxy_set_header Origin &#39;&#39;;
     }
 &lt;/code&gt;&lt;/pre&gt;</description>
-    </item>
-    
-    <item>
-      <title>利用Proxychains在终端使用socks5/http代理</title>
-      <link>https://blog.gofinall.com/post/proxychains-ng/</link>
-      <pubDate>Thu, 06 Jun 2019 14:33:31 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/proxychains-ng/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;在国内的服务器上从github上拉代码或者go get的时候非常慢(网络受阻)的时候。&lt;/li&gt;
-&lt;li&gt;当内网的某些服务器不能上外网，但是内网中有一台电脑能上外网，想让不能上外网的服务器上外网的时候。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;proxychains可以非常简单快速的设置好代理，让其它不能上网的服务器通过能上网的服务器进行上网。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;下载地址&#34;&gt;下载地址&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/rofl0r/proxychains-ng&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://github.com/rofl0r/proxychains-ng&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;安装方法&#34;&gt;安装方法&lt;/h3&gt;
-
-&lt;p&gt;1  拉取代码&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git clone git@github.com:rofl0r/proxychains-ng.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2  编译安装&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[root@localhost proxychains-ng]# cd proxychains-ng
-[root@localhost proxychains-ng]# ./configure
-[root@localhost proxychains-ng]# make
-[root@localhost proxychains-ng]# make install
-[root@localhost proxychains-ng]# cp src/proxychains.conf /usr/local/etc/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;3  修改配置文件&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[root@localhost proxychains-ng]# vi /usr/local/etc/proxychains.conf
-#修改最后ProxyList里面的参数，假如我的代理地址为socks5:192.168.137.130 1080
-#将socks4 127.0.0.1 9095改为
-socks5         192.168.137.130 1080
-#如果是http代理，则把socks5改成http
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;4  使用方法&lt;/p&gt;
-
-&lt;p&gt;在需要进行代理的命令前加&lt;code&gt;proxychains&lt;/code&gt;即可，如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#直接访问网络不通的网址
-[root@localhost]# curl http://ifconfig.me
-curl: (6) Couldn&#39;t resolve host &#39;ifconfig.me&#39;
-#使用代理的方式访问
-[root@localhost]# proxychains curl http://ifconfig.me
-[proxychains] config file found: /usr/local/etc/proxychains.conf
-[proxychains] preloading /usr/local/lib/libproxychains4.so
-[proxychains] DLL init
-[proxychains] Strict chain ... 192.168.137.130:1080 ... ifconfig.me:80 ... OK
-119.44.127.54
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;使用curl、yum、git clone、go get等命令的时候，都只要在前面加上proxychains，就都可以通过192.168.137.130的网络进行访问。&lt;/p&gt;</description>
     </item>
     
   </channel>

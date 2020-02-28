@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/svn-pre-commit/</loc>
+    <lastmod>2020-02-28T13:24:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/docker-svn-server/</loc>
     <lastmod>2020-02-24T12:25:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -795,7 +802,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
+    <lastmod>2020-02-28T13:24:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -872,7 +879,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/svn/</loc>
-    <lastmod>2020-02-24T12:25:31+08:00</lastmod>
+    <lastmod>2020-02-28T13:24:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.gofinall.com/categories/svn/</loc>
+    <lastmod>2020-02-28T13:24:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
