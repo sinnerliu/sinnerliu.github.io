@@ -160,6 +160,7 @@ fi
 #commit-access-control.pl &amp;quot;$REPOS&amp;quot; &amp;quot;$TXN&amp;quot; commit-access-control.cfg || exit 1
 
 # All checks passed, so allow the commit.
+exit 0
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
