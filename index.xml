@@ -31,6 +31,117 @@
     </item>
     
     <item>
+      <title>DenyHosts安装配置详解及安装报错处理</title>
+      <link>https://blog.gofinall.com/post/denyhosts/</link>
+      <pubDate>Mon, 02 Mar 2020 17:19:49 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/denyhosts/</guid>
+      <description>&lt;h3 id=&#34;denyhosts-简介&#34;&gt;DenyHosts 简介&lt;/h3&gt;
+
+&lt;p&gt;DenyHosts 是 Python 语言写的一个程序软件，运行于 Linux 上预防 SSH 暴力破解的，它会分析 sshd 的日志文件（/var/log/secure），当发现重复的攻击时就会记录 IP 到/etc/hosts.deny 文件，从而达到自动屏 IP 的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;下载denyhosts&#34;&gt;下载DenyHosts&lt;/h3&gt;
+
+&lt;p&gt;DenyHosts官网：&lt;a href=&#34;http://denyhosts.sourceforge.net&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://denyhosts.sourceforge.net/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;最新版本下载地址：&lt;a href=&#34;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;解压并安装&#34;&gt;解压并安装&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装服务器系统：CentOS 7.2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# 官网下载包安装
+[root@tmp ~]# tar zxvf DenyHosts-2.6.tar.gz
+[root@tmp ~]# cd DenyHosts-2.6
+[root@tmp ~]# DenyHosts-2.6]# python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 进入配置目录
+[root@tmp ~]# cd /usr/share/denyhosts/
+# 创建配置文件
+[root@tmp denyhosts]# cp denyhosts.cfg-dist denyhosts.cfg 
+# 修改服务文件名称
+[root@tmp denyhosts]# cp daemon-control-dist daemon-control
+# 提高安全级别，修改权限
+[root@tmp denyhosts]# chown root daemon-control
+[root@tmp denyhosts]# chmod 700 daemon-control
+[root@tmp denyhosts]# vi denyhosts.cfg
+SECURE_LOG = /var/log/secure   #ssh日志文件
+# format is: i[dhwmy]
+# Where i is an integer (eg. 7)
+# m = minutes
+# h = hours
+# d = days
+# w = weeks
+# y = years
+#
+# never purge:
+PURGE_DENY = 50m               #过多久后清除已阻止IP
+HOSTS_DENY = /etc/hosts.deny   #将阻止IP写入到hosts.deny
+BLOCK_SERVICE = sshd           #阻止服务名
+PURGE_THRESHOLD =              #定义了某一IP最多被解封多少次。某IP暴力破解SSH密码被阻止/解封达到了PURGE_THRESHOLD次，则会被永久禁止；
+DENY_THRESHOLD_INVALID = 1     #允许无效用户登录失败的次数
+DENY_THRESHOLD_VALID = 10      #允许普通用户登录失败的次数
+DENY_THRESHOLD_ROOT = 5        #允许root登录失败的次数
+WORK_DIR = /usr/local/share/denyhosts/data #将deny的host或ip纪录到Work_dir中
+DENY_THRESHOLD_RESTRICTED = 1 #设定 deny host 写入到该资料夹
+LOCK_FILE = /var/lock/subsys/denyhosts #将DenyHOts启动的pid纪录到LOCK_FILE中，已确保服务正确启动，防止同时启动多个服务。
+HOSTNAME_LOOKUP=NO            #是否做域名反解
+ADMIN_EMAIL =                 #设置管理员邮件地址
+DAEMON_LOG = /var/log/denyhosts #DenyHosts日志位置
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;配置服务及启动&#34;&gt;配置服务及启动&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 创建启动服务连接
+[root@tmp ~]# ln -s /usr/share/denyhosts/daemon-control /etc/init.d/denyhosts
+# 添加启动项
+[root@tmp ~]# chkconfig denyhosts on
+# 查看启动像是否成功
+[root@tmp ~]# chkconfig --list|grep denyhosts
+# 启动denyhosts
+[root@tmp ~]# service denyhosts start  # 或者 systemctl start denyhosts
+# 查看后台进程
+[root@tmp ~]# ps -ef|grep denyhosts
+root      3098  3865  0 17:35 pts/1    00:00:00 grep --color=auto denyhosts
+root     21121     1  0 Feb28 ?        00:00:01 python /usr/bin/denyhosts.py --daemon --config=/usr/share/denyhosts/denyhosts.cfg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;问题排查&#34;&gt;问题排查&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;starting DenyHosts: /usr/bin/env python /usr/bin/denyhosts.py &amp;ndash;daemon &amp;ndash;config=/usr/share/denyhosts/denyhosts.cfg python: can&amp;rsquo;t open file &amp;lsquo;/usr/bin/denyhosts.py&amp;rsquo;: [Errno 2] No such file or directory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;cd /usr/share/denyhosts/
+vi daemon-control
+DENYHOSTS_BIN = &amp;quot;/usr/bin/denyhosts.py&amp;quot;
+改为
+DENYHOSTS_BIN = &amp;quot;/usr/local/bin/denyhosts.py&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ImportError: No module named DenyHosts.python_version&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 下面的python版本视服务器上的版本而定
+cp -r /usr/local/lib/python2.7/site-packages/DenyHosts /usr/lib/python2.6/site-packages/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后重启即可。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>限制svn提交时必须添加注释</title>
       <link>https://blog.gofinall.com/post/svn-pre-commit/</link>
       <pubDate>Fri, 28 Feb 2020 13:24:39 +0800</pubDate>
@@ -812,50 +923,6 @@ dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
 &lt;p&gt;人生在于折腾。&lt;/p&gt;
 
 &lt;p&gt;参考:&lt;a href=&#34;https://luotianyi.vc/1306.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://luotianyi.vc/1306.html&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Nginx反代Websocket 403报错</title>
-      <link>https://blog.gofinall.com/post/nginx-websocket/</link>
-      <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/nginx-websocket/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;由于服务器对外只有一个端口，需要用nginx把服务器上多个tomcat的地址代理出来，工程中需要用Websocket，按照网上常规配置后，部分Websocket访问报403错误，部分Websocket正常。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;nginx版本&#34;&gt;nginx版本&lt;/h3&gt;
-
-&lt;p&gt;1.14.2&lt;/p&gt;
-
-&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
-
-&lt;p&gt;最开始的配置如下&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;配置后，部分Websocket访问报403错误，部分Websocket正常。经过google后，参考&lt;a href=&#34;https://github.com/drone/drone/issues/767&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;websocket problem when deployed behind nginx&lt;/a&gt;，后新增如下配置，重启nginx就好了。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;proxy_set_header Origin &#39;&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;完整的配置如下&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt; location /api/stream {
-        proxy_pass http://127.0.0.1:8000;
-
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
-
-        proxy_set_header Origin &#39;&#39;;
-    }
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>
