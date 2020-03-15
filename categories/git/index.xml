@@ -6,10 +6,23 @@
     <description>Recent content in Git on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 10 Apr 2019 17:09:29 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2020 17:07:29 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>设置git命令代理，加速git命令执行</title>
+      <link>https://blog.gofinall.com/post/git-proxy/</link>
+      <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-proxy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>

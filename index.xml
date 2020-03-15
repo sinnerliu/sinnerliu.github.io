@@ -31,6 +31,98 @@
     </item>
     
     <item>
+      <title>设置git命令代理，加速git命令执行</title>
+      <link>https://blog.gofinall.com/post/git-proxy/</link>
+      <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/git-proxy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+
+&lt;p&gt;Git 目前支持的三种协议 &lt;code&gt;git://&lt;/code&gt;、&lt;code&gt;ssh://&lt;/code&gt; 和 &lt;code&gt;http://&lt;/code&gt;，其代理配置各不相同：&lt;code&gt;core.gitproxy&lt;/code&gt; 用于 &lt;code&gt;git://&lt;/code&gt; 协议，&lt;code&gt;http.proxy&lt;/code&gt; 用于 &lt;code&gt;http://&lt;/code&gt; 协议，&lt;code&gt;ssh://&lt;/code&gt; 协议的代理需要配置 ssh 的 &lt;code&gt;ProxyCommand&lt;/code&gt; 参数。&lt;/p&gt;
+
+&lt;p&gt;假如代理地址为：&lt;code&gt;127.0.0.1:1080&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;所有协议全部使用-ssh-隧道进行代理&#34;&gt;所有协议全部使用 SSH 隧道进行代理&lt;/h4&gt;
+
+&lt;h5 id=&#34;git-协议的配置&#34;&gt;GIT 协议的配置&lt;/h5&gt;
+
+&lt;p&gt;建立 &lt;code&gt;/path/to/socks5proxywrapper&lt;/code&gt; 文件，使用 &lt;a href=&#34;https://bitbucket.org/gotoh/connect&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://bitbucket.org/gotoh/connect&lt;/a&gt; 工具进行代理的转换，各发行版一般打包为 proxy-connect 或者 connect-proxy。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+connect -S 127.0.0.1:1080 &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置 git&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[core]
+        gitproxy = /path/to/socks5proxywrapper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export GIT_PROXY_COMMAND=&amp;quot;/path/to/socks5proxywrapper&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;ssh-协议的配置&#34;&gt;SSH 协议的配置&lt;/h5&gt;
+
+&lt;p&gt;建立 &lt;code&gt;/path/to/soks5proxyssh&lt;/code&gt; 文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+ssh -o ProxyCommand=&amp;quot;/path/to/socks5proxywrapper %h %p&amp;quot; &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置 git 使用该 wrapper&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export GIT_SSH=&amp;quot;/path/to/socks5proxyssh“
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然也可以直接配置 &lt;code&gt;～/.ssh/config&lt;/code&gt; 的 &lt;code&gt;ProxyCommand&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;http-协议的配置&#34;&gt;HTTP 协议的配置&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code&gt;[http]
+        #这里是因为 Git 使用 libcurl 提供 http 支持
+        proxy = socks5://127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;所有协议全部使用-http-代理&#34;&gt;所有协议全部使用 http 代理&lt;/h4&gt;
+
+&lt;p&gt;在前一部分的基础上， &lt;code&gt;/path/to/socks5proxywrapper&lt;/code&gt; 文件改为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+connect -H 127.0.0.1:1080 &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;http-协议配置&#34;&gt;HTTP 协议配置&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code&gt;[http]
+    proxy = http://127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;针对域名启用代理&#34;&gt;针对域名启用代理&lt;/h4&gt;
+
+&lt;p&gt;gitproxy 参数提供 &lt;code&gt;* for *&lt;/code&gt; 结构，具体看 &lt;code&gt;man git-config&lt;/code&gt; 的 core.gitproxy 部分。&lt;/p&gt;
+
+&lt;h3 id=&#34;其他方法&#34;&gt;其他方法&lt;/h3&gt;
+
+&lt;p&gt;可以用&lt;code&gt;proxychains&lt;/code&gt;，配置方法见：&lt;a href=&#34;https://blog.gofinall.com/post/proxychains-ng/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;利用Proxychains在终端使用socks5/http代理&lt;/a&gt;，这个方法简单好用&lt;/p&gt;
+
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/q/1010000000118837&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://segmentfault.com/q/1010000000118837&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>DenyHosts安装配置详解及安装报错处理</title>
       <link>https://blog.gofinall.com/post/denyhosts/</link>
       <pubDate>Mon, 02 Mar 2020 17:19:49 +0800</pubDate>
@@ -781,148 +873,6 @@ UPDATE table_json SET info = json_remove(info,&#39;$.ip&#39;) WHERE id = 2;
 &lt;/ul&gt;
 
 &lt;p&gt;以上是个人实际经历，勿怼。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>斐讯N1折腾记1-刷入armbian</title>
-      <link>https://blog.gofinall.com/post/feixun-n1-1/</link>
-      <pubDate>Tue, 23 Jul 2019 10:26:06 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/feixun-n1-1/</guid>
-      <description>&lt;h3 id=&#34;n1介绍&#34;&gt;N1介绍&lt;/h3&gt;
-
-&lt;p&gt;斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。&lt;/p&gt;
-
-&lt;p&gt;如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;硬件配置&#34;&gt;硬件配置&lt;/h4&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;N1&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;CPU&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;Amlogic S905D, 4-Core Cortex-A53, 1.8Ghz&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;GPU&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;Mail-450&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;RAM&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;2G&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Storage&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;8G EMMC&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Network&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;BT4, 802.11 n/ac&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;Interface&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;HDMI * 1, USB * 2, 1000M Ethernet * 1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&#34;用途&#34;&gt;用途&lt;/h3&gt;
-
-&lt;p&gt;N1的核心功能就是看网络电视，主系统是Android 7，下载电视版APP可以看很多节目、电影等，如果通过刷机可以获得更多功能。刷Linux系统可以获得一台小型服务器，配合内网穿透和DDNS可以当一个低功耗小型服务器。可以作为下载服务器，有专门的下载优化固件，专注下载。N1的接口有: 网线接口、HDMI接口和两个USB2.0接口，需要大量文件传输的话速度比较一般。&lt;/p&gt;
-
-&lt;p&gt;上周从PDD上买入N1，84元，价格还算可以。&lt;/p&gt;
-
-&lt;h3 id=&#34;折腾准备&#34;&gt;折腾准备&lt;/h3&gt;
-
-&lt;h4 id=&#34;环境准备&#34;&gt;环境准备&lt;/h4&gt;
-
-&lt;p&gt;下载好adb相关的工具&lt;/p&gt;
-
-&lt;p&gt;相关工具下载可用&lt;a href=&#34;https://cnone.lty.fun/home/工具库/N1&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://cnone.lty.fun/home/%E5%B7%A5%E5%85%B7%E5%BA%93/N1&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;感谢&lt;a href=&#34;https://luotianyi.vc/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Luminous&lt;/a&gt;提供和分享相关工具。&lt;/p&gt;
-
-&lt;h4 id=&#34;降级&#34;&gt;降级&lt;/h4&gt;
-
-&lt;p&gt;当n1的系统版本在 V2.19 以上的都必须先降级才能刷机，由于我为了少折腾，直接买的是刷好了yyf的精简固件的，降级教程网上很多，此文章就忽略了。&lt;/p&gt;
-
-&lt;h4 id=&#34;刷入armbian&#34;&gt;刷入armbian&lt;/h4&gt;
-
-&lt;h5 id=&#34;系统选择&#34;&gt;系统选择&lt;/h5&gt;
-
-&lt;p&gt;网上大神制作的N1系统有：debian、ubuntu、centos，参考网上反馈使用的稳定性，最终选择了ubuntu，&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Armbian_5.77_Aml-s905_Ubuntu_bionic_default_5.0.2_20190401.img.xz&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&#34;制作u盘系统&#34;&gt;制作U盘系统&lt;/h5&gt;
-
-&lt;p&gt;本人使用的是闪迪的cz33，听说兼容性好点；&lt;/p&gt;
-
-&lt;p&gt;使用&lt;code&gt;usbit&lt;/code&gt;或者&lt;code&gt;win32diskimager&lt;/code&gt;烧录固件到U盘，本文使用&lt;code&gt;usbit&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/n1-1.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;注意此操作会格式化U盘&lt;/strong&gt;，将一个8G以上的U盘插入电脑，在左侧选择U盘，然后再点击Restore，然后选择刚才解压出来的.img镜像，一路yes就会开始写入U盘，等着写入结束即可，当写入结束后，&lt;strong&gt;windows系统会弹出一个格式化的提示，此时不要点格式化，否则写入的系统会被清掉&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h5 id=&#34;修改引导dtb&#34;&gt;修改引导dtb&lt;/h5&gt;
-
-&lt;p&gt;如果不修改dtb，可能会导致系统负载长期在2.0以上。&lt;/p&gt;
-
-&lt;p&gt;刻录完的U盘会有一个可读取分区和一个不可读取分区，进入可读取的那个分区，把&lt;code&gt;meson-gxl-s905d-phicomm-n1-xiangsm.dtb&lt;/code&gt;放到U盘的可读分区的dtb目录下，用&lt;code&gt;Notepad++&lt;/code&gt;编辑uEnv.ini，&lt;strong&gt;切记不可用windows自带的记事本&lt;/strong&gt;，把文件里的dtb_name后面的文件名换成&lt;code&gt;meson-gxl-s905d-phicomm-n1-xiangsm.dtb&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#dtb_name=/dtb/meson-gxm-khadas-vim2.dtb
-dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h5 id=&#34;修改系统可从u盘启动&#34;&gt;修改系统可从U盘启动&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;把盒子插上显示器，查看盒子的ip地址，如：&lt;code&gt;192.168.1.100&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;进入包含&lt;code&gt;adb.exe&lt;/code&gt;目录，按住&lt;code&gt;shift&lt;/code&gt;然后再点击右键，选择&lt;code&gt;在此处打开PowerShell窗口&lt;/code&gt;，在打开的PowerShell窗口先后运行这两条指令&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;.\adb.exe connect 192.168.1.100
-.\adb.exe shell reboot update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;执行完成后，看到显示器上盒子已经在重启阶段，迅速把U盘插到靠近hdmi口的usb口(听说这个口兼容性好点，具体未实验)，等待系统重启进入linux系统，&lt;strong&gt;此步骤中，切记不能开着盒子插入U盘，在安卓系统下插入U盘会导致U盘上的文件属组改变，可以等上面的adb命令执行完成后，关闭盒子，再插入U盘，再启动盒子&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&#34;初始化系统&#34;&gt;初始化系统&lt;/h5&gt;
-
-&lt;p&gt;如果有键盘，插入另一个usb口，输入登录账号&lt;code&gt;root&lt;/code&gt;，root密码为&lt;code&gt;1234&lt;/code&gt;，登录后提示创建用户，直接&lt;code&gt;ctrl+c&lt;/code&gt;取消即可。&lt;/p&gt;
-
-&lt;p&gt;如果没有键盘，可以用&lt;code&gt;ScanPort.exe&lt;/code&gt;来扫描网段内22端口的ip，或者直接去路由器上查看盒子的ip地址&lt;/p&gt;
-
-&lt;p&gt;如果不需要把系统写入盒子的emmc中，整个过程就结束了&lt;/p&gt;
-
-&lt;p&gt;用putty登录linux，如下&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/n1-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;安装应用&#34;&gt;安装应用&lt;/h3&gt;
-
-&lt;p&gt;可以安装的应用挺多的，现在很多软件都有arm的，如：frp、n2n、php、nginx、docker等，等有空了把我阿里云上的typecho博客迁移到N1上来。&lt;/p&gt;
-
-&lt;p&gt;人生在于折腾。&lt;/p&gt;
-
-&lt;p&gt;参考:&lt;a href=&#34;https://luotianyi.vc/1306.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://luotianyi.vc/1306.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
