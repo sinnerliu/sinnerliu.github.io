@@ -6,10 +6,29 @@
     <description>Recent content in Posts on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 15 Mar 2020 17:07:29 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2020 10:05:36 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux Mysql tar包部署之调整mysql.server</title>
+      <link>https://blog.gofinall.com/post/mysql-server/</link>
+      <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-server/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。&lt;/li&gt;
+&lt;li&gt;在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。&lt;/li&gt;
+&lt;li&gt;服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基于上面三个原因，结合网上的文章，大概总结了下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>设置git命令代理，加速git命令执行</title>

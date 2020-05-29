@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>设置git命令代理，加速git命令执行 - 终点站</title>
+  <title>Linux Mysql tar包部署之调整mysql.server - 终点站</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,10 +17,10 @@
 
 
 <meta name="author" content="死性不改" />
-  <meta name="description" content="背景 由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。
+  <meta name="description" content="背景  经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。 在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。 服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。  基于上面三个原因，结合网上的文章，大概总结了下。
 
 " />
-<meta name="keywords" content="git" />
+<meta name="keywords" content="mysql" />
 
 
 
@@ -31,7 +31,7 @@
 <meta name="generator" content="Hugo 0.48" />
 
 
-<link rel="canonical" href="https://blog.gofinall.com/post/git-proxy/" />
+<link rel="canonical" href="https://blog.gofinall.com/post/mysql-server/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,35 +49,53 @@
 <link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="设置git命令代理，加速git命令执行" />
+<meta property="og:title" content="Linux Mysql tar包部署之调整mysql.server" />
 <meta property="og:description" content="背景
 
-由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。
+
+经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。
+在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。
+服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。
+
+
+基于上面三个原因，结合网上的文章，大概总结了下。
 
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.gofinall.com/post/git-proxy/" /><meta property="article:published_time" content="2020-03-15T17:07:29&#43;08:00"/>
-<meta property="article:modified_time" content="2020-03-15T17:07:29&#43;08:00"/>
-<meta itemprop="name" content="设置git命令代理，加速git命令执行">
+<meta property="og:url" content="https://blog.gofinall.com/post/mysql-server/" /><meta property="article:published_time" content="2020-05-29T10:05:36&#43;08:00"/>
+<meta property="article:modified_time" content="2020-05-29T10:05:36&#43;08:00"/>
+<meta itemprop="name" content="Linux Mysql tar包部署之调整mysql.server">
 <meta itemprop="description" content="背景
 
-由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。
+
+经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。
+在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。
+服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。
+
+
+基于上面三个原因，结合网上的文章，大概总结了下。
 
 ">
 
 
-<meta itemprop="datePublished" content="2020-03-15T17:07:29&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-15T17:07:29&#43;08:00" />
-<meta itemprop="wordCount" content="538">
+<meta itemprop="datePublished" content="2020-05-29T10:05:36&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-29T10:05:36&#43;08:00" />
+<meta itemprop="wordCount" content="493">
 
 
 
-<meta itemprop="keywords" content="git," />
+<meta itemprop="keywords" content="mysql," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="设置git命令代理，加速git命令执行"/>
+<meta name="twitter:title" content="Linux Mysql tar包部署之调整mysql.server"/>
 <meta name="twitter:description" content="背景
 
-由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。
+
+经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。
+在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。
+服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。
+
+
+基于上面三个原因，结合网上的文章，大概总结了下。
 
 "/>
 
@@ -146,13 +164,13 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">设置git命令代理，加速git命令执行</h1>
+      <h1 class="post-title">Linux Mysql tar包部署之调整mysql.server</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-03-15 </span>
+        <span class="post-time"> 2020-05-29 </span>
         <div class="post-category">
             
-              <a href="/categories/git/"> git </a>
+              <a href="/categories/mysql/"> mysql </a>
             
           </div>
         
@@ -173,22 +191,9 @@
 <li>
 <ul>
 <li><a href="#背景">背景</a></li>
-<li><a href="#方法">方法</a>
-<ul>
-<li><a href="#所有协议全部使用-ssh-隧道进行代理">所有协议全部使用 SSH 隧道进行代理</a>
-<ul>
-<li><a href="#git-协议的配置">GIT 协议的配置</a></li>
-<li><a href="#ssh-协议的配置">SSH 协议的配置</a></li>
-<li><a href="#http-协议的配置">HTTP 协议的配置</a></li>
-</ul></li>
-<li><a href="#所有协议全部使用-http-代理">所有协议全部使用 http 代理</a>
-<ul>
-<li><a href="#http-协议配置">HTTP 协议配置</a></li>
-</ul></li>
-<li><a href="#针对域名启用代理">针对域名启用代理</a></li>
-</ul></li>
-<li><a href="#其他方法">其他方法</a></li>
-<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#修改方法">修改方法</a></li>
+<li><a href="#启动-停止-重启">启动|停止|重启</a></li>
+<li><a href="#参考">参考</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -200,88 +205,72 @@
     <div class="post-content">
       <h3 id="背景">背景</h3>
 
-<p>由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。</p>
+<ul>
+<li>经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。</li>
+<li>在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。</li>
+<li>服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。</li>
+</ul>
+
+<p>基于上面三个原因，结合网上的文章，大概总结了下。</p>
 
 <p></p>
 
-<h3 id="方法">方法</h3>
+<h3 id="修改方法">修改方法</h3>
 
-<p>Git 目前支持的三种协议 <code>git://</code>、<code>ssh://</code> 和 <code>http://</code>，其代理配置各不相同：<code>core.gitproxy</code> 用于 <code>git://</code> 协议，<code>http.proxy</code> 用于 <code>http://</code> 协议，<code>ssh://</code> 协议的代理需要配置 ssh 的 <code>ProxyCommand</code> 参数。</p>
+<ul>
+<li>版本</li>
+</ul>
 
-<p>假如代理地址为：<code>127.0.0.1:1080</code></p>
+<p>应该适用MySQL目前的所有版本，mysql.server实质是一个shell。</p>
 
-<h4 id="所有协议全部使用-ssh-隧道进行代理">所有协议全部使用 SSH 隧道进行代理</h4>
+<ul>
+<li>修改内容</li>
+</ul>
 
-<h5 id="git-协议的配置">GIT 协议的配置</h5>
+<p>路径: <code>support-files/mysql.server</code></p>
 
-<p>建立 <code>/path/to/socks5proxywrapper</code> 文件，使用 <a href="https://bitbucket.org/gotoh/connect" rel="noreferrer" target="_blank">https://bitbucket.org/gotoh/connect</a> 工具进行代理的转换，各发行版一般打包为 proxy-connect 或者 connect-proxy。</p>
+<pre><code class="language-shell"># 1、修改basedir和datadir路径
+# 将两个路径改成实际的路径
+basedir=
+datadir=
 
-<pre><code>#!/bin/sh
-connect -S 127.0.0.1:1080 &quot;$@&quot;
+# 2、修改extra_args,改成--defaults-file=$basedir/my.cnf
+if test -r &quot;$basedir/my.cnf&quot;
+then
+#  extra_args=&quot;-e $basedir/my.cnf&quot;
+   extra_args=&quot;--defaults-file=$basedir/my.cnf&quot;
+fi
+
+# 3、修改mysqld_safe启动默认配置文件,加入--defaults-file=&quot;$basedir/my.cnf&quot;
+# $bindir/mysqld_safe --datadir=&quot;$datadir&quot; --pid-file=&quot;$mysqld_pid_file_path&quot; $other_args &gt;/dev/null &amp;
+$bindir/mysqld_safe --defaults-file=&quot;$basedir/my.cnf&quot; --datadir=&quot;$datadir&quot; --pid-file=&quot;$mysqld_pid_file_path&quot; $other_args &gt;/dev/null &amp; 
 </code></pre>
 
-<p>配置 git</p>
+<h3 id="启动-停止-重启">启动|停止|重启</h3>
 
-<pre><code>[core]
-        gitproxy = /path/to/socks5proxywrapper
-</code></pre>
+<p>在mysql的配置文件等无误后，进去MySQL的目录执行下面的命令进行启动|停止|重启</p>
 
-<p>或者</p>
+<ul>
+<li>启动</li>
+</ul>
 
-<pre><code>export GIT_PROXY_COMMAND=&quot;/path/to/socks5proxywrapper&quot;
-</code></pre>
+<p><code>support-files/mysql.server start</code></p>
 
-<h5 id="ssh-协议的配置">SSH 协议的配置</h5>
+<ul>
+<li>停止</li>
+</ul>
 
-<p>建立 <code>/path/to/soks5proxyssh</code> 文件</p>
+<p><code>support-files/mysql.server stop</code></p>
 
-<pre><code>#!/bin/sh
-ssh -o ProxyCommand=&quot;/path/to/socks5proxywrapper %h %p&quot; &quot;$@&quot;
-</code></pre>
+<ul>
+<li>重启</li>
+</ul>
 
-<p>配置 git 使用该 wrapper</p>
+<p><code>support-files/mysql.server restart</code></p>
 
-<pre><code>export GIT_SSH=&quot;/path/to/socks5proxyssh“
-</code></pre>
+<h3 id="参考">参考</h3>
 
-<p>当然也可以直接配置 <code>～/.ssh/config</code> 的 <code>ProxyCommand</code></p>
-
-<h5 id="http-协议的配置">HTTP 协议的配置</h5>
-
-<pre><code>[http]
-        #这里是因为 Git 使用 libcurl 提供 http 支持
-        proxy = socks5://127.0.0.1:1080
-</code></pre>
-
-<hr />
-
-<h4 id="所有协议全部使用-http-代理">所有协议全部使用 http 代理</h4>
-
-<p>在前一部分的基础上， <code>/path/to/socks5proxywrapper</code> 文件改为</p>
-
-<pre><code>#!/bin/sh
-connect -H 127.0.0.1:1080 &quot;$@&quot;
-</code></pre>
-
-<h5 id="http-协议配置">HTTP 协议配置</h5>
-
-<pre><code>[http]
-    proxy = http://127.0.0.1:1080
-</code></pre>
-
-<hr />
-
-<h4 id="针对域名启用代理">针对域名启用代理</h4>
-
-<p>gitproxy 参数提供 <code>* for *</code> 结构，具体看 <code>man git-config</code> 的 core.gitproxy 部分。</p>
-
-<h3 id="其他方法">其他方法</h3>
-
-<p>可以用<code>proxychains</code>，配置方法见：<a href="https://blog.gofinall.com/post/proxychains-ng/" rel="noreferrer" target="_blank">利用Proxychains在终端使用socks5/http代理</a>，这个方法简单好用</p>
-
-<h3 id="参考文章">参考文章</h3>
-
-<p><a href="https://segmentfault.com/q/1010000000118837" rel="noreferrer" target="_blank">https://segmentfault.com/q/1010000000118837</a></p>
+<p>从启动脚本分析mysql读取my.cnf配置的顺序: <a href="https://www.jianshu.com/p/bee4a55dc574" rel="noreferrer" target="_blank"> https://www.jianshu.com/p/bee4a55dc574</a></p>
     </div>
 
     
@@ -293,21 +282,16 @@ connect -H 127.0.0.1:1080 &quot;$@&quot;
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/tags/git/">git</a>
+          <a href="/tags/mysql/">mysql</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/mysql-server/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Linux Mysql tar包部署之调整mysql.server</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
         
-          <a class="next" href="/post/denyhosts/">
-            <span class="next-text nav-default">DenyHosts安装配置详解及安装报错处理</span>
+          <a class="next" href="/post/git-proxy/">
+            <span class="next-text nav-default">设置git命令代理，加速git命令执行</span>
             <span class="prev-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

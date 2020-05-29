@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.gofinall.com/post/mysql-server/</loc>
+    <lastmod>2020-05-29T10:05:36+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.gofinall.com/post/git-proxy/</loc>
     <lastmod>2020-03-15T17:07:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -718,14 +725,14 @@
   
   <url>
     <loc>https://blog.gofinall.com/tags/mysql/</loc>
-    <lastmod>2019-11-28T13:23:54+08:00</lastmod>
+    <lastmod>2020-05-29T10:05:36+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.gofinall.com/categories/mysql/</loc>
-    <lastmod>2019-11-28T13:23:54+08:00</lastmod>
+    <lastmod>2020-05-29T10:05:36+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -830,7 +837,7 @@
   
   <url>
     <loc>https://blog.gofinall.com/post/</loc>
-    <lastmod>2020-03-15T17:07:29+08:00</lastmod>
+    <lastmod>2020-05-29T10:05:36+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

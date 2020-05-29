@@ -31,6 +31,82 @@
     </item>
     
     <item>
+      <title>Linux Mysql tar包部署之调整mysql.server</title>
+      <link>https://blog.gofinall.com/post/mysql-server/</link>
+      <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/mysql-server/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。&lt;/li&gt;
+&lt;li&gt;在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。&lt;/li&gt;
+&lt;li&gt;服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基于上面三个原因，结合网上的文章，大概总结了下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;修改方法&#34;&gt;修改方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;版本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;应该适用MySQL目前的所有版本，mysql.server实质是一个shell。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;修改内容&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;路径: &lt;code&gt;support-files/mysql.server&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 1、修改basedir和datadir路径
+# 将两个路径改成实际的路径
+basedir=
+datadir=
+
+# 2、修改extra_args,改成--defaults-file=$basedir/my.cnf
+if test -r &amp;quot;$basedir/my.cnf&amp;quot;
+then
+#  extra_args=&amp;quot;-e $basedir/my.cnf&amp;quot;
+   extra_args=&amp;quot;--defaults-file=$basedir/my.cnf&amp;quot;
+fi
+
+# 3、修改mysqld_safe启动默认配置文件,加入--defaults-file=&amp;quot;$basedir/my.cnf&amp;quot;
+# $bindir/mysqld_safe --datadir=&amp;quot;$datadir&amp;quot; --pid-file=&amp;quot;$mysqld_pid_file_path&amp;quot; $other_args &amp;gt;/dev/null &amp;amp;
+$bindir/mysqld_safe --defaults-file=&amp;quot;$basedir/my.cnf&amp;quot; --datadir=&amp;quot;$datadir&amp;quot; --pid-file=&amp;quot;$mysqld_pid_file_path&amp;quot; $other_args &amp;gt;/dev/null &amp;amp; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;启动-停止-重启&#34;&gt;启动|停止|重启&lt;/h3&gt;
+
+&lt;p&gt;在mysql的配置文件等无误后，进去MySQL的目录执行下面的命令进行启动|停止|重启&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;启动&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server start&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;停止&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server stop&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;重启&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+
+&lt;p&gt;从启动脚本分析mysql读取my.cnf配置的顺序: &lt;a href=&#34;https://www.jianshu.com/p/bee4a55dc574&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt; https://www.jianshu.com/p/bee4a55dc574&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>设置git命令代理，加速git命令执行</title>
       <link>https://blog.gofinall.com/post/git-proxy/</link>
       <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
@@ -838,41 +914,6 @@ UPDATE table_json SET info = json_remove(info,&#39;$.ip&#39;) WHERE id = 2;
 &lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/ooo0/p/9309277.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.cnblogs.com/ooo0/p/9309277.html&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>又一次长春出差后的感想</title>
-      <link>https://blog.gofinall.com/post/changchun-1/</link>
-      <pubDate>Tue, 13 Aug 2019 16:42:11 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/changchun-1/</guid>
-      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-
-&lt;p&gt;又一次长春出差，直达的飞机差不多5小时，本就疲惫不堪，但是下飞机后打出租车更让人心累；&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;经历&#34;&gt;经历&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;2014年的时候，去过一次长春，从机场打出租车到市区，出租车司机不按照打表的价格收费，要价150，实际打表的价格在110多点，由于出差，需要发票报销，出租车司机说给定额票，在人家地盘上，我也不敢说啥；&lt;/li&gt;
-&lt;li&gt;2015年的时候，又去了一次长春，打出租车照旧喊价，但是不是给的定额票，司机直接从车里拿出另一个‘计价器’，问要好多的票，他们直接用这个‘计价器’打出来；&lt;/li&gt;
-&lt;li&gt;2016年的时候，又又去了一次长春，打车还是老规矩，更要命的是去机场的时候，把我和另一个同事直接丢路上，让我们去坐另外的出租车，上车一看，车上已经有两个去机场，然后我们四个大老爷们挤着去了机场，但这次是按照打表给的票；&lt;/li&gt;
-&lt;li&gt;前段时间，又又又去了一次长春，上出租车，师傅说打表，心想着这次出租车良心了，但是到了目的地后，打表的价格是160多，记得上次打表才110左右，我也不敢问，给钱拿票走人；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;感想&#34;&gt;感想&lt;/h3&gt;
-
-&lt;p&gt;出租车是一个城市的门面，尤其是跑机场、火车站，外地人来了接触的第一个本地事物，不应该有喊价、调表(猜测)、强制拼车等行为，给人留下的印象不好；又加上大部分东北爷们脾气暴躁(网传)，又不敢给他们理论，也就只有默默的接受了。&lt;/p&gt;
-
-&lt;h3 id=&#34;建议&#34;&gt;建议&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;网约车：去机场和到市区，可以打网约车，价格是平台订的，相对透明，不坑；&lt;/li&gt;
-&lt;li&gt;城际火车：不赶时间的，或者去市中心附近的，可以坐城际火车，价格便宜(10块左右)，时间快(10多分钟)，城际火车大概是1个小时一趟，可以直接在机场下面坐，或者从市中心的火车站坐到机场。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;以上是个人实际经历，勿怼。&lt;/p&gt;</description>
     </item>
     
   </channel>
