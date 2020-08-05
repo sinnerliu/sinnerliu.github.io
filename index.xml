@@ -31,6 +31,139 @@
     </item>
     
     <item>
+      <title>Jupyter Notebook双向https认证配置</title>
+      <link>https://blog.gofinall.com/post/jupyter-notebook/</link>
+      <pubDate>Wed, 05 Aug 2020 11:26:26 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/jupyter-notebook/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、文档编写、运行代码和展示结果。——&lt;a href=&#34;https://jupyter-notebook.readthedocs.io/en/stable/notebook.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook官方介绍&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;简而言之，Jupyter Notebook是以网页的形式打开，可以在网页页面中&lt;strong&gt;直接&lt;/strong&gt;编写代码和运行代码，代码的运行结果也会直接在代码块下显示。如在编程过程中需要编写说明文档，可在同一个页面中直接编写，便于作及时的说明和解释。&lt;/p&gt;
+
+&lt;p&gt;本文主要讲配置双向https认证的问题，其余步骤简单写下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;p&gt;python3.6&lt;/p&gt;
+
+&lt;h3 id=&#34;部署&#34;&gt;部署&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;pip3 install jupyter&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;证书生成&#34;&gt;证书生成&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;方法1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;可用openssl生成，需要生成ca、server、client证书。不写了，网上教程很多&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;方法2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;生成自签名证书传统工具是&lt;code&gt;OpenSSL&lt;/code&gt;。不过&lt;code&gt;OpenSSL&lt;/code&gt;不论是其复杂的命令选项，还是更加复杂配置都会让人头皮发麻。这里介绍一个更简单的生成自签名证书的工具: &lt;code&gt;certstrap&lt;/code&gt;， 项目地址:&lt;a href=&#34;https://github.com/square/certstrap&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;square/certstrap&lt;/a&gt;.具体安装请参考其文档。几行命令就可生成ca、server、client、以及生成PKCS格式的证书。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.1 CA证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;要进行证书自签名，首先是生成一个自信任的CA认证证书。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap init --common-name &amp;quot;ExampleCA&amp;quot; --expires &amp;quot;20 years&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;命令完成后，会在当前目录下创建一个新的&lt;code&gt;out&lt;/code&gt;目录，生成的证书都在该目录下.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: tree out
+out
+├── ExampleCA.crl
+├── ExampleCA.crt
+└── ExampleCA.key
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.2 服务端证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;首先创建CSR, 即证书签名请求。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap request-cert -cn server -ip 127.0.0.1 -domain &amp;quot;*.example.com&amp;quot;
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Created out/server.key
+Created out/server.csr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;生成CSR之后，通过刚刚生成的CA证书进行签名.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap sign server --CA ExampleCA
+Enter passphrase for CA key (empty for no passphrase):
+Created out/server.crt from out/server.csr signed by out/ExampleCA.key
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就完成了服务端证书的签名，签名后的证书就是:&lt;code&gt;out/server.crt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.3 客户端证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;企业内部集群，通常为了保证服务之间的安全行，对客户端请求需要进行双向验证。这个时候就需要客户端也提供证书。&lt;/p&gt;
+
+&lt;p&gt;客户端证书的生成过程同服务端类似，更简单一点，不需要提供证书的IP与域名信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap request-cert -cn client
+$: certstrap sign client --CA ExampleCA
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.4 查看证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;生成完的证书是否正确，可以通过&lt;code&gt;certigo&lt;/code&gt;工具进行查询。项目地址: &lt;a href=&#34;https://github.com/square/certigo&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;square/certigo&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;安装完成后，通过以下命令查询证书的具体信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certigo dump out/server.crt
+** CERTIFICATE 1 **
+Valid: 2019-08-26 09:34 UTC to 2021-08-26 09:34 UTC
+Subject:
+    CN=server
+Issuer:
+    CN=ExampleCA
+DNS Names:
+    *.example.com
+IP Addresses:
+    127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.5 PKCS 格式证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;生成PKCS格式的证书可以直接点击安装到系统证书簇中，方便一些应用（浏览器等）的使用。具体生成PKCS 格式证书，使用&lt;code&gt;OpenSSL&lt;/code&gt;命令如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: openssl pkcs12 -export -out out/client.p12 -inkey out/client.key -in out/client.crt -certfile out/ExampleCA.crt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;jupyter-notebook双向https配置&#34;&gt;Jupyter Notebook双向https配置&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;启动的时候添加证书参数，如下:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;jupyter notebook --ip=0.0.0.0 --certfile=server.crt --keyfile=server.key  --client-ca=ExampleCA.crt&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;备注:&lt;/p&gt;
+
+&lt;p&gt;server.crt、server.key、ExampleCA.crt需要按照实际路径配置&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;客户端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;windows下，下载client.p12证书到本机，打开chrome-设置-安全-管理证书，然后进去个人，安装下载的client.p12证书，安装完成后用chrome打开&lt;code&gt;jupyter notebook&lt;/code&gt;的url即可。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Linux Mysql tar包部署之调整mysql.server</title>
       <link>https://blog.gofinall.com/post/mysql-server/</link>
       <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
@@ -861,59 +994,6 @@ Query OK,0 rows affected (0.00 sec)
 &lt;/ul&gt;
 
 &lt;p&gt;通过上面两种方式修改后，再观察下。/(ㄒoㄒ)/~~&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>MySQL常用json方法使用记录</title>
-      <link>https://blog.gofinall.com/post/mysql-json/</link>
-      <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/mysql-json/</guid>
-      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
-
-&lt;p&gt;Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;常用使用方法&#34;&gt;常用使用方法&lt;/h3&gt;
-
-&lt;h4 id=&#34;创建有json字段的表&#34;&gt;创建有json字段的表&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 创建表
-CREATE TABLE table_json(id INT PRIMARY KEY, sname VARCHAR(20) , info  JSON);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;查询记录&#34;&gt;查询记录&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 查询记录
-SELECT sname,JSON_EXTRACT(info,&#39;$.age&#39;) FROM table_json;
-SELECT sname,info-&amp;gt;&#39;$.age&#39; FROM table_json;
--- 查询key
-SELECT id,json_keys(info) FROM table_json;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;修改记录&#34;&gt;修改记录&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;-- 增加键
-UPDATE table_json SET info = json_set(info,&#39;$.ip&#39;,&#39;192.168.1.1&#39;) WHERE id = 2;
-
--- 变更值
-UPDATE table_json SET info = json_set(info,&#39;$.ip&#39;,&#39;192.168.1.2&#39;) WHERE id = 2;
-
--- 删除键
-UPDATE table_json SET info = json_remove(info,&#39;$.ip&#39;) WHERE id = 2;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;插入&#34;&gt;插入&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;UPDATE table_json SET info = JSON_INSERT(info,&#39;$.user-agent&#39;,&#39;chrome&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/ooo0/p/9309277.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.cnblogs.com/ooo0/p/9309277.html&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
