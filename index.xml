@@ -55,11 +55,11 @@ tomcatB: http://192.168.1.100:9091
 &lt;li&gt;下载3个需要的jar&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;[commons-pool2-2.4.2.jar]()&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/commons-pool2-2.4.2.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;commons-pool2-2.4.2.jar&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[jedis-2.9.0.jar]()&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/jedis-2.9.0.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;jedis-2.9.0.jar&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar]()&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar&lt;/a&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;把下载的文件放到tomcat8/lib下面&lt;/p&gt;&lt;/li&gt;
