@@ -31,7 +31,7 @@
     </item>
     
     <item>
-      <title>nginx&#43;tomcat8实现session共享</title>
+      <title>nginx&#43;tomcat8&#43;redis实现session共享</title>
       <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
       <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
       <author> 死性不改 </author>
