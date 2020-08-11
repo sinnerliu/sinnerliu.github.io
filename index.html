@@ -129,6 +129,35 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/nginx-tomcat-session/">nginx&#43;tomcat8实现session共享</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-08-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/tomcat/"> tomcat </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h3 id="背景">背景</h3>
+
+<p>当客户端访问Nginx服务器时，Nginx负载均衡会自动将请求转发到TomcatA或TomcatB服务器，以减轻Tomcat压力，从而达到Tomcat集群化部署，为了使各Tomcat之间共享同一个Session，将采用Redis缓存服务来集中管理Session存储。但是网上的方法基本都只支持tomcat7，于是记录下tomcat8的实现方法</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/nginx-tomcat-session/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/jupyter-notebook/">Jupyter Notebook双向https认证配置</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-08-05 </span>
@@ -412,35 +441,6 @@
     </div>
     <div class="read-more">
       <a href="/post/mysql-read-only/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/mysql-json/">MySQL常用json方法使用记录</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-08-14 </span>
-      <div class="post-category">
-          
-            <a href="/categories/mysql/"> mysql </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h3 id="介绍">介绍</h3>
-
-<p>Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &lt;, &lt;=, &gt;, &gt;=, &lt;&gt;, != 和 &lt;=&gt;。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/mysql-json/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

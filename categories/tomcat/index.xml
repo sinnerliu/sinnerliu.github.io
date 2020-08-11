@@ -6,10 +6,23 @@
     <description>Recent content in Tomcat on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 10 Apr 2019 16:29:25 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 13:36:08 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/categories/tomcat/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>nginx&#43;tomcat8实现session共享</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
+      <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-tomcat-session/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当客户端访问Nginx服务器时，Nginx负载均衡会自动将请求转发到TomcatA或TomcatB服务器，以减轻Tomcat压力，从而达到Tomcat集群化部署，为了使各Tomcat之间共享同一个Session，将采用Redis缓存服务来集中管理Session存储。但是网上的方法基本都只支持tomcat7，于是记录下tomcat8的实现方法&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Tomcat8启动报there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache</title>

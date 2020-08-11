@@ -31,6 +31,147 @@
     </item>
     
     <item>
+      <title>nginx&#43;tomcat8实现session共享</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
+      <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/nginx-tomcat-session/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当客户端访问Nginx服务器时，Nginx负载均衡会自动将请求转发到TomcatA或TomcatB服务器，以减轻Tomcat压力，从而达到Tomcat集群化部署，为了使各Tomcat之间共享同一个Session，将采用Redis缓存服务来集中管理Session存储。但是网上的方法基本都只支持tomcat7，于是记录下tomcat8的实现方法&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;nginx: http://192.168.1.100:8080
+tomcatA: http://192.168.1.100:9090
+tomcatB: http://192.168.1.100:9091
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;步骤&#34;&gt;步骤&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;下载3个需要的jar&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;[commons-pool2-2.4.2.jar]()&lt;/p&gt;
+
+&lt;p&gt;[jedis-2.9.0.jar]()&lt;/p&gt;
+
+&lt;p&gt;[tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar]()&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;把下载的文件放到tomcat8/lib下面&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改tomcat8/conf/context.xml&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vi tomcat8/context.xml
+# redis是哨兵模式
+&amp;lt;Manager pathname=&amp;quot;&amp;quot; /&amp;gt;
+&amp;lt;Valve className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&amp;quot; /&amp;gt;
+&amp;lt;Manager className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&amp;quot;
+     maxInactiveInterval=&amp;quot;60&amp;quot;
+     sentinelMaster=&amp;quot;mymaster&amp;quot;
+     database=&amp;quot;4&amp;quot;
+     password=&amp;quot;redis-password&amp;quot;
+     sessionPersistPolicies=&amp;quot;SAVE_ON_CHANGE&amp;quot;
+     sentinels=&amp;quot;192.168.1.100:26379,192.168.1.101:26379,192.168.1.102:26379&amp;quot;/&amp;gt;
+
+# redis是单点模式
+&amp;lt;Manager pathname=&amp;quot;&amp;quot; /&amp;gt;
+&amp;lt;Valve className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&amp;quot; /&amp;gt;
+&amp;lt;Manager className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&amp;quot;
+         host=&amp;quot;127.0.0.1&amp;quot;
+         port=&amp;quot;6379&amp;quot;
+         database=&amp;quot;0&amp;quot;
+         password=&amp;quot;redis-password&amp;quot;
+         maxInactiveInterval=&amp;quot;1200&amp;quot;/&amp;gt;
+ # 备注
+host: redis服务器地址
+port: redis服务器的端口号
+database: 要使用的redis数据库索引
+maxInactiveInterval: session最大空闲超时时间，如果不填则使用tomcat的超时时长，一般tomcat默认为1800 即半个小时
+sessionPersistPolicies: session保存策略，除了默认的策略还可以选择的策略有：
+[SAVE_ON_CHANGE]:每次 session.setAttribute() 、 session.removeAttribute() 触发都会保存. 
+    注意：此功能无法检测已经存在redis的特定属性的变化，
+    权衡：这种策略会略微降低会话的性能，任何改变都会保存到redis中.
+
+    注意：对于更改一个已经存储在redis中的会话属性，该选项特别有用. 
+    权衡：如果不是所有的request请求都要求改变会话属性的话不推荐使用，因为会增加并发竞争的情况。
+sentinelMaster: redis集群主节点名称（Redis集群是以分片(Sharding)加主从的方式搭建，满足可扩展性的要求）
+sentinels: redis集群列表配置(类似zookeeper，通过多个Sentinel来提高系统的可用性)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;新增测试页面&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在&lt;code&gt;tomcat8/webapps/ROOT/&lt;/code&gt;下面新增一个index.jsp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;&amp;lt;%@ page language=&amp;quot;java&amp;quot; import=&amp;quot;java.util.*&amp;quot; pageEncoding=&amp;quot;UTF-8&amp;quot;%&amp;gt;  
+&amp;lt;%  
+String path = request.getContextPath();  
+String basePath = request.getScheme()+&amp;quot;://&amp;quot;+request.getServerName()+&amp;quot;:&amp;quot;+request.getServerPort()+path+&amp;quot;/&amp;quot;;  
+%&amp;gt;  
+  
+&amp;lt;!DOCTYPE HTML PUBLIC &amp;quot;-//W3C//DTD HTML 4.01 Transitional//EN&amp;quot;&amp;gt;  
+&amp;lt;html&amp;gt;  
+  &amp;lt;head&amp;gt;  
+    &amp;lt;base href=&amp;quot;&amp;lt;%=basePath%&amp;gt;&amp;quot;&amp;gt;  
+      
+    &amp;lt;title&amp;gt;My JSP &#39;index.jsp&#39; starting page&amp;lt;/title&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;pragma&amp;quot; content=&amp;quot;no-cache&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;cache-control&amp;quot; content=&amp;quot;no-cache&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;expires&amp;quot; content=&amp;quot;0&amp;quot;&amp;gt;      
+    &amp;lt;meta http-equiv=&amp;quot;keywords&amp;quot; content=&amp;quot;keyword1,keyword2,keyword3&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;description&amp;quot; content=&amp;quot;This is my page&amp;quot;&amp;gt;  
+    &amp;lt;!-- 
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; type=&amp;quot;text/css&amp;quot; href=&amp;quot;styles.css&amp;quot;&amp;gt; 
+    --&amp;gt;  
+  &amp;lt;/head&amp;gt;  
+    
+  &amp;lt;body&amp;gt;  
+      
+        SessionID:&amp;lt;%=session.getId()%&amp;gt;  
+        &amp;lt;BR&amp;gt;  
+        SessionIP:&amp;lt;%=request.getServerName()%&amp;gt;  
+        &amp;lt;BR&amp;gt;  
+        SessionPort:&amp;lt;%=request.getServerPort()%&amp;gt;  
+        &amp;lt;%  
+        out.println(&amp;quot;This is Tomcat Server 22222&amp;quot;);  
+        %&amp;gt;  
+  &amp;lt;/body&amp;gt;  
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;重启tomcat&lt;/li&gt;
+&lt;li&gt;配置nginx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;修改nginx的代理配置
+upstream test {
+    server 192.168.1.100:9090;
+    server 192.168.1.100:9091;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;验证&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;访问&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;，查看页面返回的session值&lt;/p&gt;
+
+&lt;p&gt;1.停掉tomcatA，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;
+
+&lt;p&gt;2.启动tomcatA，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;
+
+&lt;p&gt;3.停掉tomcatB，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Jupyter Notebook双向https认证配置</title>
       <link>https://blog.gofinall.com/post/jupyter-notebook/</link>
       <pubDate>Wed, 05 Aug 2020 11:26:26 +0800</pubDate>
@@ -922,78 +1063,6 @@ setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
 &lt;p&gt;之前遇到过这个问题，但是没有找到原因，今天看到网友分享了经验，记录下&lt;/p&gt;
 
 &lt;p&gt;转自：&lt;a href=&#34;https://www.v2ex.com/t/623596&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt; https://www.v2ex.com/t/623596 &lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Mysql出现Could not retrieve transaction read-only status from server报错</title>
-      <link>https://blog.gofinall.com/post/mysql-read-only/</link>
-      <pubDate>Tue, 10 Sep 2019 15:48:06 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/mysql-read-only/</guid>
-      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
-
-&lt;p&gt;mysql在java连接数据库的时候，&lt;code&gt;偶发性&lt;/code&gt;的出现如下错误：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;解决办法&#34;&gt;解决办法&lt;/h3&gt;
-
-&lt;p&gt;mysql版本：&lt;code&gt;5.7.25&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;mysql jdbc驱动包：mysql-connector-java-5.1.47.jar&lt;/p&gt;
-
-&lt;p&gt;mysql事务类型和java连接数据库的方法不匹配，根据网上搜索到的办法和自己实际使用的办法如下&lt;/p&gt;
-
-&lt;p&gt;1.查看mysql的事物隔离级别  &lt;code&gt;SHOW VARIABLES LIKE &#39;%iso%&#39;;&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
-+------------------------+-----------------+
-| Variable_name          | Value           |
-+------------------------+-----------------+
-| transaction_isolation  | REPEATABLE-READ |
-| tx_isolation           | REPEATABLE-READ |
-+------------------------+-----------------+
-2 row in set (0.00 sec)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2.修改mysql事务隔离级别&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SET GLOBAL tx_isolation=&#39;READ-COMMITTED&#39;; 
-Query OK,0 rows affected (0.00 sec)
-
-mysql&amp;gt; SET GLOBAL transaction_isolation=&#39;READ-COMMITTED&#39;; 
-Query OK,0 rows affected (0.00 sec)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;3.修改my.cnf，让配置永久生效&lt;/p&gt;
-
-&lt;p&gt;在&lt;code&gt;/etc/my.cnf&lt;/code&gt;(位置可能不一样)的&lt;code&gt;[mysqld]&lt;/code&gt;后面添加&lt;code&gt;transaction_isolation = READ-COMMITTED&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;4.检测事务隔离级别是否生效，第一步执行后几分钟后才能查询到；&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &#39;%iso%&#39;;
-+------------------------+-----------------+
-| Variable_name          | Value           |
-+------------------------+-----------------+
-| transaction_isolation  | READ-COMMITTED |
-| tx_isolation           | READ-COMMITTED |
-+------------------------+-----------------+
-2 row in set (0.00 sec)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;后续问题&#34;&gt;后续问题&lt;/h3&gt;
-
-&lt;p&gt;经过上面的修改，一段时间后还是出现了该问题，偶发出现，尝试方法有两个：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;把驱动包降到5.1.30还是有问题，尝试把驱动包升到mysql-connector-java-8.0.17.jar&lt;/li&gt;
-&lt;li&gt;在jdbc串后面加参数：&lt;code&gt;failOverReadOnly=false&lt;/code&gt;  &lt;strong&gt;自动重连成功后，连接是否设置为只读&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;通过上面两种方式修改后，再观察下。/(ㄒoㄒ)/~~&lt;/p&gt;</description>
     </item>
     
   </channel>
