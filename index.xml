@@ -31,6 +31,51 @@
     </item>
     
     <item>
+      <title>Linux下文件名编码转换-Convmv</title>
+      <link>https://blog.gofinall.com/post/convmv/</link>
+      <pubDate>Tue, 27 Oct 2020 13:00:53 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/convmv/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器环境默认字符编码为gbk，当执行程序后生成的日志文件名的字符编码为gbk的，但是程序读取日志的时候用的utf-8编码，当日志文件名包含中文时就不能找到日志，于是可以用Convmv来批量转换文件名的字符编码&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;下载地址&#34;&gt;下载地址&lt;/h3&gt;
+
+&lt;p&gt;源代码&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.j3e.de/linux/convmv/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.j3e.de/linux/convmv/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;目前最新版本: &lt;a href=&#34;https://www.j3e.de/linux/convmv/convmv-2.05.tar.gz&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.j3e.de/linux/convmv/convmv-2.05.tar.gz&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;安装包(rpm等)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://pkgs.org/download/convmv?&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://pkgs.org/download/convmv?&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
+
+&lt;p&gt;源代码&lt;/p&gt;
+
+&lt;p&gt;解压后直接make即可&lt;/p&gt;
+
+&lt;p&gt;rpm等安装包安装方法：&lt;code&gt;rpm -ivh convmv-xx.rpm&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;使用方法&#34;&gt;使用方法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;convmv -f GBK -t UTF-8 *.log
+# 不过这个命令不会直正的转换，你可以看到转换前后的对比。如果要直正的转换要加上参数 --notest
+convmv -f GBK -t UTF-8 --notest *.log
+# -f 参数是指出转换前的编码，-t 是转换后的编码。这个千万不要弄错了。不然可能还是乱码哦。还有一个参数很有用。就是 -r 这个表示递归转换当前目录下的所有子目录。
+# -r递归使用方法
+convmv -f GBK -t UTF-8 -r ./ --notest *.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其他参数说明: &lt;a href=&#34;https://linux.die.net/man/1/convmv&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://linux.die.net/man/1/convmv&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>nginx&#43;tomcat8&#43;redis实现session共享</title>
       <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
       <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
@@ -989,80 +1034,6 @@ route add -net 10.1.231.0 netmask 255.255.255.0 gw 10.10.1.2
 &lt;p&gt;&lt;a href=&#34;https://nwgat.ninja/quick-easy-tinc-1-1-2/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://nwgat.ninja/quick-easy-tinc-1-1-2/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://lala.im/6209.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://lala.im/6209.html&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</title>
-      <link>https://blog.gofinall.com/post/mysql-localhost/</link>
-      <pubDate>Thu, 28 Nov 2019 13:23:54 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/mysql-localhost/</guid>
-      <description>&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
-
-&lt;p&gt;Whenever you specify &amp;ldquo;localhost&amp;rdquo; or &amp;ldquo;localhost:port&amp;rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &amp;ldquo;127.0.0.1&amp;rdquo; instead of &amp;ldquo;localhost&amp;rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.&lt;/p&gt;
-
-&lt;p&gt;localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;为什么我使用-localhost-一直没出问题&#34;&gt;为什么我使用 localhost 一直没出问题&lt;/h3&gt;
-
-&lt;p&gt;因为你的本机中只有一个 mysql 进程， 如果你有一个 node1 运行在 3306， 有一个 node2 运行在 3307&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql -u root -h localhost -P 3306
-mysql -u root -h localhost -P 3307
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;都会连接到同一个 mysql 进程， 因为 localhost 使用 Linux socket， 所以 -P 字段直接被忽略了， 等价于&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql -u root -h localhost 
-mysql -u root -h localhost 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;而 -h 默认是 localhost， 又等价于&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql -u root 
-mysql -u root 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;为了避免这种情况（比如你在本地开发只有一个 mysql 进程，线上或者 qa 环境有多个 mysql 进程）最好的方式就是使用 IP&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql -u root -h 127.0.0.1 -P 3307
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;使用localhost地址的strace&#34;&gt;使用localhost地址的strace&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;strace mysql -h localhost -P 3306 -u root &amp;amp;&amp;gt; /tmp/strace_mysql.txt
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;execve(&amp;quot;/opt/app/mysql/bin/mysql&amp;quot;, [&amp;quot;mysql&amp;quot;, &amp;quot;-h&amp;quot;, &amp;quot;localhost&amp;quot;, &amp;quot;-P&amp;quot;, &amp;quot;3306&amp;quot;, &amp;quot;-u&amp;quot;, &amp;quot;root&amp;quot;], [/* 25 vars */]) = 0
-
-......
-
-socket(AF_LOCAL, SOCK_STREAM, 0)        = 3
-connect(3, {sa_family=AF_LOCAL, sun_path=&amp;quot;/tmp/mysql.sock&amp;quot;}, 110) = 0 // 这里
-setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
-setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;使用ip地址的strace&#34;&gt;使用ip地址的strace&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;strace mysql -h 127.0.0.1 -P 3306 -u root &amp;amp;&amp;gt; /tmp/strace_mysql_use_ip.txt
-execve(&amp;quot;/opt/app/mysql/bin/mysql&amp;quot;, [&amp;quot;mysql&amp;quot;, &amp;quot;-h&amp;quot;, &amp;quot;127.0.0.1&amp;quot;, &amp;quot;-P&amp;quot;, &amp;quot;3306&amp;quot;, &amp;quot;-u&amp;quot;, &amp;quot;root&amp;quot;], [/* 25 vars */]) = 0
-
-....
-
-socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
-connect(3, {sa_family=AF_INET, sin_port=htons(3306), sin_addr=inet_addr(&amp;quot;127.0.0.1&amp;quot;)}, 16) = 0
-setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-setsockopt(3, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;之前遇到过这个问题，但是没有找到原因，今天看到网友分享了经验，记录下&lt;/p&gt;
-
-&lt;p&gt;转自：&lt;a href=&#34;https://www.v2ex.com/t/623596&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt; https://www.v2ex.com/t/623596 &lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

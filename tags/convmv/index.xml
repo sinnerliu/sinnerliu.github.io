@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Convmv on 终点站</title>
+    <link>https://blog.gofinall.com/tags/convmv/</link>
+    <description>Recent content in Convmv on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 27 Oct 2020 13:00:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/convmv/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux下文件名编码转换-Convmv</title>
+      <link>https://blog.gofinall.com/post/convmv/</link>
+      <pubDate>Tue, 27 Oct 2020 13:00:53 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/convmv/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器环境默认字符编码为gbk，当执行程序后生成的日志文件名的字符编码为gbk的，但是程序读取日志的时候用的utf-8编码，当日志文件名包含中文时就不能找到日志，于是可以用Convmv来批量转换文件名的字符编码&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
