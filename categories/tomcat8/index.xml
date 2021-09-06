@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tomcat8 on 终点站</title>
+    <link>https://blog.gofinall.com/categories/tomcat8/</link>
+    <description>Recent content in Tomcat8 on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 01 Sep 2021 11:12:59 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/tomcat8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tomcat8使用cronolog来进行Catalina.Out日志拆分</title>
+      <link>https://blog.gofinall.com/post/tomcat-catalina-out/</link>
+      <pubDate>Wed, 01 Sep 2021 11:12:59 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tomcat-catalina-out/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;tomcat产生的catalina.out日志文件如果不进行分割处理的话，往往会导致文件越来越大，影响效率。同时如需查找日志文件的时候，在那么大的catalina.out日志文件中查找也比较费事，最好是按天来分割catalina.out日志文件。下面来介绍一种分割方法：使用cronolog来分割catalina.out日志文件&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

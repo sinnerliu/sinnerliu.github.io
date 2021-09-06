@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>终点站</title>
+    <link>https://blog.gofinall.com/</link>
+    <description>Recent content on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    
+    <language>zh-CN</language>
+    
+    
+    
+    
+    <lastBuildDate>Sun, 20 Aug 2017 21:38:52 +0800</lastBuildDate>
+    
+        <atom:link href="https://blog.gofinall.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于</title>
+      <link>https://blog.gofinall.com/about/</link>
+      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/about/</guid>
+      <description>&lt;p&gt;Hello World!&lt;/p&gt;
+
+&lt;p&gt;本站作为博客(typecho)的备用站，等哪天我的博客主机(阿里云)没钱续费了，就直接在这个静态博客上更新了；&lt;/p&gt;
+
+&lt;p&gt;博客主站：&lt;a href=&#34;https://gofinall.com&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://gofinall.com&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Jmeter远程测试环境搭建</title>
+      <link>https://blog.gofinall.com/post/jmeter-remote/</link>
+      <pubDate>Mon, 06 Sep 2021 11:45:18 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/jmeter-remote/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;如果您的JMeter客户端计算机无法使用性能方面，要模拟足够的用户来增强压力或受限于网络级别，则可以选择从单个JMeter客户端控制多个远程JMeter引擎。通过远程运行JMeter，您可以跨许多低端计算机复制测试，从而模拟服务器上的较大负载。JMeter客户端的一个实例可以控制任意数量的远程JMeter实例，并从中收集所有数据。这提供以下功能：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;将测试samples保存到本地机器&lt;/li&gt;
+&lt;li&gt;从单个机器管理多个JMeter Engines&lt;/li&gt;
+&lt;li&gt;无需将测试计划复制到每个服务器 - 客户端将其发送到所有服务器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意：所有服务器都运行相同的测试计划。JMeter不会在服务器之间分配负载，每个都运行完整的测试计划。所以如果你设置1000个线程并且有6个JMeter服务器，你最终会注入6000个线程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;jmeter分布式原理&#34;&gt;jmeter分布式原理&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://blog.gofinall.com/post/images/jmeter_server_agent.png&#34; alt=&#34;jmeter_server_agent&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;客户端机器作为一个控制器controller，控制多台slave机器的操作。 controller通过GUI界面启动slave机器，将jmeter压测发送给每台启动的slave，slave获得脚本后开始执行。slave本地不需预先存储脚本； 各台slave执行完成后，将结果传回给controller，controller收集整合显示。&lt;/p&gt;
+
+&lt;h3 id=&#34;部署及配置&#34;&gt;部署及配置&lt;/h3&gt;
+
+&lt;h4 id=&#34;要求&#34;&gt;要求&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务器(slave)与客户端(controller)保持同版本&lt;/li&gt;
+&lt;li&gt;jdk最好也是同一个大版本，如jdk1.8&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;服务端配置&#34;&gt;服务端配置&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jdk安装&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;此处忽略50字。。。目前jdk可用1.8&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解压jmeter，进入jmeter/bin，修改&lt;code&gt;jmeter.properties&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 去掉server_port前面的#号，放开注释，定义端口，不能被占用
+server_port=1099
+# 去掉server.rmi.localport前面的#号，放开注释，端口需要和上面的server_port配置成一样
+server.rmi.localport=1099
+# 去掉server.rmi.ssl.disable前面的#号，并把后面的值改成true，即忽略ssl
+server.rmi.ssl.disable=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;客户端配置&#34;&gt;客户端配置&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jdk安装&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;此处忽略50字。。。目前jdk可用1.8，大版本需要和服务端一致&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解压jmeter，&lt;strong&gt;版本号要和服务端一样&lt;/strong&gt;，进入jmeter/bin，修改&lt;code&gt;jmeter.properties&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 修改remote_hosts，后面加上服务端的ip地址，如果服务端ip为10.1.1.5
+# 如果服务端端口不是1099，则需要在ip后面加上服务端的端口号，如下
+remote_hosts=127.0.0.1,10.1.1.5:1099
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;启动&#34;&gt;启动&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 进入jmeter/bin
+./jmeter-server 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;客户端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 用no-gui方式
+jmeter -R 10.1.1.5 -n -t xxx.jmx -l xxx.tl -e -o ./xxx
+# 用gui方式
+启动jmeter.bat，编写好脚本，点击 运行-启动运行选择服务端的ip即可
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tomcat8使用cronolog来进行Catalina.Out日志拆分</title>
+      <link>https://blog.gofinall.com/post/tomcat-catalina-out/</link>
+      <pubDate>Wed, 01 Sep 2021 11:12:59 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/tomcat-catalina-out/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;tomcat产生的catalina.out日志文件如果不进行分割处理的话，往往会导致文件越来越大，影响效率。同时如需查找日志文件的时候，在那么大的catalina.out日志文件中查找也比较费事，最好是按天来分割catalina.out日志文件。下面来介绍一种分割方法：使用cronolog来分割catalina.out日志文件&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装cronolog-1.6.2.tar.gz&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;下载地址：&lt;a href=&#34;https://blog.gofinall.com/post/files/cronolog-1.6.2.tar.gz&#34;&gt;cronolog-1.6.2.tar.gz&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;tar -zxvf cronolog-1.6.2.tar.gz
+cd cronolog-1.6.2
+./configre # --prefix=/opt/cronolog ，可以指定安装目录，默认在 /usr/local/sbin/cronolog
+make
+make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;tomcat配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Tomcat7以前的版本：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vim tomcat/bin/catalina.sh
+# 注释掉（#）
+touch “$CATALINA_BASE”/logs/catalina.out
+# 修改tomcat bin目录下的catalina.sh文件中的两处
+org.apache.catalina.startup.Bootstrap “$@” start \
+&amp;gt;&amp;gt; “$CATALINA_BASE”/logs/catalina.out 2&amp;gt;&amp;amp;1 &amp;amp;
+# 为
+org.apache.catalina.startup.Bootstrap &amp;quot;$@&amp;quot; start 2&amp;gt;&amp;amp;1 \
+| /usr/local/sbin/cronolog &amp;quot;$CATALINA_BASE&amp;quot;/logs/catalina.%Y-%m-%d.out &amp;gt;&amp;gt; /dev/null &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完成之后重起Tomcat就可以看到logs文件中存在catalina.out.2015-09-13样式的日志。&lt;/p&gt;
+
+&lt;p&gt;Tomcat7以后的版本：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vi tomcat/bin/catalina.sh
+#第一步
+将
+if [ -z &amp;quot;$CATALINA_OUT&amp;quot; ] ; then
+CATALINA_OUT=&amp;quot;$CATALINA_BASE&amp;quot;/logs/catalina.out
+fi
+修改为
+if [ -z &amp;quot;$CATALINA_OUT&amp;quot; ] ; then
+CATALINA_OUT=&amp;quot;$CATALINA_BASE&amp;quot;/logs/catalina.%Y-%m-%d.out
+fi
+# 第二步
+将
+touch &amp;quot;$CATALINA_OUT&amp;quot;
+改为
+#touch &amp;quot;$CATALINA_OUT&amp;quot;
+echo &amp;quot;$CATALINA_OUT&amp;quot;
+# 第三步
+将
+org.apache.catalina.startup.Bootstrap &amp;quot;$@&amp;quot; start \
+&amp;gt;&amp;gt; &amp;quot;$CATALINA_OUT&amp;quot; 2&amp;gt;&amp;amp;1 &amp;amp;
+修改为
+org.apache.catalina.startup.Bootstrap &amp;quot;$@&amp;quot; start 2&amp;gt;&amp;amp;1 \
+| /usr/local/sbin/cronolog &amp;quot;$CATALINA_OUT&amp;quot; &amp;gt;&amp;gt; /dev/null &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完成之后重起Tomcat就可以看到logs文件中存在catalina.out.2021-09-01样式的日志。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux下文件名编码转换-Convmv</title>
+      <link>https://blog.gofinall.com/post/convmv/</link>
+      <pubDate>Tue, 27 Oct 2020 13:00:53 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/convmv/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器环境默认字符编码为gbk，当执行程序后生成的日志文件名的字符编码为gbk的，但是程序读取日志的时候用的utf-8编码，当日志文件名包含中文时就不能找到日志，于是可以用Convmv来批量转换文件名的字符编码&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;下载地址&#34;&gt;下载地址&lt;/h3&gt;
+
+&lt;p&gt;源代码&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.j3e.de/linux/convmv/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.j3e.de/linux/convmv/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;目前最新版本: &lt;a href=&#34;https://www.j3e.de/linux/convmv/convmv-2.05.tar.gz&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://www.j3e.de/linux/convmv/convmv-2.05.tar.gz&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;安装包(rpm等)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://pkgs.org/download/convmv?&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://pkgs.org/download/convmv?&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
+
+&lt;p&gt;源代码&lt;/p&gt;
+
+&lt;p&gt;解压后直接make即可&lt;/p&gt;
+
+&lt;p&gt;rpm等安装包安装方法：&lt;code&gt;rpm -ivh convmv-xx.rpm&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;使用方法&#34;&gt;使用方法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;convmv -f GBK -t UTF-8 *.log
+# 不过这个命令不会直正的转换，你可以看到转换前后的对比。如果要直正的转换要加上参数 --notest
+convmv -f GBK -t UTF-8 --notest *.log
+# -f 参数是指出转换前的编码，-t 是转换后的编码。这个千万不要弄错了。不然可能还是乱码哦。还有一个参数很有用。就是 -r 这个表示递归转换当前目录下的所有子目录。
+# -r递归使用方法
+convmv -f GBK -t UTF-8 -r ./ --notest *.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其他参数说明: &lt;a href=&#34;https://linux.die.net/man/1/convmv&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://linux.die.net/man/1/convmv&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>nginx&#43;tomcat8&#43;redis实现session共享</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
+      <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/nginx-tomcat-session/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当客户端访问Nginx服务器时，Nginx负载均衡会自动将请求转发到TomcatA或TomcatB服务器，以减轻Tomcat压力，从而达到Tomcat集群化部署，为了使各Tomcat之间共享同一个Session，将采用Redis缓存服务来集中管理Session存储。但是网上的方法基本都只支持tomcat7，于是记录下tomcat8的实现方法&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;nginx: http://192.168.1.100:8080
+tomcatA: http://192.168.1.100:9090
+tomcatB: http://192.168.1.100:9091
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;步骤&#34;&gt;步骤&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;下载3个需要的jar&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/commons-pool2-2.4.2.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;commons-pool2-2.4.2.jar&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/jedis-2.9.0.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;jedis-2.9.0.jar&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://blog.gofinall.com/post/files/tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;tomcat-redis-session-manager-8.5-master-2.0.0-8.5.40.jar&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;把下载的文件放到tomcat8/lib下面&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改tomcat8/conf/context.xml&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;vi tomcat8/context.xml
+# redis是哨兵模式
+&amp;lt;Manager pathname=&amp;quot;&amp;quot; /&amp;gt;
+&amp;lt;Valve className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&amp;quot; /&amp;gt;
+&amp;lt;Manager className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&amp;quot;
+     maxInactiveInterval=&amp;quot;60&amp;quot;
+     sentinelMaster=&amp;quot;mymaster&amp;quot;
+     database=&amp;quot;4&amp;quot;
+     password=&amp;quot;redis-password&amp;quot;
+     sessionPersistPolicies=&amp;quot;SAVE_ON_CHANGE&amp;quot;
+     sentinels=&amp;quot;192.168.1.100:26379,192.168.1.101:26379,192.168.1.102:26379&amp;quot;/&amp;gt;
+
+# redis是单点模式
+&amp;lt;Manager pathname=&amp;quot;&amp;quot; /&amp;gt;
+&amp;lt;Valve className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&amp;quot; /&amp;gt;
+&amp;lt;Manager className=&amp;quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&amp;quot;
+         host=&amp;quot;127.0.0.1&amp;quot;
+         port=&amp;quot;6379&amp;quot;
+         database=&amp;quot;0&amp;quot;
+         password=&amp;quot;redis-password&amp;quot;
+         maxInactiveInterval=&amp;quot;1200&amp;quot;/&amp;gt;
+ # 备注
+host: redis服务器地址
+port: redis服务器的端口号
+database: 要使用的redis数据库索引
+maxInactiveInterval: session最大空闲超时时间，如果不填则使用tomcat的超时时长，一般tomcat默认为1800 即半个小时
+sessionPersistPolicies: session保存策略，除了默认的策略还可以选择的策略有：
+[SAVE_ON_CHANGE]:每次 session.setAttribute() 、 session.removeAttribute() 触发都会保存. 
+    注意：此功能无法检测已经存在redis的特定属性的变化，
+    权衡：这种策略会略微降低会话的性能，任何改变都会保存到redis中.
+
+    注意：对于更改一个已经存储在redis中的会话属性，该选项特别有用. 
+    权衡：如果不是所有的request请求都要求改变会话属性的话不推荐使用，因为会增加并发竞争的情况。
+sentinelMaster: redis集群主节点名称（Redis集群是以分片(Sharding)加主从的方式搭建，满足可扩展性的要求）
+sentinels: redis集群列表配置(类似zookeeper，通过多个Sentinel来提高系统的可用性)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;新增测试页面&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在&lt;code&gt;tomcat8/webapps/ROOT/&lt;/code&gt;下面新增一个index.jsp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;&amp;lt;%@ page language=&amp;quot;java&amp;quot; import=&amp;quot;java.util.*&amp;quot; pageEncoding=&amp;quot;UTF-8&amp;quot;%&amp;gt;  
+&amp;lt;%  
+String path = request.getContextPath();  
+String basePath = request.getScheme()+&amp;quot;://&amp;quot;+request.getServerName()+&amp;quot;:&amp;quot;+request.getServerPort()+path+&amp;quot;/&amp;quot;;  
+%&amp;gt;  
+  
+&amp;lt;!DOCTYPE HTML PUBLIC &amp;quot;-//W3C//DTD HTML 4.01 Transitional//EN&amp;quot;&amp;gt;  
+&amp;lt;html&amp;gt;  
+  &amp;lt;head&amp;gt;  
+    &amp;lt;base href=&amp;quot;&amp;lt;%=basePath%&amp;gt;&amp;quot;&amp;gt;  
+      
+    &amp;lt;title&amp;gt;My JSP &#39;index.jsp&#39; starting page&amp;lt;/title&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;pragma&amp;quot; content=&amp;quot;no-cache&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;cache-control&amp;quot; content=&amp;quot;no-cache&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;expires&amp;quot; content=&amp;quot;0&amp;quot;&amp;gt;      
+    &amp;lt;meta http-equiv=&amp;quot;keywords&amp;quot; content=&amp;quot;keyword1,keyword2,keyword3&amp;quot;&amp;gt;  
+    &amp;lt;meta http-equiv=&amp;quot;description&amp;quot; content=&amp;quot;This is my page&amp;quot;&amp;gt;  
+    &amp;lt;!-- 
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; type=&amp;quot;text/css&amp;quot; href=&amp;quot;styles.css&amp;quot;&amp;gt; 
+    --&amp;gt;  
+  &amp;lt;/head&amp;gt;  
+    
+  &amp;lt;body&amp;gt;  
+      
+        SessionID:&amp;lt;%=session.getId()%&amp;gt;  
+        &amp;lt;BR&amp;gt;  
+        SessionIP:&amp;lt;%=request.getServerName()%&amp;gt;  
+        &amp;lt;BR&amp;gt;  
+        SessionPort:&amp;lt;%=request.getServerPort()%&amp;gt;  
+        &amp;lt;%  
+        out.println(&amp;quot;This is Tomcat Server 22222&amp;quot;);  
+        %&amp;gt;  
+  &amp;lt;/body&amp;gt;  
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;重启tomcat&lt;/li&gt;
+&lt;li&gt;配置nginx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;修改nginx的代理配置
+upstream test {
+    server 192.168.1.100:9090;
+    server 192.168.1.100:9091;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;验证&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;访问&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;，查看页面返回的session值&lt;/p&gt;
+
+&lt;p&gt;1.停掉tomcatA，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;
+
+&lt;p&gt;2.启动tomcatA，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;
+
+&lt;p&gt;3.停掉tomcatB，再刷新&lt;code&gt;http://192.168.1.100:8080&lt;/code&gt;查看session是否改变&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook双向https认证配置</title>
+      <link>https://blog.gofinall.com/post/jupyter-notebook/</link>
+      <pubDate>Wed, 05 Aug 2020 11:26:26 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/jupyter-notebook/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、文档编写、运行代码和展示结果。——&lt;a href=&#34;https://jupyter-notebook.readthedocs.io/en/stable/notebook.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook官方介绍&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;简而言之，Jupyter Notebook是以网页的形式打开，可以在网页页面中&lt;strong&gt;直接&lt;/strong&gt;编写代码和运行代码，代码的运行结果也会直接在代码块下显示。如在编程过程中需要编写说明文档，可在同一个页面中直接编写，便于作及时的说明和解释。&lt;/p&gt;
+
+&lt;p&gt;本文主要讲配置双向https认证的问题，其余步骤简单写下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;p&gt;python3.6&lt;/p&gt;
+
+&lt;h3 id=&#34;部署&#34;&gt;部署&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;pip3 install jupyter&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;证书生成&#34;&gt;证书生成&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;方法1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;可用openssl生成，需要生成ca、server、client证书。不写了，网上教程很多&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;方法2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;生成自签名证书传统工具是&lt;code&gt;OpenSSL&lt;/code&gt;。不过&lt;code&gt;OpenSSL&lt;/code&gt;不论是其复杂的命令选项，还是更加复杂配置都会让人头皮发麻。这里介绍一个更简单的生成自签名证书的工具: &lt;code&gt;certstrap&lt;/code&gt;， 项目地址:&lt;a href=&#34;https://github.com/square/certstrap&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;square/certstrap&lt;/a&gt;.具体安装请参考其文档。几行命令就可生成ca、server、client、以及生成PKCS格式的证书。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.1 CA证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;要进行证书自签名，首先是生成一个自信任的CA认证证书。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap init --common-name &amp;quot;ExampleCA&amp;quot; --expires &amp;quot;20 years&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;命令完成后，会在当前目录下创建一个新的&lt;code&gt;out&lt;/code&gt;目录，生成的证书都在该目录下.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: tree out
+out
+├── ExampleCA.crl
+├── ExampleCA.crt
+└── ExampleCA.key
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.2 服务端证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;首先创建CSR, 即证书签名请求。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap request-cert -cn server -ip 127.0.0.1 -domain &amp;quot;*.example.com&amp;quot;
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Created out/server.key
+Created out/server.csr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;生成CSR之后，通过刚刚生成的CA证书进行签名.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap sign server --CA ExampleCA
+Enter passphrase for CA key (empty for no passphrase):
+Created out/server.crt from out/server.csr signed by out/ExampleCA.key
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就完成了服务端证书的签名，签名后的证书就是:&lt;code&gt;out/server.crt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.3 客户端证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;企业内部集群，通常为了保证服务之间的安全行，对客户端请求需要进行双向验证。这个时候就需要客户端也提供证书。&lt;/p&gt;
+
+&lt;p&gt;客户端证书的生成过程同服务端类似，更简单一点，不需要提供证书的IP与域名信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certstrap request-cert -cn client
+$: certstrap sign client --CA ExampleCA
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.4 查看证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;生成完的证书是否正确，可以通过&lt;code&gt;certigo&lt;/code&gt;工具进行查询。项目地址: &lt;a href=&#34;https://github.com/square/certigo&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;square/certigo&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;安装完成后，通过以下命令查询证书的具体信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: certigo dump out/server.crt
+** CERTIFICATE 1 **
+Valid: 2019-08-26 09:34 UTC to 2021-08-26 09:34 UTC
+Subject:
+    CN=server
+Issuer:
+    CN=ExampleCA
+DNS Names:
+    *.example.com
+IP Addresses:
+    127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;1.5 PKCS 格式证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;生成PKCS格式的证书可以直接点击安装到系统证书簇中，方便一些应用（浏览器等）的使用。具体生成PKCS 格式证书，使用&lt;code&gt;OpenSSL&lt;/code&gt;命令如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$: openssl pkcs12 -export -out out/client.p12 -inkey out/client.key -in out/client.crt -certfile out/ExampleCA.crt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;jupyter-notebook双向https配置&#34;&gt;Jupyter Notebook双向https配置&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;启动的时候添加证书参数，如下:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;jupyter notebook --ip=0.0.0.0 --certfile=server.crt --keyfile=server.key  --client-ca=ExampleCA.crt&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;备注:&lt;/p&gt;
+
+&lt;p&gt;server.crt、server.key、ExampleCA.crt需要按照实际路径配置&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;客户端&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;windows下，下载client.p12证书到本机，打开chrome-设置-安全-管理证书，然后进去个人，安装下载的client.p12证书，安装完成后用chrome打开&lt;code&gt;jupyter notebook&lt;/code&gt;的url即可。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux Mysql tar包部署之调整mysql.server</title>
+      <link>https://blog.gofinall.com/post/mysql-server/</link>
+      <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/mysql-server/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。&lt;/li&gt;
+&lt;li&gt;在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。&lt;/li&gt;
+&lt;li&gt;服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基于上面三个原因，结合网上的文章，大概总结了下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;修改方法&#34;&gt;修改方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;版本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;应该适用MySQL目前的所有版本，mysql.server实质是一个shell。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;修改内容&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;路径: &lt;code&gt;support-files/mysql.server&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 1、修改basedir和datadir路径
+# 将两个路径改成实际的路径
+basedir=
+datadir=
+
+# 2、修改extra_args,改成--defaults-file=$basedir/my.cnf
+if test -r &amp;quot;$basedir/my.cnf&amp;quot;
+then
+#  extra_args=&amp;quot;-e $basedir/my.cnf&amp;quot;
+   extra_args=&amp;quot;--defaults-file=$basedir/my.cnf&amp;quot;
+fi
+
+# 3、修改mysqld_safe启动默认配置文件,加入--defaults-file=&amp;quot;$basedir/my.cnf&amp;quot;
+# $bindir/mysqld_safe --datadir=&amp;quot;$datadir&amp;quot; --pid-file=&amp;quot;$mysqld_pid_file_path&amp;quot; $other_args &amp;gt;/dev/null &amp;amp;
+$bindir/mysqld_safe --defaults-file=&amp;quot;$basedir/my.cnf&amp;quot; --datadir=&amp;quot;$datadir&amp;quot; --pid-file=&amp;quot;$mysqld_pid_file_path&amp;quot; $other_args &amp;gt;/dev/null &amp;amp; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;启动-停止-重启&#34;&gt;启动|停止|重启&lt;/h3&gt;
+
+&lt;p&gt;在mysql的配置文件等无误后，进去MySQL的目录执行下面的命令进行启动|停止|重启&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;启动&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server start&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;停止&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server stop&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;重启&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;support-files/mysql.server restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+
+&lt;p&gt;从启动脚本分析mysql读取my.cnf配置的顺序: &lt;a href=&#34;https://www.jianshu.com/p/bee4a55dc574&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt; https://www.jianshu.com/p/bee4a55dc574&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>设置git命令代理，加速git命令执行</title>
+      <link>https://blog.gofinall.com/post/git-proxy/</link>
+      <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/git-proxy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+
+&lt;p&gt;Git 目前支持的三种协议 &lt;code&gt;git://&lt;/code&gt;、&lt;code&gt;ssh://&lt;/code&gt; 和 &lt;code&gt;http://&lt;/code&gt;，其代理配置各不相同：&lt;code&gt;core.gitproxy&lt;/code&gt; 用于 &lt;code&gt;git://&lt;/code&gt; 协议，&lt;code&gt;http.proxy&lt;/code&gt; 用于 &lt;code&gt;http://&lt;/code&gt; 协议，&lt;code&gt;ssh://&lt;/code&gt; 协议的代理需要配置 ssh 的 &lt;code&gt;ProxyCommand&lt;/code&gt; 参数。&lt;/p&gt;
+
+&lt;p&gt;假如代理地址为：&lt;code&gt;127.0.0.1:1080&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;所有协议全部使用-ssh-隧道进行代理&#34;&gt;所有协议全部使用 SSH 隧道进行代理&lt;/h4&gt;
+
+&lt;h5 id=&#34;git-协议的配置&#34;&gt;GIT 协议的配置&lt;/h5&gt;
+
+&lt;p&gt;建立 &lt;code&gt;/path/to/socks5proxywrapper&lt;/code&gt; 文件，使用 &lt;a href=&#34;https://bitbucket.org/gotoh/connect&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://bitbucket.org/gotoh/connect&lt;/a&gt; 工具进行代理的转换，各发行版一般打包为 proxy-connect 或者 connect-proxy。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+connect -S 127.0.0.1:1080 &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置 git&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[core]
+        gitproxy = /path/to/socks5proxywrapper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export GIT_PROXY_COMMAND=&amp;quot;/path/to/socks5proxywrapper&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;ssh-协议的配置&#34;&gt;SSH 协议的配置&lt;/h5&gt;
+
+&lt;p&gt;建立 &lt;code&gt;/path/to/soks5proxyssh&lt;/code&gt; 文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+ssh -o ProxyCommand=&amp;quot;/path/to/socks5proxywrapper %h %p&amp;quot; &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置 git 使用该 wrapper&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export GIT_SSH=&amp;quot;/path/to/socks5proxyssh“
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然也可以直接配置 &lt;code&gt;～/.ssh/config&lt;/code&gt; 的 &lt;code&gt;ProxyCommand&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;http-协议的配置&#34;&gt;HTTP 协议的配置&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code&gt;[http]
+        #这里是因为 Git 使用 libcurl 提供 http 支持
+        proxy = socks5://127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;所有协议全部使用-http-代理&#34;&gt;所有协议全部使用 http 代理&lt;/h4&gt;
+
+&lt;p&gt;在前一部分的基础上， &lt;code&gt;/path/to/socks5proxywrapper&lt;/code&gt; 文件改为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+connect -H 127.0.0.1:1080 &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;http-协议配置&#34;&gt;HTTP 协议配置&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code&gt;[http]
+    proxy = http://127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;针对域名启用代理&#34;&gt;针对域名启用代理&lt;/h4&gt;
+
+&lt;p&gt;gitproxy 参数提供 &lt;code&gt;* for *&lt;/code&gt; 结构，具体看 &lt;code&gt;man git-config&lt;/code&gt; 的 core.gitproxy 部分。&lt;/p&gt;
+
+&lt;h3 id=&#34;其他方法&#34;&gt;其他方法&lt;/h3&gt;
+
+&lt;p&gt;可以用&lt;code&gt;proxychains&lt;/code&gt;，配置方法见：&lt;a href=&#34;https://blog.gofinall.com/post/proxychains-ng/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;利用Proxychains在终端使用socks5/http代理&lt;/a&gt;，这个方法简单好用&lt;/p&gt;
+
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/q/1010000000118837&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://segmentfault.com/q/1010000000118837&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>DenyHosts安装配置详解及安装报错处理</title>
+      <link>https://blog.gofinall.com/post/denyhosts/</link>
+      <pubDate>Mon, 02 Mar 2020 17:19:49 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/denyhosts/</guid>
+      <description>&lt;h3 id=&#34;denyhosts-简介&#34;&gt;DenyHosts 简介&lt;/h3&gt;
+
+&lt;p&gt;DenyHosts 是 Python 语言写的一个程序软件，运行于 Linux 上预防 SSH 暴力破解的，它会分析 sshd 的日志文件（/var/log/secure），当发现重复的攻击时就会记录 IP 到/etc/hosts.deny 文件，从而达到自动屏 IP 的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;下载denyhosts&#34;&gt;下载DenyHosts&lt;/h3&gt;
+
+&lt;p&gt;DenyHosts官网：&lt;a href=&#34;http://denyhosts.sourceforge.net&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://denyhosts.sourceforge.net/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;最新版本下载地址：&lt;a href=&#34;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;解压并安装&#34;&gt;解压并安装&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装服务器系统：CentOS 7.2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# 官网下载包安装
+[root@tmp ~]# tar zxvf DenyHosts-2.6.tar.gz
+[root@tmp ~]# cd DenyHosts-2.6
+[root@tmp ~]# DenyHosts-2.6]# python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 进入配置目录
+[root@tmp ~]# cd /usr/share/denyhosts/
+# 创建配置文件
+[root@tmp denyhosts]# cp denyhosts.cfg-dist denyhosts.cfg 
+# 修改服务文件名称
+[root@tmp denyhosts]# cp daemon-control-dist daemon-control
+# 提高安全级别，修改权限
+[root@tmp denyhosts]# chown root daemon-control
+[root@tmp denyhosts]# chmod 700 daemon-control
+[root@tmp denyhosts]# vi denyhosts.cfg
+SECURE_LOG = /var/log/secure   #ssh日志文件
+# format is: i[dhwmy]
+# Where i is an integer (eg. 7)
+# m = minutes
+# h = hours
+# d = days
+# w = weeks
+# y = years
+#
+# never purge:
+PURGE_DENY = 50m               #过多久后清除已阻止IP
+HOSTS_DENY = /etc/hosts.deny   #将阻止IP写入到hosts.deny
+BLOCK_SERVICE = sshd           #阻止服务名
+PURGE_THRESHOLD =              #定义了某一IP最多被解封多少次。某IP暴力破解SSH密码被阻止/解封达到了PURGE_THRESHOLD次，则会被永久禁止；
+DENY_THRESHOLD_INVALID = 1     #允许无效用户登录失败的次数
+DENY_THRESHOLD_VALID = 10      #允许普通用户登录失败的次数
+DENY_THRESHOLD_ROOT = 5        #允许root登录失败的次数
+WORK_DIR = /usr/local/share/denyhosts/data #将deny的host或ip纪录到Work_dir中
+DENY_THRESHOLD_RESTRICTED = 1 #设定 deny host 写入到该资料夹
+LOCK_FILE = /var/lock/subsys/denyhosts #将DenyHOts启动的pid纪录到LOCK_FILE中，已确保服务正确启动，防止同时启动多个服务。
+HOSTNAME_LOOKUP=NO            #是否做域名反解
+ADMIN_EMAIL =                 #设置管理员邮件地址
+DAEMON_LOG = /var/log/denyhosts #DenyHosts日志位置
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;配置服务及启动&#34;&gt;配置服务及启动&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 创建启动服务连接
+[root@tmp ~]# ln -s /usr/share/denyhosts/daemon-control /etc/init.d/denyhosts
+# 添加启动项
+[root@tmp ~]# chkconfig denyhosts on
+# 查看启动像是否成功
+[root@tmp ~]# chkconfig --list|grep denyhosts
+# 启动denyhosts
+[root@tmp ~]# service denyhosts start  # 或者 systemctl start denyhosts
+# 查看后台进程
+[root@tmp ~]# ps -ef|grep denyhosts
+root      3098  3865  0 17:35 pts/1    00:00:00 grep --color=auto denyhosts
+root     21121     1  0 Feb28 ?        00:00:01 python /usr/bin/denyhosts.py --daemon --config=/usr/share/denyhosts/denyhosts.cfg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;问题排查&#34;&gt;问题排查&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;starting DenyHosts: /usr/bin/env python /usr/bin/denyhosts.py &amp;ndash;daemon &amp;ndash;config=/usr/share/denyhosts/denyhosts.cfg python: can&amp;rsquo;t open file &amp;lsquo;/usr/bin/denyhosts.py&amp;rsquo;: [Errno 2] No such file or directory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;cd /usr/share/denyhosts/
+vi daemon-control
+DENYHOSTS_BIN = &amp;quot;/usr/bin/denyhosts.py&amp;quot;
+改为
+DENYHOSTS_BIN = &amp;quot;/usr/local/bin/denyhosts.py&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ImportError: No module named DenyHosts.python_version&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 下面的python版本视服务器上的版本而定
+cp -r /usr/local/lib/python2.7/site-packages/DenyHosts /usr/lib/python2.6/site-packages/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后重启即可。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>限制svn提交时必须添加注释</title>
+      <link>https://blog.gofinall.com/post/svn-pre-commit/</link>
+      <pubDate>Fri, 28 Feb 2020 13:24:39 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/svn-pre-commit/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;鉴于有些人在提交代码的时候并不写注释，而且没有固定格式，所以准备给svn提交时增加强制注释。&lt;/p&gt;
+
+&lt;p&gt;按照网上的教程只能识别提交日志为纯数字(123)、纯字母(abc)、数字和字母组合(123abc)，但是不能识别中文，按照下面的配置方法可以正确识别中文，如: &lt;code&gt;123abc中文&lt;/code&gt; 识别出来长度为: &lt;code&gt;8&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;环境&#34;&gt;环境&lt;/h3&gt;
+
+&lt;p&gt;centos 7&lt;/p&gt;
+
+&lt;p&gt;svn server&lt;/p&gt;
+
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;进入代码仓库路径下的hooks，&lt;code&gt;cp pre-commit.tmpl pre-commit&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改pre-commit文件如下&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#!/bin/sh
+# 需要添加下面这行，来正确统计中文个数
+export LANG=zh_CN.utf-8
+# PRE-COMMIT HOOK
+#
+# The pre-commit hook is invoked before a Subversion txn is
+# committed.  Subversion runs this hook by invoking a program
+# (script, executable, binary, etc.) named &#39;pre-commit&#39; (for which
+# this file is a template), with the following ordered arguments:
+#
+#   [1] REPOS-PATH   (the path to this repository)
+#   [2] TXN-NAME     (the name of the txn about to be committed)
+#
+#   [STDIN] LOCK-TOKENS ** the lock tokens are passed via STDIN.
+#
+#   If STDIN contains the line &amp;quot;LOCK-TOKENS:\n&amp;quot; (the &amp;quot;\n&amp;quot; denotes a
+#   single newline), the lines following it are the lock tokens for
+#   this commit.  The end of the list is marked by a line containing
+#   only a newline character.
+#
+#   Each lock token line consists of a URI-escaped path, followed
+#   by the separator character &#39;|&#39;, followed by the lock token string,
+#   followed by a newline.
+#
+# If the hook program exits with success, the txn is committed; but
+# if it exits with failure (non-zero), the txn is aborted, no commit
+# takes place, and STDERR is returned to the client.   The hook
+# program can use the &#39;svnlook&#39; utility to help it examine the txn.
+#
+#   ***  NOTE: THE HOOK PROGRAM MUST NOT MODIFY THE TXN, EXCEPT  ***
+#   ***  FOR REVISION PROPERTIES (like svn:log or svn:author).   ***
+#
+#   This is why we recommend using the read-only &#39;svnlook&#39; utility.
+#   In the future, Subversion may enforce the rule that pre-commit
+#   hooks should not modify the versioned data in txns, or else come
+#   up with a mechanism to make it safe to do so (by informing the
+#   committing client of the changes).  However, right now neither
+#   mechanism is implemented, so hook writers just have to be careful.
+#
+# The default working directory for the invocation is undefined, so
+# the program should set one explicitly if it cares.
+#                           
+# On a Unix system, the normal procedure is to have &#39;pre-commit&#39;
+# invoke other programs to do the real work, though it may do the
+# work itself too.
+#
+# Note that &#39;pre-commit&#39; must be executable by the user(s) who will
+# invoke it (typically the user httpd runs as), and that user must
+# have filesystem-level permission to access the repository.
+#
+# On a Windows system, you should name the hook program
+# &#39;pre-commit.bat&#39; or &#39;pre-commit.exe&#39;,
+# but the basic idea is the same.
+#
+# The hook program runs in an empty environment, unless the server is
+# explicitly configured otherwise.  For example, a common problem is for
+# the PATH environment variable to not be set to its usual value, so
+# that subprograms fail to launch unless invoked via absolute path.
+# If you&#39;re having unexpected problems with a hook program, the
+# culprit may be unusual (or missing) environment variables.
+#
+# CAUTION:
+# For security reasons, you MUST always properly quote arguments when
+# you use them, as those arguments could contain whitespace or other
+# problematic characters. Additionally, you should delimit the list
+# of options with &amp;quot;--&amp;quot; before passing the arguments, so malicious
+# clients cannot bootleg unexpected options to the commands your
+# script aims to execute.
+# For similar reasons, you should also add a trailing @ to URLs which
+# are passed to SVN commands accepting URLs with peg revisions.
+#
+# Here is an example hook script, for a Unix /bin/sh interpreter.
+# For more examples and pre-written hooks, see those in
+# the Subversion repository at
+# http://svn.apache.org/repos/asf/subversion/trunk/tools/hook-scripts/ and
+# http://svn.apache.org/repos/asf/subversion/trunk/contrib/hook-scripts/
+
+
+REPOS=&amp;quot;$1&amp;quot;
+TXN=&amp;quot;$2&amp;quot;
+
+# Make sure that the log message contains some text.
+SVNLOOK=/usr/bin/svnlook
+# 提交日志可以为：123、123abc、123abc中文
+# 正确识别出来的长度为：3、6、8
+# 网上常规配置为：LOGMSG=`$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot; | grep &amp;quot;[a-zA-Z0-9]&amp;quot; | wc -c`
+# 网上配置不能识别中文，固进行下面的改进
+LOGMSG=`$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot;`
+LOGMSG_LENGTH=`echo ${#LOGMSG}`
+# 提交日志长度小于5就不让提交
+if [ &amp;quot;$LOGMSG_LENGTH&amp;quot; -lt 5 ];then 
+   echo &amp;quot;Failed submission: comments must not be less than 5 characters&amp;quot; 1&amp;gt;&amp;amp;2 
+   exit 1
+fi
+#$SVNLOOK log -t &amp;quot;$TXN&amp;quot; &amp;quot;$REPOS&amp;quot; | \
+#   grep &amp;quot;[a-zA-Z0-9]&amp;quot; &amp;gt; /dev/null || exit 1
+
+# Check that the author of this commit has the rights to perform
+# the commit on the files and directories being modified.
+#commit-access-control.pl &amp;quot;$REPOS&amp;quot; &amp;quot;$TXN&amp;quot; commit-access-control.cfg || exit 1
+
+# All checks passed, so allow the commit.
+exit 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;然后 给pre-commit文件添加755权限：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  chmod 755 pre-commit 或 chmod +x pre-commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果没有添加权限， 则会报：&lt;/p&gt;
+
+&lt;p&gt;Commit blocked by pre-commit hook (exit code 255) with no output 错误。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

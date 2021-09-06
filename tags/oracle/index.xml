@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oracle on 终点站</title>
+    <link>https://blog.gofinall.com/tags/oracle/</link>
+    <description>Recent content in Oracle on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 02 May 2018 14:31:39 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/oracle/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>oracle12c中文乱码，修改字符集的方法</title>
+      <link>https://blog.gofinall.com/post/oracle-character/</link>
+      <pubDate>Wed, 02 May 2018 14:31:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/oracle-character/</guid>
+      <description>&lt;p&gt;由于在安装Oracle 12c的时候没有设定字符集，采用的是操作系统默认字符集：WE8MSWIN1252，现需要将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>linux安装oracle精简版客户端</title>
+      <link>https://blog.gofinall.com/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+      <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
+      <description>&lt;p&gt;linux安装oracle精简版客户端
+&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

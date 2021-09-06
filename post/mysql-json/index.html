@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MySQL常用json方法使用记录 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="介绍 Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。
+
+" />
+<meta name="keywords" content="mysql, json" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/mysql-json/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="MySQL常用json方法使用记录" />
+<meta property="og:description" content="介绍
+
+Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &lt;, &lt;=, &gt;, &gt;=, &lt;&gt;, != 和 &lt;=&gt;。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/mysql-json/" /><meta property="article:published_time" content="2019-08-14T17:15:21&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-14T17:15:21&#43;08:00"/>
+<meta itemprop="name" content="MySQL常用json方法使用记录">
+<meta itemprop="description" content="介绍
+
+Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &lt;, &lt;=, &gt;, &gt;=, &lt;&gt;, != 和 &lt;=&gt;。
+
+">
+
+
+<meta itemprop="datePublished" content="2019-08-14T17:15:21&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-14T17:15:21&#43;08:00" />
+<meta itemprop="wordCount" content="327">
+
+
+
+<meta itemprop="keywords" content="mysql,json," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MySQL常用json方法使用记录"/>
+<meta name="twitter:description" content="介绍
+
+Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &lt;, &lt;=, &gt;, &gt;=, &lt;&gt;, != 和 &lt;=&gt;。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MySQL常用json方法使用记录</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-14 </span>
+        <div class="post-category">
+            
+              <a href="/categories/mysql/"> mysql </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#介绍">介绍</a></li>
+<li><a href="#常用使用方法">常用使用方法</a>
+<ul>
+<li><a href="#创建有json字段的表">创建有json字段的表</a></li>
+<li><a href="#查询记录">查询记录</a></li>
+<li><a href="#修改记录">修改记录</a></li>
+<li><a href="#插入">插入</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="介绍">介绍</h3>
+
+<p>Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &lt;, &lt;=, &gt;, &gt;=, &lt;&gt;, != 和 &lt;=&gt;。</p>
+
+<p></p>
+
+<h3 id="常用使用方法">常用使用方法</h3>
+
+<h4 id="创建有json字段的表">创建有json字段的表</h4>
+
+<pre><code class="language-shell">-- 创建表
+CREATE TABLE table_json(id INT PRIMARY KEY, sname VARCHAR(20) , info  JSON);
+</code></pre>
+
+<h4 id="查询记录">查询记录</h4>
+
+<pre><code class="language-shell">-- 查询记录
+SELECT sname,JSON_EXTRACT(info,'$.age') FROM table_json;
+SELECT sname,info-&gt;'$.age' FROM table_json;
+-- 查询key
+SELECT id,json_keys(info) FROM table_json;
+</code></pre>
+
+<h4 id="修改记录">修改记录</h4>
+
+<pre><code class="language-shell">-- 增加键
+UPDATE table_json SET info = json_set(info,'$.ip','192.168.1.1') WHERE id = 2;
+
+-- 变更值
+UPDATE table_json SET info = json_set(info,'$.ip','192.168.1.2') WHERE id = 2;
+
+-- 删除键
+UPDATE table_json SET info = json_remove(info,'$.ip') WHERE id = 2;
+</code></pre>
+
+<h4 id="插入">插入</h4>
+
+<pre><code class="language-shell">UPDATE table_json SET info = JSON_INSERT(info,'$.user-agent','chrome')
+</code></pre>
+
+<h3 id="参考">参考</h3>
+
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html" rel="noreferrer" target="_blank">https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html</a></p>
+
+<p><a href="https://www.cnblogs.com/ooo0/p/9309277.html" rel="noreferrer" target="_blank">https://www.cnblogs.com/ooo0/p/9309277.html</a></p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/mysql/">mysql</a>
+          
+          <a href="/tags/json/">json</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/mysql-read-only/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Mysql出现Could not retrieve transaction read-only status from server报错</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/changchun-1/">
+            <span class="next-text nav-default">又一次长春出差后的感想</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+</body>
+</html>

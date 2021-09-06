@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jmeter on 终点站</title>
+    <link>https://blog.gofinall.com/categories/jmeter/</link>
+    <description>Recent content in Jmeter on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 06 Sep 2021 11:45:18 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/jmeter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jmeter远程测试环境搭建</title>
+      <link>https://blog.gofinall.com/post/jmeter-remote/</link>
+      <pubDate>Mon, 06 Sep 2021 11:45:18 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jmeter-remote/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;如果您的JMeter客户端计算机无法使用性能方面，要模拟足够的用户来增强压力或受限于网络级别，则可以选择从单个JMeter客户端控制多个远程JMeter引擎。通过远程运行JMeter，您可以跨许多低端计算机复制测试，从而模拟服务器上的较大负载。JMeter客户端的一个实例可以控制任意数量的远程JMeter实例，并从中收集所有数据。这提供以下功能：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;将测试samples保存到本地机器&lt;/li&gt;
+&lt;li&gt;从单个机器管理多个JMeter Engines&lt;/li&gt;
+&lt;li&gt;无需将测试计划复制到每个服务器 - 客户端将其发送到所有服务器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意：所有服务器都运行相同的测试计划。JMeter不会在服务器之间分配负载，每个都运行完整的测试计划。所以如果你设置1000个线程并且有6个JMeter服务器，你最终会注入6000个线程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

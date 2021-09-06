@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Plink on 终点站</title>
+    <link>https://blog.gofinall.com/tags/plink/</link>
+    <description>Recent content in Plink on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 04 Sep 2018 20:38:42 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/plink/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Putty小工具Plink妙用</title>
+      <link>https://blog.gofinall.com/post/plink/</link>
+      <pubDate>Tue, 04 Sep 2018 20:38:42 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/plink/</guid>
+      <description>&lt;p&gt;提及Putty大家都不陌生，Putty自带的工具Plink同样强大，本文就简单介绍下几种用法。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

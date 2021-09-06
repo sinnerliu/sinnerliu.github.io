@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on 终点站</title>
+    <link>https://blog.gofinall.com/categories/git/</link>
+    <description>Recent content in Git on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 15 Mar 2020 17:07:29 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>设置git命令代理，加速git命令执行</title>
+      <link>https://blog.gofinall.com/post/git-proxy/</link>
+      <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-proxy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>
+      <link>https://blog.gofinall.com/post/git-add-error-unpopulated/</link>
+      <pubDate>Wed, 10 Apr 2019 17:09:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-add-error-unpopulated/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;用hugo搭建了个博客，我把博客的data目录提交到git上做备份，把public提交到pages上。但是在备份data目录的时候有点问题；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>如何恢复windows 10系统下git的状态图标显示</title>
+      <link>https://blog.gofinall.com/post/windows-git-ico/</link>
+      <pubDate>Wed, 21 Nov 2018 20:39:17 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-git-ico/</guid>
+      <description>&lt;h3 id=&#34;现象&#34;&gt;现象&lt;/h3&gt;
+
+&lt;p&gt;装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

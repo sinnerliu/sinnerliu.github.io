@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on 终点站</title>
+    <link>https://blog.gofinall.com/tags/nginx/</link>
+    <description>Recent content in Nginx on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 12 Jul 2019 18:24:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Nginx反代Websocket 403报错</title>
+      <link>https://blog.gofinall.com/post/nginx-websocket/</link>
+      <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-websocket/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器对外只有一个端口，需要用nginx把服务器上多个tomcat的地址代理出来，工程中需要用Websocket，按照网上常规配置后，部分Websocket访问报403错误，部分Websocket正常。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号</title>
+      <link>https://blog.gofinall.com/post/nginx-display-version/</link>
+      <pubDate>Mon, 21 Jan 2019 11:43:12 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-display-version/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>记一次nginx&#43;tomcat8请求400错误的坑</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</link>
+      <pubDate>Thu, 11 Oct 2018 18:42:18 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;环境信息&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx：1.4.2   https&lt;/li&gt;
+&lt;li&gt;tomcat：8.5.34  http&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报&lt;code&gt;400 Bad Request&lt;/code&gt;；但是直接通过tomcat访问，该请求正常；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

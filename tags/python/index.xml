@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on 终点站</title>
+    <link>https://blog.gofinall.com/tags/python/</link>
+    <description>Recent content in Python on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 05 Aug 2020 11:26:26 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jupyter Notebook双向https认证配置</title>
+      <link>https://blog.gofinall.com/post/jupyter-notebook/</link>
+      <pubDate>Wed, 05 Aug 2020 11:26:26 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jupyter-notebook/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、文档编写、运行代码和展示结果。——&lt;a href=&#34;https://jupyter-notebook.readthedocs.io/en/stable/notebook.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook官方介绍&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;简而言之，Jupyter Notebook是以网页的形式打开，可以在网页页面中&lt;strong&gt;直接&lt;/strong&gt;编写代码和运行代码，代码的运行结果也会直接在代码块下显示。如在编程过程中需要编写说明文档，可在同一个页面中直接编写，便于作及时的说明和解释。&lt;/p&gt;
+
+&lt;p&gt;本文主要讲配置双向https认证的问题，其余步骤简单写下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python3通过gitlab原生api来获取gitlab上的工程名、分支、提交日志</title>
+      <link>https://blog.gofinall.com/post/python-gitlab-api-get/</link>
+      <pubDate>Fri, 18 Jan 2019 13:53:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-gitlab-api-get/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Robotframework&#43;Python实现右键功能</title>
+      <link>https://blog.gofinall.com/post/robotframework-python-right-click/</link>
+      <pubDate>Tue, 21 Aug 2018 16:13:58 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/robotframework-python-right-click/</guid>
+      <description>&lt;p&gt;刚开始研究robotframework,使用时测试的web应用有个右键弹出框功能,发现RF并没有右键相关的关键字可用,在网上看了很多的资料,最后按葫芦画瓢,能成功弹出右键弹出框&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>安装Python，pip报错Fatal error in launcher: Unable to create process using 解决方案</title>
+      <link>https://blog.gofinall.com/post/python-pip-error/</link>
+      <pubDate>Wed, 15 Aug 2018 16:23:49 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-pip-error/</guid>
+      <description>&lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;C:\Python35\Scripts&amp;gt;pip3 list
+ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux下python2.7安装pip</title>
+      <link>https://blog.gofinall.com/post/python-pip-install/</link>
+      <pubDate>Fri, 02 Mar 2018 17:20:56 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-pip-install/</guid>
+      <description>&lt;p&gt;由于centos自带的python为2.7，默认没有安装pip，我们在使用的时候不方便，下面就说下怎么安装pip。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

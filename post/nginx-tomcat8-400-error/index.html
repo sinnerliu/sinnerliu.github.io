@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>记一次nginx&#43;tomcat8请求400错误的坑 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="背景 环境信息
+ nginx：1.4.2 https tomcat：8.5.34 http  以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报400 Bad Request；但是直接通过tomcat访问，该请求正常；
+
+" />
+<meta name="keywords" content="nginx, tomcat8, 400, 400 Bad Request" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/nginx-tomcat8-400-error/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="记一次nginx&#43;tomcat8请求400错误的坑" />
+<meta property="og:description" content="背景
+
+环境信息
+
+
+nginx：1.4.2   https
+tomcat：8.5.34  http
+
+
+以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报400 Bad Request；但是直接通过tomcat访问，该请求正常；
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/nginx-tomcat8-400-error/" /><meta property="article:published_time" content="2018-10-11T18:42:18&#43;08:00"/>
+<meta property="article:modified_time" content="2018-10-11T18:42:18&#43;08:00"/>
+<meta itemprop="name" content="记一次nginx&#43;tomcat8请求400错误的坑">
+<meta itemprop="description" content="背景
+
+环境信息
+
+
+nginx：1.4.2   https
+tomcat：8.5.34  http
+
+
+以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报400 Bad Request；但是直接通过tomcat访问，该请求正常；
+
+">
+
+
+<meta itemprop="datePublished" content="2018-10-11T18:42:18&#43;08:00" />
+<meta itemprop="dateModified" content="2018-10-11T18:42:18&#43;08:00" />
+<meta itemprop="wordCount" content="1583">
+
+
+
+<meta itemprop="keywords" content="nginx,tomcat8," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记一次nginx&#43;tomcat8请求400错误的坑"/>
+<meta name="twitter:description" content="背景
+
+环境信息
+
+
+nginx：1.4.2   https
+tomcat：8.5.34  http
+
+
+以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报400 Bad Request；但是直接通过tomcat访问，该请求正常；
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">记一次nginx&#43;tomcat8请求400错误的坑</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-10-11 </span>
+        <div class="post-category">
+            
+              <a href="/categories/tomcat/"> tomcat </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#问题现象">问题现象</a></li>
+<li><a href="#问题排查及处理过程">问题排查及处理过程</a></li>
+<li><a href="#问题解决">问题解决</a></li>
+<li><a href="#遗留问题">遗留问题</a></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>环境信息</p>
+
+<ul>
+<li>nginx：1.4.2   https</li>
+<li>tomcat：8.5.34  http</li>
+</ul>
+
+<p>以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报<code>400 Bad Request</code>；但是直接通过tomcat访问，该请求正常；</p>
+
+<p></p>
+
+<h3 id="问题现象">问题现象</h3>
+
+<ul>
+<li>前台报错</li>
+</ul>
+
+<p><img src="data:image/png;base64,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" alt="" /></p>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAw4AAACiCAYAAADodJpFAAAgAElEQVR4nO3dC3Bc9X0v8O8uLuaVFsIiHjYx8sq3vXJqCW5TUU/Y+CFEe7FoLV1Z0JLO7AghuxrqktsNV0ZgOZHtuhtqjHH9EGZnrpuhtkZKEzkzsBaWsxAH5aZE8sW6zUjH4mHAiCVhkpSnLd3//3/O2T1nX2d3teuH/P0wwrvn+Ttnz+7+f//HWdeUACIiIiIiogzc5zoAIiIiIiI6/zFxICIiIiIiR0wciIiIiIjI0ayc15gIY93j+/Dup/FVb7h3CzbfVVLIuHJnxvX730Do4VvPbSxERERERDNMTonDRHgdHnnuXZEoPIGQmSiIAnvbz4sRGhERERERnS9mbX3iCbz13rtJM26+/kY0t7Tgqquu0ieIBOHJ3reARd+wty6U1IjnZylaIiIiIiI6J2bVNzTgyaefSpohp8eSBmFi6IjqnnR7TeZuQCM7GxH86RXGsy/j4dD/xCKjG9Env3s9Lvv1e0Y3J2OeWi6KcFsrnjulr/fxjffh6U018BzfDf93XsE1112LX73/gUha/hZbFnarVo8YMY1dk4iIiIiIisv9pS99CV+59Su2ifK5nJ6eLOg3wu/3q79714XFFDNp+GOREIQQ2nIfbpw9hK1b4/2Y3plVg2/s2oct990onr2G516YgJk0POtqQlCu9/e34/J3n8MTal58PTVPJAglNZsQko/FX+CPP8JHrxxAeCIpQCIiIiIiKiA1xuG++xpx6p2TqsuS7KIkn2fmQc3m/ajBMHav2ogBMeU/p4bw0sAUcOVr2CqSCXPzH7//Pt7DJ+rZ5dddJ9YU5swT/3sXp0beBm59H0d+dSku//Q5BPzPxfag5s3VH5d+rVJfz2COtQCuwBVXnML4++LhddM+F0RERERElEZscHTDfffhn578J9VFKZUSo7D/SvjnaFmYvmtQrJuRdeJE2DmSVF2Ojv80YSE9UTns8qJpewiVQ+vs3ZaIiIiIiKgoYr/jMPemm/CNv/tG+i5KC1tU1yAcewq7jyfPnu2ai1KvS3Uz6jHni4Qh1bI2Jddj3i8/tXc5Or47dfejiffwxhdn44rbV6GmBIhqmtPxERERERFRAdhuxyqTh0zK1+zHFu86PPIdP14xJ155pepKdAM8uGHzDkAOcrbMv/3vaxxCqEDLgUeBVRvx3CN+yM5KH310A5q2p1i0pAb3V+xF8KdPQfaGuua6m8XED5yPkoiIiIiIpsU1JZzrIIiIiIiI6Pzmdl6EiIiIiIgudkwciIiIiIjIERMHIiIiIiJyxMSBiIiIiIgcMXEgIiIiIiJHTByIiIiIiMjRLOdFiCgfn58+ndVyk2fOxB7Pnj27WOEQERERTQt/x4HOis8++yzrZS+ZlX8+O3n6jPNC6bim8VZw5d94Z00crGZKEjE5OWl77nbnf66mJvN/fc9MufJe9xJ3/uuaXK7pb4OIiOhcYosDFU0uyQIl+/TTT8/b5CExGSBn1joaJhFERHQhYuJARcGkoTBk8pDJdGrvT6dp6cjG7EsvzXtd0pMIJg9ERHSh4eBoKjj2fiNyxvcJERFdaJg4UEGxMESUPb5fiIjoQsLEgQqGhSCi3PF9Q0REFwomDkRERERE5KjAg6OHsXvVRvRbatDc7jI0bd+MmpLC7qloju9GQ0c/ULMB3c3l+rSJMNpauzBmTJsIr0Nr16h9PcvyIzsbseHI/AvruKeJtaZEREREM1tRWhwuWdCMnd3d6N7RjPmTY3j2yTCixdhRnmTBvqFhD45NczvVHeIYxXFuWCZOY3g9dh8vRHTD6PR2po0t2uuHvzf12Rzq9KJzqBAxZCtzrESUnYyJd7QXTf7e1J+hQ53wZvWmn9nvVftnXxS9fi+8XuOvyXLu5Pkyp9vOh1zHjzQfrRnI82rZlwoieVu2z21bDPG45TFYp9tjt+/HXEdu13ocahtNaa6VBPq6icec4Txkfa0l7iM57qTXSPz57ScM/qTzmrRx+/sito79OjfPq+38m+fI+lqkvU4Sv1etr0XCubKulxSzdb14jPZzZG4v+fzE44jPs10HxhPb9qwxZDqmdOchYX78NUofQ+Jrnn0c5vlJdU1mvoZyjSH1OU8n02uRON+yLfM4be9hPw6Ov2z/zEiKIcPnV5prKO01WZQYin071pLbsLTMjbHR1/GOeOop6s6yNYyXBgpbO17uWwYc7sfrJyeAhRdJEwPkm+9JaMEgFonHH374oW3eb3/zm7y3e8Xv/V7e637624/yXncS07g96WWX573uxx/lH7ML+V/LH3/ycd7rXnZF/q/R5Gf573f2FVfkve5nn36e97quafw44CVZ3jL3pjlzUk4f2hVA6VrtPPn8PA+JAuN2LYgtlfrToc4q9NUOQgt5kpbz12sIDmqo8+iFhyrxhTi4ty7Pcyu/hOvEZ6DYV511CxlKISoG4Huapj43rSrbNWjtRlwja8Xjytj2ev2W/chtVIkv+cEQfGKuz3c5xsQuF3mGMXD532BJVj+xEkWkz4s9e9z4l0gUdXXFu7p8Iu6Q3L4sxNR34h5xkPqx+8RrEULSrtXxBeDt0RCqTN6eyfa+kNveXo6jP9mK//UnlrTBuDYOj83HvrJdeGPlCuxT51++5uK8bjNfC3mOqxDo9emxVrZDky9GLB5RSDPilt97ELFplcZr9UgvfPIaSnhtZcLi7zWOXV0rT6JcXHua7VLpRSDgFeuE9HMij2PXEOrEa18XEtdpfEERXwCYqw4cAW+PuB5OoCnQi/e2zMK6vloMqpM1jEfkY7E9j3F9dq7QoC6ltMeU4TwoYjviffPn9Svxq/jJTxuDByFxnVoP0Y+ACtw4Pst70P6aj6BjrAco22Z/nW3vZ6MCRMadZwzqNbOec0ee9K9FYnzGeS0T8Y1t049z/i4vdg3VYcXBOnXdrCgFVohz3R7bnjymPpR5zG1X6ceVdPGnuYaMzwfzmlQJtTgfi0M+HC14DLrijnGYeBUDY+JTrOar8RdIdgVqaIj9xWrpZXcgy3T9T28VkF2DrMsmPk9ct+2FiZT7+sfhUUtXqkP4tnUb0zASOay6ZC29NVPSEEW4rRGNjW0ITzhv8zd7m+1ZoFGbUhWIIBKoss8zssr6EBCqT8hGxXr3rgtbssfEWrb0tTqJtVl2w9gl3nwPF/ELh+hi0pmqltIo+KyutE+L1cbKN32q6ZbaQb3GtU58lYawMum9nrlmKa00NcL2FtGE2mvbOom1ZZ34cewzz6jNU8snf14lniK9AOlc+I9G+hDxr40VWDx1fwf/ETEt3+bwoT6ElgQRLPZnYDSCH8KyH08dgkGgTwR+ciSCquqb8H/+fULF83n1PSiNjKiKOqdt9i26G8sr/gDuvsjZ6RFQWQs/NJXkZA5Nvk49aM+QNCS9L2ShWBTer3efTlp0clEp5hm/mXJkoyjZ95iJiywQxh/7an2p93VyBJEl5bjJeOqpC8Vi8/hqY4majBvB1cb2ojihAZEf6ufWrGRLulQ84noX78sfmK1OB0UyWD43OQZVSI5fu+YykxjHtse7cXfQvP4rsDcUf7zCn/qQ7MeU+TwMddap2Nfd/oFtevoYrOzlBHV8Kc+D+HwShe15Sb9tI8+jD7U+cwV5TPHzlXsMMmGOwB+7BvJgey2GcTDkj5eD5HkVr+fzw7Iru9coiANXvvgE6pH6mtavDeO6ke/LiB/fS7Fg2msIb4syqB/3mKt4fLgbfRhU77PCxmAqSuJwZrQLa0ShvPGhASzd0R0fK2CMH9C7+OxEc5kb/R17cEoWqrfuxRjuxGNGF6eybHdmjD/AAzti3YZOPLtVNcW0iX3Fuk2Jv29WLEDLgUdRrS5OfV8tC/M/zv4OPSFZP2s99u8v5HiGEP763VZoIiMcFF8QgV1DxhtLPvepGhw5T9OM2hpVk6ChR3xI+GXWqebF3xiX71+DkbWasT0NK2Nt40bGrhnrZPykTiC/NP0r8n/zEZGNqlFOeA/Kwsik+CKPf1eIQnZVH2oHjfdsj6VkYHxG6O/nQdT2BVShXdVka6IQLv77XtJ7Xa9NMz8DBu/uQ8Cxv06GGDKuM4KHzf33ACttSUoIz1yzWZ8nPvTGt4l54njWWgoJZgHalkQZX9z3WKZVrpYfmlVJXRBkIdteKJuDcl8EIyezCD+FqCgZ+u725dZaYRzTynTdb1IRhZEj3vm2/XjmexERgV967R/hxrvuxKJfDqha4z8V33Hlacq/ttjFdeVdemuskJF38pQLlWjVIlYGFEWsQFViomsU7FaoqtN4UptYqZX0vkhDHF/tsf+hEmfNp+FbaQpO5n698+NbjHVnkTXkW1InpjIO87WR15e+vkyEqzBR3RlLKlSC9/GheOIcO54KtIv3avk2ffrBFZqlpj8eW6+sOTYvfJGAeeX1XRUQT17DuzVbUxQmAf294YP1knc+poTzMNSJ+vEUyXGWMdgKpElJQLYs71GRMG4z60ryiiGhkJ2zhNciqmHcpydg6txuL8fj4uPws6kFIgHT1Pt84/BtOPbPH6cpiCdUwMrEI025Kv01JFkSclmui4hyuEoCCxuDqWhjHL4jCujLpjTsfShewy5r5iW9wL0GXWOTcLvH8bPx/7C3TBhdnLIxMXREJBzA2DOteiH+8CQmJ8cw8uvrcYtIEGQS05plLX+uZAK0o3mBGt/Q0DXisLQHNZv3Z5lgxLM9+QUxXW5f/MtW1ZBoJ/Qv7Lnl8IXq09YyypoVawISl/DmIaJpeXRwdooCQ4pWPZWwr01bUIj3W61SXx7ZsPatr8pmpYwxZFjH2uJhbSlRLLV2onBt1ppWrvAjdNBozRCFtMSWBXuhALH1VQI1WIu+qhxaUXIkv8jzoSdymijC1qfoP587WUC4c/bzCHhXqK4mzmThEEaBUhYu9NaLYom1kMtuPLZuYT7VjcJMWpOvfyOpTUpMc2ntNhPjXngjXjxunPPEcYKyu4msRLOWq/TvP/M6StEPXhSqVZcXy0qXukZj3UlW3zVbTTtttD4ED89G0Ejqg1q9ZbyC0dVFxIj65NhUQdBtTbhksqEn2MCX4e2rSnEdmd3b7DXUTsdkPw96F6XUCUY2McjXCZZEQRbakzbkQLx+4hg0syfFI8CS2OWQRwyioK9l2Jt97EOK3hZJr4XuF3ub9e6F4vquMCM3zvWjFa9i0d9crn/2JXwWyc8vawWsrIxIE1mGa0ichx5vPAkXyUvQV4wYJP07pmhdla50VaJl/XJViO/6frxQLbv0NO/QWwDknyxIr7gy/z7eJnOgcretdeGAaoFQMbRaujBlcl1pcmvH++MqOSn7UvLbp6TmG6rlxN2/ryjJScHJ2ivzVTe/YLdAfFjk8AWb0GwqXX3NNUUIlujiEElR7Z2yUJyB7FIQ8vfEWhyCWdQ8qxrFULwlYjCrlfLkt7Ruyr9sxhZUrhZfkAfVF/ihT/80qbUhYwFSfb6J8zAZgGy0nVvuSzjPsiBjr5HNRfL2cqMSCFEoDm13+NydWx6v7DGo1g5L4KqAECvAOnQHUl0R4rX9qvvrD4vXXUlvIZfXYyje2p2WB7KuTDuRPppc3xeSfG94vuVFRI136IE3sMs2oFzWqg+ma3GXrRaJLVOxvvrxijV5Peyu2ySSBqMngPFdO8s4Jv9D5vWudwdSx6gKomaNvigA6l0M7N3ztoUs61qmB/pw//2fIiR7DZitdOY8o496cjKW/piSzoNK9hOuE5kENln2kzYGs0BqLSfk2cJnbUnd68MXNOt7NscYVNew9O+PWGKV0Gsjtq/E10JsrzQS0HuItOutZLZyt9FiM++111SS3FOqfxbp9KTGWgGrKorHT6R4L2a4hiSj14l+jrzicy3eRalwMUh6slbcMQ4L622Fao+4+OyJRBRHjx4VpW+9dQDhl/U3jDk2wlAyZ576Vw0+lmtpWtK8ge/G79wkt2k+Ll+zH90d1erx2Jty6hyUehP70VmYrR1mLHAaw+BBzf3LkhKkZLmNccgk05dVpg9cSfUxTGxeV2/MXviP2PvGphvjILehNyUTUSGo2mdboUqvFU5q1lethAeN96SsEbTX3McKk0ZztV2aL8xYX2f5JZJFlaBDDObnU7Q3EI9B9m8PbcvjrkV6c/vR7z6HY19cav/cyqq7ZLyWU7a2+iwxqELFkuTaw6wjU9urT9FiIL/kI5Za/MSa17jMtXuxHeFuWL7s1YBa4C9EjvcfP839ZgF6X/xBSwEp+bO/8DyoW+sHsrgG9K5mgTTLpXlfZCILTuIdJlsArOMd1NbEd5wqLGdKYo0+37HuLbFB9vaB3ao132deT3oh0/yulUmF2XJm6w4k30vWc58wnsJMLBIb9+V7q682iOXXTiaNiTBbDTJ2PU44ppTnwVoYtXaTNpbJFEOqAqlZ2A3V5393N/WZYqm0zD0GOUZCJEOP5NEKmfK10MeRxMpD6nPXPK/ys1FvZbOONYgfS2JiBf1z8kggZXfRtNdQYphqTIqZWBc2BlNx76okLpTKpSJZGBtVt2R9etMm7ID8DYT1aAgbi9RswOLF5ap1or9DDlg+pArp3msvA8yxOCoBOYwu2R3pGeDmUpksvGHMaxGJAdDQIcdVdKlJsqvUtrIfoK11n2opMKc9bYy1kAX9LmNfsqXCPs5BdinaAbGymi85/hbFwttR7XoR/fKWrIu7cYeYZLZydBmLfKV9EwpR1FYD+gJ18KrvavtdKdQHblUVvLLLn+rPrGfMkyIjrtIn6rV+xgr63QXiBQX5oeBYi5NwBxOrq9/YgQ/ntU7r+IguNpfOmSO+owcR9MvaPOPL22jV0xK/F1Qf+QBWqg8AP/bsaULoJ/os2/tfDtr1WQulFdBne6F/PBgFC1mjP1llfD748b/XLcvYlJ8cg88Wg+3zScXQF9u/bE73mvuH5W47TrsThbFBNabiPstUo7tkMPGDyKhtteQ/aj9qMTmouC9+DpYkFhj12lUzvtg5ynAeQoNiMVkjm7BOZXuv6i5mfuzKGNrljlRNtTXR8ht3+Ml4BlR3jb7YfvTP/T/3iGPNuF4qRoFjrXWPsvBThx8Mie8LdbgZzoPs2hoLP81dkdIRBdEevxfb1F2ckvcTux7kee0ZsV0romSm/5vufWHcicl82SMySBn36hNo2lZu3HFoLmqPye4sxnedXEddKJH496PxvXmT7bsx/l2q13Dr+4lY4pNjC9sr67Cl1p/yu1bWZPeMeNW+Y8dqvSbNGbbrwajhTryjmuwipe66JafWiuupSl0XMgaPnKdeH8vrZFznSHdMKhFNfR7SlgcyxYB4gTTxdZLnYRB+y/Ga506/A1Ts0pLn1nx/Wt8z1msxzxhkS19Pp9dyrNlcx2leC7W9Xhz02t+b+t2pnlStT/Ic3lSr6ccsj8lIKlRSM5j4+SJr9HvVGJlYeOZ5SHsN2cty8c/VIsRgPHVNnZe/3CVr51vRNbYcj3U/yAG406FuzQVsCeV7y0E72Zx50Ly9m31H+i3KgiEsu+RXvB1rDng71uzNtNuxpr4Fa/y9dEHctEx+sR9ckdvNFaa7/enss8CfiXS2XGDvC6IZqsgtDjTTyGw99Ve1HIRm1hdcM63EgehikO53G+zvpXND9XdOGYJDTWRhg9BrGlVtV8KnjuxGkW+e4rHXDGdq+TgvzkMeEluT43JsJXDeka2m37anLFuUsnfu3xdExBYHKqKTb76Z13psccgeWxyydz61OKRPGoiIiM5f52niQDNNLknETE0cPNdei+gHHyRNZ+KQvQs5cWCyQEREFzomDkRnWWLywMQhe+d74nDzzTfnvQ8iIqLzHcc4EJ1lsuXBlKoFgi5MTBqIiGimY+JAdA6pJMKSSEhvvfVWymWLXTAdHf1FUbc/kzFpICKiiwG7KhFREqckgl2VmCwQEdHFh4kDERERERE5Sv/LRERERERERAYmDkRERERE5IiJAxEREREROWLiQEREREREjgqcOETR6/fC643/dQ7pc4Y69ef+3qg5Ad6mXrwxNYROr30dr9cPczFg2D7f3KDcW68/aZrabuL2xH6iRYohu/PRiWPWqanitpw7c7JaTjyJLe90HpLizhBZyhjy2xYRERERzXxF+B0HH4KDIdR5LJOivdiuBXF4bD72le3CGytXYF898D2tDvPE7HZNQ3tsYVlI70OZx3xcBy04CM22QT0J2FY+iMFgAFUjlhmV7dC0duuC8B6cD4+I4ZECx+Ak2htAwB2EH/EA08Y9tAsBb4/Yzwk0BXrx3pZZWNdXi8FQJTwIiX1bt+tHAHNjj6sCXnEcISzKMq60MQieOsu+5Ll7pBe+vXXI7ciJiIiIaKY5az8AN7moFPNcLvX4yEZRYu/RUhZ0o71PisJzUJ831IfQkiAGUxTYK9s1UZxWOUkGUfRu0xAMVorHJwoeQ0YisIAo0OuJSrx0niluX/lcPU6MY9vjQ7g7uC9FgX0Yu8R2H9Y86vgifRH4e7JPGpxisB3CCQ0oXcGkgYiIiIiKkThEEKjyIiAfygK3rK32+FB7rAperygc+3yi0NoDrTLVutZCsV5w9d29Ov+Cq6rFXwt9c2czBpGwBALwisRknms4u1Uqa+GtF/FBj+/dmq1IlavYkhq8jZGIH/eEcgrOkWyRqFfb9ON7qU8SEREREV1kCjzGwYO6kAZN0/96SgOoUn3ozem98Ea8eBz19rEGBlkoDvlXxGrPT45EphGLbG0Iwb/CLPgWIwb72AdzW6qLkrcH7TmVuStUdyltMCgefxnevirbeAdzf7tERlbrMzKKqFg+wxbt4xXs4ywykS0S6jXsAVbmsB4RERERzVxFvatS5Qq/7flQZx083/IiosYa9MAb2GUplOqF4uDqeGl7brkPkZGT+e1ctja4g1idUHgvbAxGYd/4C9XFuw8hVG8U2OsQEv+tTEoCUpEtFX24//5PEZLjHUQSMb5NH9it5qqkZm28JcIjti9Sh7E0A5jVeIVYfO05dWdSKmvhz7B9IiIiIrp4FDFx0Gv89X77UANt69GD1XfNto01iC2dWCgWPL5a+EQBPOubGCXs2/9QwqDesxKDvdVFtnD4VZcfzbEFQrZU9NUGsfzayfh5i0lOamTissIfQeCReHJRUGp8hzh+DnIgIiIiuugVeIyDfgcis8u9Lzio18JHe9G0rVzdIQiYGx9rIOYvMtZTheLBhJK1R2xrEPBXeVXff8XfA02UwPW7CZndiCLwhuQso3ButDbYNleEGPKRNm50ompkrdiuLKXHxzvIeaodw0hqtIRCvOxW1NPpRZU3YExJcVerbGOotI5vQHyMSl5HSkREREQziWtKONdBEBERERHR+Y2/HE1ERERERI6YOBARERERkSMmDkRERERE5IiJAxEREREROWLiQEREREREjpg4EBERERGRIyYORERERETkiIkDERERERE5YuJARERERESOmDgQEREREZEjJg5EREREROSIiQMRERERETmaVdjNDWP3qo3on5qKTXG7y9C0fTNqSgq7p6KZCKOttQtj8nHNBnQ3l1tmrUNr16h6XN3RjZaFuW16ZGcjNhyZP/3zYcaYEB8RERERUbEUpcXhkgXN2Nndje4dzZg/OYZnnwwjWowd5UkW4Bsa9uCY04Lhly3LRDE0oBVnP2fNMDq9XnjNv6Ze/XUZ6oxPU3+deszRXvht0/W/zqFzexREREREdPYVuMUhQcltWFrmxtjo63hHPPUUdWfZGsZLA1OOS91cOg9vjR/CT44/iEWyZWHiVQyMTRrT3yjYfs4emTTUQQsOQqtL8Ur4e6C1V9qneeoQ0uqMdZ9E+WAIqVYlIiIiopmvuImDUdhGzVexyJx2fDcaOvpji8S6/Fi7CMXcice6H8QNRhchc9mJhOeJ65Y9sAOb7ypJ2tdX2jfh9zaaXakO4dsNh9J2OfovFf8Nv//6m+g/OiLml2Ni6AhOuMtw+/WehMQhinBbK7rkcUJvbdmysQTPN25K2s8dxhpHHv86uj74xB4r7F2hnOYl7n/vCYcuUEN9CC0JYpAlfyIiIiLKQ1G6Kp0Z7cKahgY0PjSApTu64/3wjYK8LER3d+9Ec5kb/R17cEoWfrfuFQV/mSjoXZzKst2ZkTRAFLK7xboblrlx4tmtODj+MtrEvmLdpsTfNysWoOXAo6h2uQBjX+nGKbzhWY47lrpUd6VTRjcll3cp/uoPP7AspRfan3U16fvoqFbHvit8U9r9TE6OYd5D+2LHP/bMv+ndgsS5kYlBmXEcO5oXiHmtaHthQh3jVpk0yDENxrxcDR0MwXe3T7X6DHUmdFWSQvXJXZWIiIiIiAxFaXGw1rrvfagNMGrCRyKH1fz+jgaY7QBu9zh+Nv4f+LG1ZcLs4jSWbg9xsiVALSYK2Q3PmFPHMPLr63GLKLiPiYJ8a+NAXgOSy33LgMOH8G/f/QLeEPGVPiC78hyx7FxvUTkDmSh1xSaPvZl+RIccLF56nfX5OE6J3GCWODdy3tJb9SBLKpeI5GlUbWvCpR9j9eJy+zz1zIOazftRk8NxVbZr0Fb3oilgmZiqqxIRERERkaFoXZWudFWiZf1ykST0o+v7I6gxWh1S3mVpIowfT3N/KbscHTiAO3Y2Yv3hMXS1NmBAdf3JYaMLb0e160X8Yvjf8baMWxbqUw0MTnl3o+HcDqDI5pb7EBk5CQ5SICIiIqJ8FPd3HBbWq+447v59CE8AHq9XddWRiYQuiqNHjwIleutA7C5G5tgIQ8mceerf109O6GtpWtK8ge/G79wkt2k+Ll+zX3UhkvSWgDko9bqyPIAK1V1JjmmQ3ZRuS2yxMOI2j08RSZD+OJf96K0b8twM/FzfkNmSIlsZzGOU4y2s83Syu1QjGhvb4jGk4Kn7O/hD9bwjEhERERHlpcg/AOdB5VI9WZC3ZHXXbNL754fXo6GhQfytwdbjV0MW0GXrhD6QWKH2kWoAABTJSURBVB8b4br2svhmjARE9vmX6z0zfrNlXktsbMEatc0GPHXwtzgz8QO0Gc8bzLEOqlXAg5r7l8X2tft45iNQ3ZWE0q9VprgrVIUay7BsSlMtGg1G7Oax57IfeRzmuAa5HXO8g2pFEfPk2A3zvP1D/2fZjwGxxNo+GIRWb4xjqArgiPXV5xgHIiIiIsrANTU1dT7dM9Rg3qloubqr0iLnFYiIiIiIqIiK3OJAREREREQzARMHIiIiIiJydJ52VSIiIiIiovMJWxyIiIiIiMgREwciIiIiInLExIGIiIiIiBwxcSAiIiIiIkdMHIiIiIiIyBETByIiIiIicsTEgYiIiIiIHDFxICIiIiIiR7POdQCkO3r0KH7bt8027aratVi8ePE5ioiIiIiIKK7wvxx9fDcaOvpjTy9Z0IynN9XAU9Cd5GsYu1dtRL/lkKs7utGyMJdtRBFua0XX2HI81v0gFhUgqnBbI+Z+CfiwYq1t+tXD23DyTaBm8/4C7IWIiIiIKH+F7apkJg01G9Dd3a3+/nbFVbHZIzsb0dCwB8ey2FQuy2ZlIoy2hk4MlD2AnUZs3TuaUXpdoXaQH9nS8PtHNfVYJgrWP0nOk8ukN4xOrxfepl6R0pii6PWLaXK614/eqGXxaC/8XmOebR0iIiIiovQK2lVp4u031L/Vi8tj0+JdbYbx0kC2jRu5LJuNKMJb92IMd+Ixa+tHSQ1qCriXfMxp+1tM/uw1XJlmvpwnl8GPfpZy/lBnHX5ZvxJL3rdOq0Jf7SC0kEdPFKo6Uaa1Y5FMMqr6UDuoQZ/lR1XnfGjtlYU/MCIiIiKaUQqaOJTMmSf+P4r+jga8/sAObL6rxJhj7SJ0CN9uOKS6CK18ex1au0bjG5AtFc2fJy37lfZNqPzXdkv3oMTuQgldkNR24skLJl7FwNikmP7VtF2LJsL2WMqs8cvWitYukXikkdA9S3V/gqX1xRpLApkYWP/NtEySoU7UjwdxdPMsrHvktDFxGAdDfjysGenRyRFEEIJ3SCYOfQj51yI+KwKEvDgmEodCdLkiIiIiopmrsF2VFrZgR/MC9XDsmVY0NDRg93H5rAItBx5FtcslHt8pCvv6uIKSmk2xLk0blrnh7t+H8ETyst+suCbtLktUErEJh11eNO8wuiBlKKinJAr+MmmQyYJcXx6DjL/thQnYWiuM7k1lCevKBEEmC93dO9Fc5haJ0x68d92NucWQs2F01msIbqnD9e7T8clRDeO+ctwEvUXBu70cj/uNWSc0+MrnwuzK9JTnm/AXOUoiIiIimhkKfjtWMxmQiYAkC9GZxinImn6ZYKw/PInJyTGMv59h4VTrw6MGFst1u1objMJ+bkYih+F2l2HprXoLQ0nlEpUcjL0ZTW6tKLkNS8vctnUl2crS0LAGXWJZt3tcFOvvySqJcf/Rlx3jS7WM7KKkBYOoSzPq/Bd7m1E1shba3jqRtsX99oMJkTRUYWSthmdX3+64byIiIiIiqWi/41C+Zr/eiiAK0adSluVl96JVeGjvlGopMFsq8t1Xd0e1eixbCu5dF7YP+i25HrfIFozwy4UbbG0hk45Ya4f4279/M2pKnNeT3t78VB7LyO5IQCRQpQ9yrgrgSCSAKq8fB39TglLx+K/fbTXGLkRxQh97Dc98L179h1qVNOizNGi5HCgRERERXbQKmjjI1oNwLEnQBzhPTpbiBlWInoNSr8uy8Ht4fUrMr/66KmRHNWsRNmFZo1UhnoS8jXEtYfD0whZRaG9XXZzOjL6Od2wzK9CyfjnkmIlN1qRiIqziLfctUy0WAz/Xg58YOqLGM6hB3olJh9kCYUYmCu6qteP7I8aUqH4XJNmFqaEBDV0jyEQOHv/4O3+uHsuWhcQ/OS/5txwq0C7Ol2b+DQaxxBfEoBbCitKvYoUf8K8wBjwP7UIg4sc98mllLfwwHqtZAUT8Kzi+gYiIiIgcFfR3HBIHGMua+Kbtltp3yyBiOSbgjkij6qIk3Vw6D2+NvxH/XYWEZVuuiw9Qltv1XnMSox/cge3ddTimBkpPpt6nPcCkQc7m/jIOjrbEYt23+TsOieuqAdGLX8pqcLRJJhvq7kkWsqUhqx+Ai/aiKQBsCdUZd4ySt2itQ0g99iE4GIp3aRrqhLden4MlItnYW3ee/MYGEREREZ3PCv8DcERERERENOMUbYwDERERERHNHEwciIiIiIjIERMHIiIiIiJyxMSBiIiIiIgczTrXAdDM8dFHH8UeT03mP+b+s88/y3vdyy+7LO91/9MSf65cLudl0jl9Jv9zVXId74lFREREZwcTB1I+/NWHSdMunX3pOYiEiIiIiM5HTBwuQqmSBCIiIiKiTJg4XCSYLBARERHRdHBw9EWASQMRERERTRcThxmOSQMRERERFQIThxnsk08+OdchEBEREdEMwcRhhmLSQERERESFVODEYRi7V61CQ0ND7K+xsQ3hicLupdhGdjaq2O9dF0bUYbm0xzcRRps8B10jxQqTiIiIiOisKUqLwyULmrGzuxvdO5oxf3IMzz6ZuQBeaHrBfw+O5bX2MF4a0H+Qa0obwKsXWNIjsbWBiIiIiAqtuF2VSm7D0jI3zoy+jneKuiOreME/L8dfQf/UFJb/RR0mRdIz8PMLMHMgIiIiIiqw4v6Ow8SrGBibBGq+ikXmtOO70dDRH1ukuqMbLQujCLe1Yu+J+fBecxKjH+g15l9YXo3rX+zHmHp2Jx7rftDYjuwStVEV8GGbZ51+CN9uOGTbfpeMBXqLyNObauBJEfJI5LDa3p/95X+F6/suDPxoCNG7zGUT9ysyL0vqNRFeh9au0ZSnQraCbDgSP77McSXsp2YDuptLkpbdsrEEzzduEstVW84NEREREVHhFaXF4cxoF9bI8Q0PDWDpjm5R6C3XZxhJgyw0d3fvRHOZG/0de3DKsu6Sb+1TXZzKxOPfvOjCfd3d2NG8ADIReO4FWfsvC9tmYVlupx3Vrn6RJMiuSRVoOfCoeO6CnkzEC+fPupr07lMd1Sq+J15I1ZJgtFaIRGeeqxJ3LHXZuiuN7NyEwy4vmneY+3XFV50IY6tMGmQhPxaznWzBmFr5hJqfKS55fPH96OdvZKeeNOjnrhv/KhKMedb9ExEREREVUVFaHKy14XsfagO2b0ZNiVmbD5EsNMBsc3C7xzEYBS6HLFiX4gaxHCbM7dyCm8S/njnzxP+NmvykVowKVcA/fGQcp8R6i0oSgjGWPwOZzHTFJo+9KUddJCxsdFNCeD0awrElVXelmrveVUmFq2wpbiux7tfYzdAR1TJSvVhPkkoql4jkZ9RoLTGPtQxLby1xjOvrXxLnYmwMXa0NGHhgBzbfVQKP1wscHtXPnWqBKFcxtBw4gJaEQ/7ss89jjyenJhNfnqydOXM673VPn85/v0D+Xc0+//xz54XScF9ySd7rTp45k/e6mJpG1zoiIiKis6RoXZWudFWiZf1yUdDtR9f3R1BjtDrIwnOTkUjERRFOuZUCihW20xEx/Mthe3zyzkitXRj/0RDeqEnMSIoZ1350+/TWmbFnWnHvj2QXpk3ortTjGVOJzZ3snkREREREZ01xB0cvrFfdkdz9+9QtS2WtueyuIxMJXRRHjx7NbZvGgGuEXzbumqR3L3J5zZaAOSj1WrrwlFyPW1yuWAyKSAiSbqFqtADEtxPfl+yuNPTBXLXdeNcl+yDsEtUqAvQf1Y/NbIFIfxwOcS1siXWHig0uL6nBZqOLl2ypeXP8ZeP2t/Y7SP3u737B6SwSEREREeWkuIOj4UHlUpEsjI2qW7LKWvMdkAOILV2BajZg8eLctlmzeR3GV21Ug591d+Kx2GBnMf/+ZejqsAyOPvAoIJaXXX9kpyC9VaHGttVYQb90rmXQdDz+V/59EpsfbsJAa5fazl6xDe8XZwO/MhYVBf0Nyw5jvdHN6ebSeWqcRvrkoSJlXH+54zbbIGg5rfnpBzFL3mL2cLz7T3XHZqwoHcbuXE4dEREREVGeXFNT7GA9U/3617/B6dP59/n/nd/JP6+c3hiH/Neddck0Yp7Mf7/TGeNw5kz++y0puS7vdYmIiIhyUdyuSnROscsSERERERUKE4cZ7otf/OK5DoGIiIiIZgB2VbpI/PKXv8x5nUJ0Vbrmmqvz3gYRERERnT+YOFyEskki2FJBRERERFZMHIiIiIiIyBHHOBARERERkSMmDkRERERE5IiJAxEREREROWLiQEREREREjpg4EBERERGRIyYORERERETkiIkDERERERE5yv+ngVMaxu5VG9Fv+WkIt7sMTds3o6bEee2RnY1Yf1j+4vCdeKz7QSwqbHBZmwivQ2vXqG1a2QM7sPkup4OIItzWiq6x5Xr8x3ejoaMfqNmA7uby4gVMRERERFRkRWlxuGRBM3Z2d6N7RzPmT47h2SfDokjtQBSyZdIgC+jd5zBpsKruEMcgjmPDMjfGnmnF7uP5bafsS57CBna+ivbC7/XCq/46cexcxzMd4lia/L3O122hDXXC2zl0tvdaAMPovNBfcyIiIsqowC0OCUpuw9IyUegefR3viKeZis8Tb79R1FCmo9y3DDjcj9dPTgALs2g6MS1sEYlHS/ECO88M7QrA26MhVHmuIyEiIiKiQivuGIeJVzEwNgnUfDXegiC77zQ0xP5kLb61a5Cs2b93ndFCMRFGm2XZthcm1DKyS1NjYxvWrf66mv6Pw6MIt8WnyX/DE9mv79SSMBI5rP69ZW5JymNo6BpJvaKxnLnfxHhk3LtXrRKP98Rqas3YDo6/nDQvpWivOl+9/lQ1/VHLdC/8vdnUn+s1xz/e2xxbL14Bbt+evWI8ihOaD+Vzk7c41JkqBrktP158cVOKefnEkGmd1GRcicskTvthp/N5jS2f8bXIwNpSUx+yzkj9+qVqlTCn5XA9qD+1nQyvha0VKfEasm6vDqHEeMz1ms5Byw0REREVXFEShzOjXVgjCsaNDw1g6Y7ueP9+o8+/3gVoJ5rL3Ojv2INTNZuwo3mBWkR2VfrXTTXwyEJ2axegui7p3YVOPLtVTwiEyckxTK18Qs37ZsU1sWnzHtqH/fs3owbZr9+yMPVx9HfoBXzZhUrGrJaTcZnjFmR3rI5qILw+ffJgMo5n3OzGpeJegDuWusTMQ/iJSl6G8dLAFFzepfjDW67K+nxfvn8NRtZq0DQNPf4QthqFu6HOKvTVDqrpmjaI2r4qx8K0LoRnrtmsrzcYxPg2veAnt2fuR9N6gXo/5K70xKAKgUgEgSp7ATPa68e28nQxRPDgT/57bHvewC5LITe3GDKtk87cch+MIFW3pFMJyc9kJIAjRuyJ5zVdDOlei/REwlPVh9pBY3s9/tictK/f3HL4rpTjiPQCv9xF9IQGnxF4uhiivQEEvD2x8+ODH99rN5uH0rwWHpEQaJolhgDi+Ys1PpFgmIHL87mtHIPGeoN396Hqgux+RURERFZF6aokxzhs2ViC5xs3Ye9DbYAxONqsuZcF8n5jWbd7HKdEYf6GhG1MDB3BmHzwTCsanjGnjmH8fVFugj7oeumtid2G7sSfLJzO+naxZCFFXNWLjWRo4e2odr2IgfGTouCZfnux9f6qxtZlq7y+CWWHu9B/dAQteEUNLC/7WiXmuUrQcuAAsuno5PYFsdoo/8UKw0YhuHa1uTcPfLU+9J0Qpb5KjyrQVwUixjxRgNTaLeNK/Hi4zlhPFBz3qqrkYewS/4ZCXkvNsg9B8f/KdlFAbJeF2AAQDKEudoBRRPoiiESqREE0Hq9/rWV9M3BUoF2rsBxVbjGkX0dfr9NSI+4LDiJkLKeJ8zEx8TNM4lpMoE5M8aLMo0JX53WLsVz8vA7jYIYYUr8WGWIY6kNInBAtqR9fhtdPXMDuY+N4b+It/Gz2aVxxUkYgIp/vcYghk3SvhT3u+LHK8yDOd3LgiEb6cEQkkVWpX3QiIiK6QBVtjMOVrkq0rF8ukoR+dH1/BDVGq0O6uyxNpNlOqsL7SCT1ssVYv+jMcSDhl/Hi/A8gk5/7HO/eNH2euhC0ulzXSkwwsiEKmoPWZGK68olBFoQ1tCdM9cz3InLwJEZvfB/3338Vnh8exS9Qji35xpCxcSF1DHnxeFEqCuev/V83rl7zOF7dH8bEzR/BKUeQx4tAPbxGFuDv0RzP41CnSBr8PSIxlEmFkRxmwZqcERER0cxQ3DEOC+tVdyR3/z7VRcjj9aouQjKR0EVx9OjRlKuWzJmn/h34bvyOTHLZbPtKT3f9tNutXIIy8a9sIVCO660EpV+rTGo1cYpH50HlUlGgwyHs2vVzy3iQ4ezGOKTlwXxvBH2R+LiBXYFIrFY6dxVYkVXXG3sMvlpRVt1VqG4q+cSQgezyo72Ig3M3YnnFH+D/Pbnp3MQQOmi8xsPojI1xyPT6zRFJgoZjQ7PxpxULsOrd5xD86RWOuxo6GFLJgmZ0IWrPchC72QUKQ7sQa6RSMYTwA+OlVQmGGbn+ovMOS0RERDNMkX8ATi8UTxq3ZHWbYxnkmAA1QHgNth6/OvWq8o5EHdWx8RJy+acO/jb7XU93/XRKarDZHNcgt2uMd3D8jYcU8ZiDss1kRIp1gSqAynbZV70qNnhVCw5mXVh03l52g149dUEEtXrLgNzp3bIznxjSByfWj/wzTv2nW5Z2UYsIjnjnZ7z7V+FjqMNakYisVNvqw5/saUqzH+vrpycVT4+U4ibxTJbTIxGji1WmuFf4Eaq3D452GnpQuTookgAjhu3lCMZaNTyoWxvfXrj2+fgYB3FMwaBmHFN2+yEiIqLzn2tqyvJrbXTO6D9+t/yc/vAdzWTJY1DUOJeRtUY3JCIiIqLMivs7DpSdiTD2qR+/+wsmDVQkerexqiovYqMUlgQxuJdJAxEREWWHLQ7nVBThtlZ0qd+62BC/bS0RERER0XmGiQMRERERETkq8uBoIiIiIiKaCZg4EBERERGRIyYORERERETkiIkDERERERE5YuJARERERESOmDgQEREREZEjJg5ERERERORo1ptvvnmuYyAiIiIiovMcfwCOiIiIiIgcsasSERERERE5YuJARERERESOmDgQEREREZGj/w+EsyOpsLmciQAAAABJRU5ErkJggg==" alt="" /></p>
+
+<ul>
+<li>nginx后台access.log报错</li>
+</ul>
+
+<pre><code class="language-shell">10.189.147.210 - - [09/Oct/2018:22:25:14 +0800] &quot;GET /daxp/xxcheck/data_query/SQL_CUSTOM_ALL_REG/1%2320697%2324%7C29%7C-18%7C-74%7C-96%7C30%7C46%7C-97%7C-70%7C-69%7C-90%7C23%7C126%7C-28%7C-61%7C19%7C27%7C-45%7C-111%7C-18%7C16%7C108%7C-105%7C-33%7C-1 HTTP/1.1&quot; 400 5 &quot;https://192.168.37.11:8080/daxp/xxcheck/getjk?dimCode=SQL_CUSTOM_ALL_REG&quot; &quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36&quot;
+</code></pre>
+
+<ul>
+<li>tomcat后台报错</li>
+</ul>
+
+<p>无</p>
+
+<h3 id="问题排查及处理过程">问题排查及处理过程</h3>
+
+<ul>
+<li>nginx配置如下</li>
+</ul>
+
+<pre><code class="language-shell">upstream  daxpnew  {
+  server   192.168.37.100:8080 ;
+  ip_hash;
+ }
+ 
+ server {
+        listen       192.168.37.11:8080 ssl;
+        server_name _;
+        access_log   off;
+        client_max_body_size 200M;
+        error_page 404 502  /404.html;
+
+        ssl_certificate      /home/ssl/nginx/nginx/ca.ssl/server.crt;
+        ssl_certificate_key  /home/ssl/nginx/nginx/ca.ssl/server.key;
+
+        ssl_session_timeout  10m;
+
+        ssl_protocols  SSLv2 SSLv3 TLSv1;
+        ssl_ciphers ALL:!kEDH!ADH:RC4+RSA:+HIGH:+EXP;
+        ssl_prefer_server_ciphers on;
+        ssl_session_cache shared:SSL:10m;
+
+        port_in_redirect on;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        location /daxp {
+            proxy_pass http://daxpnew/daxp;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection &quot;upgrade&quot;;
+            proxy_set_header Host $host:$server_port;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_read_timeout 1800;
+            proxy_connect_timeout 1800;
+            root   html;
+            index  index.html index.htm;
+        }
+</code></pre>
+
+<p>百度及google搜索，有人说400错误原因和解决办法有几种：</p>
+
+<ol>
+<li>request header过大所引起，request过大，通常是由于cookie中写入了较大的值所引起。 在nginx.conf中，将<code>client_header_buffer_size</code>和<code>large_client_header_buffers</code>都调大，可缓解此问题。</li>
+<li>客户端的调用方式没有使用host 参数，传递了空的Host头给服务端，一旦Nginx设置了<code>proxy_set_header Host $host</code>，空Host头就传给了后端。然而，在http 1.1的规范中，Host只要出现空，就会返回400，所以出现了这个故障。而对于需要在Host字段里带上端口信息的，则仍需要配置<code>proxy_set_header Host $host:$server_port</code>。</li>
+<li>在server下加入<code>server_name _;</code></li>
+<li>在tomcat的server.xml中加入一下配置</li>
+</ol>
+
+<pre><code class="language-shell">            &lt;Valve className=&quot;org.apache.catalina.valves.RemoteIpValve&quot;
+                  portHeader=&quot;x-forwarded-port&quot;
+                  remoteIpHeader=&quot;x-forwarded-for&quot;
+                  proxiesHeader=&quot;x-forwarded-by&quot;
+                  protocolHeader=&quot;x-forwarded-proto&quot; /&gt;
+</code></pre>
+
+<p>以上方法都试过一次，改配置的都配置了，但是还是出现400错误；折腾了大半天，无果，哎，心累；</p>
+
+<h3 id="问题解决">问题解决</h3>
+
+<p>在tomcat日志中，一直有个报错</p>
+
+<pre><code class="language-shell">11-Oct-2018 11:44:26.346 INFO [http-nio-8080-exec-2] org.apache.coyote.http11.Http11Processor.service Error parsing HTTP request header
+ Note: further occurrences of HTTP header parsing errors will be logged at DEBUG level.
+ java.lang.IllegalArgumentException: Invalid character found in the request target. The valid characters are defined in RFC 7230 and RFC 3986
+        at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:484)
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:684)
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+        at java.lang.Thread.run(Thread.java:745)
+</code></pre>
+
+<p>因为这个报错一直都存在，而且在服务请求报400错误的时候并没有报出来这个错误，就忽略掉了，今天我突然仔细查询这个报错和之前有点不一样，之前的报错如下，但是下面的报错并不影响前台功能</p>
+
+<pre><code class="language-shell">10-Oct-2018 14:43:12.531 INFO [http-nio-8080-exec-7] org.apache.coyote.http11.Http11Processor.service Error parsing HTTP request header
+ Note: further occurrences of HTTP header parsing errors will be logged at DEBUG level.
+ java.lang.IllegalArgumentException: Invalid character found in method name. HTTP method names must be tokens
+        at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:428)
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:684)
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+        at java.lang.Thread.run(Thread.java:745)
+</code></pre>
+
+<p>百度了下现在的报错，<code>Invalid character found in the request target. The valid characters are defined in RFC 7230 and RFC 3986</code>，也就是说我们的请求中用了无效的字符。查看RFC规范知,url中只允许包含英文字母(a-zA-Z)、数字(0-9)、-_.~四个特殊字符以及保留字符<code>( ! * ’ ( ) ; : @ &amp; = + $ , / ? # [ ] ) (26*2+10+4+18=84)</code>这84个字符.而我们的请求中出现了|、{}大括号,所以tomcat报错.。</p>
+
+<p><strong>Tomcat从 7.0.73, 8.0.39, 8.5.7 版本后添加了对Url的限制。</strong></p>
+
+<ul>
+<li>配置tomcat支持|{}等字符的方法是:在 <code>catalina.properties</code>中添加 <code>tomcat.util.http.parser.HttpParser.requestTargetAllow=|{}</code> 但是只支持7.0.76, 8.0.42, 8.5.12 之后的版本(这些版本之后支持设置上述属性)</li>
+<li>Tomcat从 7.0.73, 8.0.39, 8.5.7 版本后添加了对Url的限制。</li>
+</ul>
+
+<p>于是修改了 <code>catalina.properties</code>的配置文件，重启tomcat，再次测试服务请求正常，不再报400错误；</p>
+
+<h3 id="遗留问题">遗留问题</h3>
+
+<ol>
+<li>在没有配置<code>catalina.properties</code>前，通过tomcat直接请求服务正常，但是通过nginx请求错误，不知道差异在哪儿；</li>
+<li><code>org.apache.coyote.http11.Http11Processor.service Error parsing HTTP request heade</code>这个报错暂时没有发现影响前台功能，所以目前未处理(偷个懒)；</li>
+</ol>
+
+<h3 id="总结">总结</h3>
+
+<p>造成这次错误的原因如下</p>
+
+<ol>
+<li>由于头一天我们的tomcat7.0.72升级到了tomcat8.5.34，之前的tomcat没有对Url进行限制，但是新版本的tomcat配置未改，而且我们并不知道tomcat7和8的差异；</li>
+<li>在查看tomcat日志的时候没有仔细，并没有发现用tomcat7和tomcat8的报错的差异；</li>
+</ol>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/nginx/">nginx</a>
+          
+          <a href="/tags/tomcat8/">tomcat8</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/shell-grep-wc/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/centos-add-swap/">
+            <span class="next-text nav-default">Centos给swap扩容</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+</body>
+</html>

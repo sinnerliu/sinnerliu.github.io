@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chrome on 终点站</title>
+    <link>https://blog.gofinall.com/categories/chrome/</link>
+    <description>Recent content in Chrome on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 18 May 2019 11:00:04 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/chrome/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>chrome 73 版本上安装crx插件出现「程序包无效 CRX_HEADER_INVALID」的报错解决办法</title>
+      <link>https://blog.gofinall.com/post/chrome-install-crx/</link>
+      <pubDate>Sat, 18 May 2019 11:00:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/chrome-install-crx/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;在最新版 chrome 73 版本上，通过打开开发者模式，通过拖入crx文件来安装扩展，会出现「程序包无效 CRX_HEADER_INVALID」的报错，不想把crx解压了直接加载安装。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

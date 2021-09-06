@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysql on 终点站</title>
+    <link>https://blog.gofinall.com/categories/mysql/</link>
+    <description>Recent content in Mysql on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 29 May 2020 10:05:36 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux Mysql tar包部署之调整mysql.server</title>
+      <link>https://blog.gofinall.com/post/mysql-server/</link>
+      <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-server/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。&lt;/li&gt;
+&lt;li&gt;在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。&lt;/li&gt;
+&lt;li&gt;服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基于上面三个原因，结合网上的文章，大概总结了下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</title>
+      <link>https://blog.gofinall.com/post/mysql-localhost/</link>
+      <pubDate>Thu, 28 Nov 2019 13:23:54 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-localhost/</guid>
+      <description>&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
+
+&lt;p&gt;Whenever you specify &amp;ldquo;localhost&amp;rdquo; or &amp;ldquo;localhost:port&amp;rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &amp;ldquo;127.0.0.1&amp;rdquo; instead of &amp;ldquo;localhost&amp;rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.&lt;/p&gt;
+
+&lt;p&gt;localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mysql出现Could not retrieve transaction read-only status from server报错</title>
+      <link>https://blog.gofinall.com/post/mysql-read-only/</link>
+      <pubDate>Tue, 10 Sep 2019 15:48:06 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-read-only/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;mysql在java连接数据库的时候，&lt;code&gt;偶发性&lt;/code&gt;的出现如下错误：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL常用json方法使用记录</title>
+      <link>https://blog.gofinall.com/post/mysql-json/</link>
+      <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-json/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

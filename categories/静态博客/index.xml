@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>静态博客 on 终点站</title>
+    <link>https://blog.gofinall.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 静态博客 on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 16 Jan 2018 16:58:07 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用Hugo来生成静态博客</title>
+      <link>https://blog.gofinall.com/post/hugo-build/</link>
+      <pubDate>Tue, 16 Jan 2018 16:58:07 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/hugo-build/</guid>
+      <description>&lt;h3 id=&#34;关于hugo&#34;&gt;关于Hugo&lt;/h3&gt;
+
+&lt;p&gt;Hugo是一个用Go语言编写的静态网站生成器，它使用起来非常简单，相对于Jekyll复杂的安装设置来说，Hugo仅需要一个二进制文件hugo(hugo.exe)即可轻松用于本地调试和生成静态页面。
+&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

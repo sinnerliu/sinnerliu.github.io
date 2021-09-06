@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Centos7下rc.local文件开机不执行 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="背景 centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；
+
+" />
+<meta name="keywords" content="linux, centos7, rc.local" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/centos-rc.local/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Centos7下rc.local文件开机不执行" />
+<meta property="og:description" content="背景
+
+centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/centos-rc.local/" /><meta property="article:published_time" content="2018-07-09T11:34:50&#43;08:00"/>
+<meta property="article:modified_time" content="2018-07-09T11:34:50&#43;08:00"/>
+<meta itemprop="name" content="Centos7下rc.local文件开机不执行">
+<meta itemprop="description" content="背景
+
+centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；
+
+">
+
+
+<meta itemprop="datePublished" content="2018-07-09T11:34:50&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-09T11:34:50&#43;08:00" />
+<meta itemprop="wordCount" content="389">
+
+
+
+<meta itemprop="keywords" content="linux,centos7," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Centos7下rc.local文件开机不执行"/>
+<meta name="twitter:description" content="背景
+
+centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Centos7下rc.local文件开机不执行</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-09 </span>
+        <div class="post-category">
+            
+              <a href="/categories/linux/"> linux </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#解决办法">解决办法</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h3 id="背景">背景</h3>
+
+<p>centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；</p>
+
+<p></p>
+
+<h3 id="解决办法">解决办法</h3>
+
+<p>查看rc.local文件</p>
+
+<pre><code class="language-shell">cat /etc/rc.d/rc.local
+#!/bin/bash
+#这个文件是为兼容性才添加的
+# THIS FILE IS ADDED FOR COMPATIBILITY PURPOSES
+#强烈建议使用systemd服务或udev规则来运行开机启动脚本,而不是使用这个文件
+# It is highly advisable to create own systemd services or udev rules to run scripts during boot instead of using this file.
+#与以前的版本引导时的并行执行相相比，这个脚本将不会在其它服务后执行
+# In contrast to previous versions due to parallel execution during boot this script will NOT be run after all other services.
+#请记住：你必须运行'chmod +x /etc/rc.d/rc.local'来确保这个脚本在启动时执行
+# Please note that you must run 'chmod +x /etc/rc.d/rc.local' to ensure that this script will be executed during boot.
+</code></pre>
+
+<p>从上面rc.local文件来看，rc.local是没有执行权限的，只要给rc.local添加执行权限就可以了</p>
+
+<pre><code class="language-shell"># 赋权前
+[root@localhost ~]# ll /etc/rc.d/rc.local
+-rw-r--r--. 1 root root 502 3月   9 00:16 /etc/rc.d/rc.local
+[root@localhost ~]# chmod +x /etc/rc.d/rc.local
+# 赋权后
+[root@localhost ~]# ll /etc/rc.d/rc.local
+-rwxr-xr-x. 1 root root 502 3月   9 00:16 /etc/rc.d/rc.local
+</code></pre>
+
+<p>此时可以开机执行了。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/centos7/">centos7</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/flashplayer-2144-2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">【解决flash助手推荐】flash_player_30_0_0_127地区不相容PJ</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/rabbitmq/">
+            <span class="next-text nav-default">RabbitMQ使用分析和高可用集群搭建</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+</body>
+</html>

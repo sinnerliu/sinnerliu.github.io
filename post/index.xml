@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 终点站</title>
+    <link>https://blog.gofinall.com/post/</link>
+    <description>Recent content in Posts on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 06 Sep 2021 11:45:18 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jmeter远程测试环境搭建</title>
+      <link>https://blog.gofinall.com/post/jmeter-remote/</link>
+      <pubDate>Mon, 06 Sep 2021 11:45:18 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jmeter-remote/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;如果您的JMeter客户端计算机无法使用性能方面，要模拟足够的用户来增强压力或受限于网络级别，则可以选择从单个JMeter客户端控制多个远程JMeter引擎。通过远程运行JMeter，您可以跨许多低端计算机复制测试，从而模拟服务器上的较大负载。JMeter客户端的一个实例可以控制任意数量的远程JMeter实例，并从中收集所有数据。这提供以下功能：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;将测试samples保存到本地机器&lt;/li&gt;
+&lt;li&gt;从单个机器管理多个JMeter Engines&lt;/li&gt;
+&lt;li&gt;无需将测试计划复制到每个服务器 - 客户端将其发送到所有服务器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意：所有服务器都运行相同的测试计划。JMeter不会在服务器之间分配负载，每个都运行完整的测试计划。所以如果你设置1000个线程并且有6个JMeter服务器，你最终会注入6000个线程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tomcat8使用cronolog来进行Catalina.Out日志拆分</title>
+      <link>https://blog.gofinall.com/post/tomcat-catalina-out/</link>
+      <pubDate>Wed, 01 Sep 2021 11:12:59 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tomcat-catalina-out/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;tomcat产生的catalina.out日志文件如果不进行分割处理的话，往往会导致文件越来越大，影响效率。同时如需查找日志文件的时候，在那么大的catalina.out日志文件中查找也比较费事，最好是按天来分割catalina.out日志文件。下面来介绍一种分割方法：使用cronolog来分割catalina.out日志文件&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux下文件名编码转换-Convmv</title>
+      <link>https://blog.gofinall.com/post/convmv/</link>
+      <pubDate>Tue, 27 Oct 2020 13:00:53 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/convmv/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器环境默认字符编码为gbk，当执行程序后生成的日志文件名的字符编码为gbk的，但是程序读取日志的时候用的utf-8编码，当日志文件名包含中文时就不能找到日志，于是可以用Convmv来批量转换文件名的字符编码&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>nginx&#43;tomcat8&#43;redis实现session共享</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat-session/</link>
+      <pubDate>Tue, 11 Aug 2020 13:36:08 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-tomcat-session/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当客户端访问Nginx服务器时，Nginx负载均衡会自动将请求转发到TomcatA或TomcatB服务器，以减轻Tomcat压力，从而达到Tomcat集群化部署，为了使各Tomcat之间共享同一个Session，将采用Redis缓存服务来集中管理Session存储。但是网上的方法基本都只支持tomcat7，于是记录下tomcat8的实现方法&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook双向https认证配置</title>
+      <link>https://blog.gofinall.com/post/jupyter-notebook/</link>
+      <pubDate>Wed, 05 Aug 2020 11:26:26 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jupyter-notebook/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、文档编写、运行代码和展示结果。——&lt;a href=&#34;https://jupyter-notebook.readthedocs.io/en/stable/notebook.html&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Jupyter Notebook官方介绍&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;简而言之，Jupyter Notebook是以网页的形式打开，可以在网页页面中&lt;strong&gt;直接&lt;/strong&gt;编写代码和运行代码，代码的运行结果也会直接在代码块下显示。如在编程过程中需要编写说明文档，可在同一个页面中直接编写，便于作及时的说明和解释。&lt;/p&gt;
+
+&lt;p&gt;本文主要讲配置双向https认证的问题，其余步骤简单写下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux Mysql tar包部署之调整mysql.server</title>
+      <link>https://blog.gofinall.com/post/mysql-server/</link>
+      <pubDate>Fri, 29 May 2020 10:05:36 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-server/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;经常在部署MySQL的时候没有root账号，只能用普通账号部署，需要修改mysql.server来方便启停。&lt;/li&gt;
+&lt;li&gt;在某些安装的系统上，/etc/my.cnf会默认生成一个，导致MySQL启动的时候会去读/etc/my.cnf。&lt;/li&gt;
+&lt;li&gt;服务器上部署多个MySQL的时候，可能会有my.cnf的冲突。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基于上面三个原因，结合网上的文章，大概总结了下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>设置git命令代理，加速git命令执行</title>
+      <link>https://blog.gofinall.com/post/git-proxy/</link>
+      <pubDate>Sun, 15 Mar 2020 17:07:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-proxy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于****原因，从Github拖代码的速度抽风，于是搜索了各种配置代理方式，貌似常规搜出来的方法不支持ssh方式，最终找到一个方法，可以只是ssh方式，如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>DenyHosts安装配置详解及安装报错处理</title>
+      <link>https://blog.gofinall.com/post/denyhosts/</link>
+      <pubDate>Mon, 02 Mar 2020 17:19:49 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/denyhosts/</guid>
+      <description>&lt;h3 id=&#34;denyhosts-简介&#34;&gt;DenyHosts 简介&lt;/h3&gt;
+
+&lt;p&gt;DenyHosts 是 Python 语言写的一个程序软件，运行于 Linux 上预防 SSH 暴力破解的，它会分析 sshd 的日志文件（/var/log/secure），当发现重复的攻击时就会记录 IP 到/etc/hosts.deny 文件，从而达到自动屏 IP 的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>限制svn提交时必须添加注释</title>
+      <link>https://blog.gofinall.com/post/svn-pre-commit/</link>
+      <pubDate>Fri, 28 Feb 2020 13:24:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/svn-pre-commit/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;鉴于有些人在提交代码的时候并不写注释，而且没有固定格式，所以准备给svn提交时增加强制注释。&lt;/p&gt;
+
+&lt;p&gt;按照网上的教程只能识别提交日志为纯数字(123)、纯字母(abc)、数字和字母组合(123abc)，但是不能识别中文，按照下面的配置方法可以正确识别中文，如: &lt;code&gt;123abc中文&lt;/code&gt; 识别出来长度为: &lt;code&gt;8&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Docker搭建Svn Server</title>
+      <link>https://blog.gofinall.com/post/docker-svn-server/</link>
+      <pubDate>Mon, 24 Feb 2020 12:25:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/docker-svn-server/</guid>
+      <description>&lt;h3 id=&#34;基础环境&#34;&gt;基础环境&lt;/h3&gt;
+
+&lt;p&gt;系统版本: centos-7.6(linux)&lt;/p&gt;
+
+&lt;p&gt;环境依赖: Docker&lt;/p&gt;
+
+&lt;p&gt;系统要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;关闭selinux&lt;/li&gt;
+&lt;li&gt;防火墙放行80、3690端口(或者关闭防火墙)&lt;/li&gt;
+&lt;li&gt;服务器的80和3690端口没有被占用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>tinc-1.1pre17在linux下的部署</title>
+      <link>https://blog.gofinall.com/post/tinc-1/</link>
+      <pubDate>Fri, 17 Jan 2020 16:34:44 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tinc-1/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;TincV+P+N是一个P2PV+P+N，即两端可以直接通信，虚拟局域网内只需要一台机器（VPS）能够有外网访问的能力即可，一旦两端建立起连接，流量就不会再经过VPS。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL 连接时尽量使用 127.0.0.1 而不是 localhost</title>
+      <link>https://blog.gofinall.com/post/mysql-localhost/</link>
+      <pubDate>Thu, 28 Nov 2019 13:23:54 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-localhost/</guid>
+      <description>&lt;h3 id=&#34;原因&#34;&gt;原因&lt;/h3&gt;
+
+&lt;p&gt;Whenever you specify &amp;ldquo;localhost&amp;rdquo; or &amp;ldquo;localhost:port&amp;rdquo; as server, the MySQL client library will override this and try to connect to a local socket (named pipe on Windows). If you want to use TCP/IP, use &amp;ldquo;127.0.0.1&amp;rdquo; instead of &amp;ldquo;localhost&amp;rdquo;. If the MySQL client library tries to connect to the wrong local socket, you should set the correct path as in your PHP configuration and leave the server field blank.&lt;/p&gt;
+
+&lt;p&gt;localhost 使用的 Linux socket，127.0.0.1 使用的是 tcp/ip&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mysql出现Could not retrieve transaction read-only status from server报错</title>
+      <link>https://blog.gofinall.com/post/mysql-read-only/</link>
+      <pubDate>Tue, 10 Sep 2019 15:48:06 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-read-only/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;mysql在java连接数据库的时候，&lt;code&gt;偶发性&lt;/code&gt;的出现如下错误：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Could not retrieve transaction read-only status from server, nested exception is java.sql. SQLException: Could not retrieve transaction read-only status from server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL常用json方法使用记录</title>
+      <link>https://blog.gofinall.com/post/mysql-json/</link>
+      <pubDate>Wed, 14 Aug 2019 17:15:21 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-json/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;Mysql5.7版本以后提供了一个原生的Json类型，Json值将不再以字符串的形式存储，而是采用一种允许快速读取文本元素（document elements）的内部二进制（internal binary）格式。在Json列插入或者更新的时候将会自动验证Json文本，未通过验证的文本将产生一个错误信息。Json文本采用标准的创建方式，可以使用大多数的比较操作符进行比较操作，例如：=, &amp;lt;, &amp;lt;=, &amp;gt;, &amp;gt;=, &amp;lt;&amp;gt;, != 和 &amp;lt;=&amp;gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>又一次长春出差后的感想</title>
+      <link>https://blog.gofinall.com/post/changchun-1/</link>
+      <pubDate>Tue, 13 Aug 2019 16:42:11 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/changchun-1/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;又一次长春出差，直达的飞机差不多5小时，本就疲惫不堪，但是下飞机后打出租车更让人心累；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>斐讯N1折腾记1-刷入armbian</title>
+      <link>https://blog.gofinall.com/post/feixun-n1-1/</link>
+      <pubDate>Tue, 23 Jul 2019 10:26:06 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/feixun-n1-1/</guid>
+      <description>&lt;h3 id=&#34;n1介绍&#34;&gt;N1介绍&lt;/h3&gt;
+
+&lt;p&gt;斐讯N1原来的定位: NAS和区块链设备，后来斐讯翻车和被很多大神破解，刷入不同的固件，从而让它能实现各种功能，再加上目前低廉的价格，让它的可玩性和性价比都极高。&lt;/p&gt;
+
+&lt;p&gt;如果你不是拿来做开发、需要GPIO开发等一个N1显然更实用，适合普通人的生活需求，树莓派对于开发者比较友好一些。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nginx反代Websocket 403报错</title>
+      <link>https://blog.gofinall.com/post/nginx-websocket/</link>
+      <pubDate>Fri, 12 Jul 2019 18:24:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-websocket/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;由于服务器对外只有一个端口，需要用nginx把服务器上多个tomcat的地址代理出来，工程中需要用Websocket，按照网上常规配置后，部分Websocket访问报403错误，部分Websocket正常。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>利用Proxychains在终端使用socks5/http代理</title>
+      <link>https://blog.gofinall.com/post/proxychains-ng/</link>
+      <pubDate>Thu, 06 Jun 2019 14:33:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/proxychains-ng/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在国内的服务器上从github上拉代码或者go get的时候非常慢(网络受阻)的时候。&lt;/li&gt;
+&lt;li&gt;当内网的某些服务器不能上外网，但是内网中有一台电脑能上外网，想让不能上外网的服务器上外网的时候。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;proxychains可以非常简单快速的设置好代理，让其它不能上网的服务器通过能上网的服务器进行上网。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows使用NSSM将任意exe封装为服务</title>
+      <link>https://blog.gofinall.com/post/windows-service-nssm/</link>
+      <pubDate>Thu, 23 May 2019 14:32:58 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-service-nssm/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;NSSM是一个服务封装程序，它可以将普通exe程序封装成服务，使之像windows服务一样运行。同类型的工具还有微软自己的srvany，不过nssm更加简单易用，并且功能强大。它的特点如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;支持普通exe程序（控制台程序或者带界面的Windows程序都可以）&lt;/li&gt;
+&lt;li&gt;安装简单，修改方便&lt;/li&gt;
+&lt;li&gt;可以重定向输出（并且支持Rotation）&lt;/li&gt;
+&lt;li&gt;可以自动守护封装了的服务，程序挂掉了后可以自动重启&lt;/li&gt;
+&lt;li&gt;可以自定义环境变量&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>chrome 73 版本上安装crx插件出现「程序包无效 CRX_HEADER_INVALID」的报错解决办法</title>
+      <link>https://blog.gofinall.com/post/chrome-install-crx/</link>
+      <pubDate>Sat, 18 May 2019 11:00:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/chrome-install-crx/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;在最新版 chrome 73 版本上，通过打开开发者模式，通过拖入crx文件来安装扩展，会出现「程序包无效 CRX_HEADER_INVALID」的报错，不想把crx解压了直接加载安装。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>内网穿透之n2n-点对网</title>
+      <link>https://blog.gofinall.com/post/n2n-p2p-route/</link>
+      <pubDate>Fri, 17 May 2019 15:19:54 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/n2n-p2p-route/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;n2n v+p+n 其实与 pptp v+p+n 有类似的一面，都是一种点对点的局域网，所不同的是，n2n 可以建立点与点之间的直连，而 pptp 局域网内通讯的全部流量都必须走中心节点。pptp可以实现点对忘的连接，n2n应该也可以实现。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>内网穿透之n2n-介绍及使用说明</title>
+      <link>https://blog.gofinall.com/post/n2n-p2p-introduce/</link>
+      <pubDate>Fri, 17 May 2019 12:01:09 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/n2n-p2p-introduce/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.ntop.org/products/n2n/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;N2N &lt;/a&gt;是一款开源的P2P v+p+n 软件，其作者是著名的开源网管软件ntop的作者Luca Deri。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>git add出现in unpopulated submodule &#39;themes&#39;问题</title>
+      <link>https://blog.gofinall.com/post/git-add-error-unpopulated/</link>
+      <pubDate>Wed, 10 Apr 2019 17:09:29 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/git-add-error-unpopulated/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;用hugo搭建了个博客，我把博客的data目录提交到git上做备份，把public提交到pages上。但是在备份data目录的时候有点问题；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows远程桌面(mstsc)不能复制粘贴的解决办法</title>
+      <link>https://blog.gofinall.com/post/windows-mstsc-copy/</link>
+      <pubDate>Wed, 10 Apr 2019 16:44:16 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-mstsc-copy/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;原来通过mstsc远程连接Windows能够直接在本地和服务器之间复制、粘贴一些文字和文件，最近突然无法直接复制粘贴了，只能通过远程映射的本地磁盘方式交换文件；&lt;/p&gt;
+
+&lt;p&gt;已经确认远程桌面连接选项“本地资源-》本地设备和资源-》剪贴板”中勾选了剪贴板。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tomcat8启动报there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache</title>
+      <link>https://blog.gofinall.com/post/tomcat8-error-cachemaxsize/</link>
+      <pubDate>Wed, 10 Apr 2019 16:29:25 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tomcat8-error-cachemaxsize/</guid>
+      <description>&lt;p&gt;当用tomcat8启动工程的时候，日志报错&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;09-Dec-2016 10:57:49.150 WARNING [localhost-startStop-1] org.apache.catalina.webresources.Cache.getResource Unable to add the resource at [/WEB-INF/classes/struts/PersonnelActio
+n.xml] to the cache because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+09-Dec-2016 10:57:51.729 SEVERE [localhost-startStop-1] org.apache.catalina.core.ContainerBase.addChildInternal ContainerBase.addChild: start:
+ org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[]]
+        at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:158)
+        at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:724)
+        at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:700)
+        at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:734)
+        at org.apache.catalina.startup.HostConfig.deployDirectory(HostConfig.java:1107)
+        at org.apache.catalina.startup.HostConfig$DeployDirectory.run(HostConfig.java:1841)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at java.lang.Thread.run(Thread.java:745)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nginx隐藏响应头信息的Server信息和版本信息,隐藏tomcat版本号</title>
+      <link>https://blog.gofinall.com/post/nginx-display-version/</link>
+      <pubDate>Mon, 21 Jan 2019 11:43:12 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-display-version/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;当使用nginx做为web服务器时，在头部信息会看到版本号相关的信息，在安全扫描的时候会扫出来，要求不能显示nginx版本，避免根据已知的版本的nginx的特有漏洞从漏洞信息中获取该版本的攻击方式并进行攻击。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python3通过gitlab原生api来获取gitlab上的工程名、分支、提交日志</title>
+      <link>https://blog.gofinall.com/post/python-gitlab-api-get/</link>
+      <pubDate>Fri, 18 Jan 2019 13:53:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-gitlab-api-get/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;某天突然有个需求，要求统计gitlab上所有工程所有分支的提交日志，于是拿出python动手撸了段脚本。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>解决jenkins自动杀掉衍生进程</title>
+      <link>https://blog.gofinall.com/post/jenkins-kill-tomcat/</link>
+      <pubDate>Wed, 16 Jan 2019 14:23:16 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jenkins-kill-tomcat/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;今天用jenkins来部署tomcat工程，没有使用tomcat-deploy插件，直接写了个shell脚本，用脚本来停止、换包、启动tomcat，但是当jenkins Pipeline  job执行完成后，发现后台tomcat进程没有了；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Centos 将程序添加到 service 并设置开机启动</title>
+      <link>https://blog.gofinall.com/post/centos-service-add/</link>
+      <pubDate>Thu, 03 Jan 2019 13:42:24 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-service-add/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;一般情况，服务器是极少重启的，如果必须这样做或者因为不可抗拒的因素自动重启了，那么很多程序，如：darkhttpd，还要登录SSH要重新远程启动，很麻烦的。因此将程序添加到开机运行中是件可以带来很大便利的事情。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018再见，2019你好</title>
+      <link>https://blog.gofinall.com/post/hello-2019/</link>
+      <pubDate>Tue, 01 Jan 2019 00:50:32 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/hello-2019/</guid>
+      <description>&lt;h3 id=&#34;元旦快乐&#34;&gt;元旦快乐&lt;/h3&gt;
+
+&lt;p&gt;转眼2019年到了，2018年所有的不快都抛开吧。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>连接vsftpd的ftp慢的问题解决办法</title>
+      <link>https://blog.gofinall.com/post/linux-vsftpd-slow/</link>
+      <pubDate>Thu, 20 Dec 2018 18:20:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux-vsftpd-slow/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;在Linux安装了一个vsftpd的ftp，在连接的时候很慢，总要等上10多秒才能连接上；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>如何恢复windows 10系统下git的状态图标显示</title>
+      <link>https://blog.gofinall.com/post/windows-git-ico/</link>
+      <pubDate>Wed, 21 Nov 2018 20:39:17 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-git-ico/</guid>
+      <description>&lt;h3 id=&#34;现象&#34;&gt;现象&lt;/h3&gt;
+
+&lt;p&gt;装完windows的Git客户端之后，按理说会在所有git仓库的目录图标处显示出对应的叠加小图标，如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>记grep&#43;wc取值在shell中的结果与手动执行结果不一致的坑</title>
+      <link>https://blog.gofinall.com/post/shell-grep-wc/</link>
+      <pubDate>Wed, 21 Nov 2018 19:36:42 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/shell-grep-wc/</guid>
+      <description>&lt;p&gt;有一个shell脚本来备份mysql数据库，crontab每天凌晨2点启动，但是运行一段时间后发现有时候在备份数据库遇到锁表等情况，导致备份一直在等待，在下一次启动后，又在此处等待了；几天后，后台同时有多个备份脚本在执行；于是打算修改下脚本，在执行备份前判断是否有其他备份脚本在执行，有的话则报错退出并告警；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>记一次nginx&#43;tomcat8请求400错误的坑</title>
+      <link>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</link>
+      <pubDate>Thu, 11 Oct 2018 18:42:18 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/nginx-tomcat8-400-error/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;环境信息&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx：1.4.2   https&lt;/li&gt;
+&lt;li&gt;tomcat：8.5.34  http&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上环境信息为背景，通过nginx访问前台正常，但是工程中某个和外部系统联调的请求中，始终报&lt;code&gt;400 Bad Request&lt;/code&gt;；但是直接通过tomcat访问，该请求正常；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Centos给swap扩容</title>
+      <link>https://blog.gofinall.com/post/centos-add-swap/</link>
+      <pubDate>Thu, 27 Sep 2018 18:31:37 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-add-swap/</guid>
+      <description>&lt;h3 id=&#34;swap空间介绍&#34;&gt;swap空间介绍&lt;/h3&gt;
+
+&lt;p&gt;swap分区的用处：swap是当物理内存不够用的时候，把数据放到swap中，所以swap起到了一个虚拟内存的作用，在某种意义上来说也算是加大了内存空间。一般swap分区是在安装系统时设置的，如果安装系统时忘记分swap分区或者分区太小，那也没事，还有补救的方法。下面就讲讲安装完CentOS系统后如何给swap分区扩容。&lt;/p&gt;
+
+&lt;p&gt;场景：
+安装完CentOS Linux系统后，安装oracle发下swap大小不够用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Putty小工具Plink妙用</title>
+      <link>https://blog.gofinall.com/post/plink/</link>
+      <pubDate>Tue, 04 Sep 2018 20:38:42 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/plink/</guid>
+      <description>&lt;p&gt;提及Putty大家都不陌生，Putty自带的工具Plink同样强大，本文就简单介绍下几种用法。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Excel正则提取表格内容</title>
+      <link>https://blog.gofinall.com/post/excel-vb-regexp/</link>
+      <pubDate>Sat, 01 Sep 2018 11:58:22 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/excel-vb-regexp/</guid>
+      <description>&lt;p&gt;下面介绍在excel中如何通过正则表达式提取我们想要的内容。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>robotframework 执行job出现了Unexpected error: UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe6 in position 977: ordinal not in range(128)</title>
+      <link>https://blog.gofinall.com/post/robotframework-unicodedecodeerror/</link>
+      <pubDate>Wed, 29 Aug 2018 16:17:14 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/robotframework-unicodedecodeerror/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;今天在升级了&lt;code&gt;robotframework-seleniumlibrary&lt;/code&gt;和&lt;code&gt;robotframework-selenium2library&lt;/code&gt;后，执行窗口选择的时候一直出现下面的错误&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[ ERROR ] Unexpected error: UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe6 in position 977: ordinal not in range(128)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Robotframework&#43;Python实现右键功能</title>
+      <link>https://blog.gofinall.com/post/robotframework-python-right-click/</link>
+      <pubDate>Tue, 21 Aug 2018 16:13:58 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/robotframework-python-right-click/</guid>
+      <description>&lt;p&gt;刚开始研究robotframework,使用时测试的web应用有个右键弹出框功能,发现RF并没有右键相关的关键字可用,在网上看了很多的资料,最后按葫芦画瓢,能成功弹出右键弹出框&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>安装Python，pip报错Fatal error in launcher: Unable to create process using 解决方案</title>
+      <link>https://blog.gofinall.com/post/python-pip-error/</link>
+      <pubDate>Wed, 15 Aug 2018 16:23:49 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-pip-error/</guid>
+      <description>&lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;C:\Python35\Scripts&amp;gt;pip3 list
+ERROR：Fatal error in launcher: Unable to create process using &#39;&amp;quot;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>linux下使用pmap和ldd查看进程调用了什么lib</title>
+      <link>https://blog.gofinall.com/post/linux-pmap-ldd/</link>
+      <pubDate>Thu, 12 Jul 2018 16:36:09 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux-pmap-ldd/</guid>
+      <description>&lt;p&gt;在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看&lt;a href=&#34;https://blog.gofinall.com/categories/linux/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;linux&lt;/a&gt;下使用pmap和ldd的命令。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>【解决flash助手推荐】flash_player_30_0_0_127地区不相容PJ</title>
+      <link>https://blog.gofinall.com/post/flashplayer-2144-2/</link>
+      <pubDate>Tue, 10 Jul 2018 15:58:36 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/flashplayer-2144-2/</guid>
+      <description>&lt;p&gt;上一篇文章(&lt;a href=&#34;https://blog.gofinall.com/post/flashplayer-2144/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题&lt;/a&gt;)说了两个解决flash地区不相容 的问题，但是事情比我们想象的要复杂。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Centos7下rc.local文件开机不执行</title>
+      <link>https://blog.gofinall.com/post/centos-rc.local/</link>
+      <pubDate>Mon, 09 Jul 2018 11:34:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-rc.local/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;centos7以后rc.local和之前的有不太一样了，centos7默认开机不会执行，需要手工调整；&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ使用分析和高可用集群搭建</title>
+      <link>https://blog.gofinall.com/post/rabbitmq/</link>
+      <pubDate>Fri, 06 Jul 2018 17:56:00 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/rabbitmq/</guid>
+      <description>&lt;h3 id=&#34;rabbitmq-基础理解&#34;&gt;RabbitMQ 基础理解&lt;/h3&gt;
+
+&lt;p&gt;​     RabbitMQ，是一个使用 erlang 编写的 AMQP（高级消息队列协议）的服务实现，简单来说，就是一个功能强大的消息队列服务。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows和Linux利用原生命令查看文件MD5</title>
+      <link>https://blog.gofinall.com/post/windows-linux-md5/</link>
+      <pubDate>Sat, 23 Jun 2018 15:29:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/windows-linux-md5/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的。&lt;/p&gt;
+
+&lt;p&gt;md5sum命令用于生成和校验文件的md5值。它会逐位对文件的内容进行校验。是文件的内容，与文件名无关，也就是文件内容相同，其md5值相同。md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值。&lt;/p&gt;
+
+&lt;p&gt;md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的。&lt;/p&gt;
+
+&lt;p&gt;在网络传输时，我们校验源文件获得其md5sum，传输完毕后，校验其目标文件，并对比如果源文件和目标文件md5 一致的话，则表示文件传输无异常。否则说明文件在传输过程中未正确传输。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>maven命令行窗口指定settings.xml</title>
+      <link>https://blog.gofinall.com/post/mvn-setting/</link>
+      <pubDate>Wed, 13 Jun 2018 21:20:23 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mvn-setting/</guid>
+      <description>&lt;h3 id=&#34;setting-xml是什么&#34;&gt;setting.xml是什么&lt;/h3&gt;
+
+&lt;p&gt;从settings.xml的文件名就可以看出，它是用来设置maven参数的配置文件。并且，&lt;strong&gt;settings.xml是maven的全局配置文件&lt;/strong&gt;。而pom.xml文件是所在项目的局部配置。 Settings.xml中包含类似本地仓储位置、修改远程仓储服务器、认证信息等配置&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题</title>
+      <link>https://blog.gofinall.com/post/flashplayer-2144/</link>
+      <pubDate>Tue, 12 Jun 2018 17:26:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/flashplayer-2144/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;最近发现打开flash的网站后就出现&amp;rdquo;此Flash Player 与您的地区不相容&amp;rdquo;的提示信息（如图所示），可按照提示操作下载后问题依旧。排查了一些浏览器设置并在网络上搜索之后，发现可能是下载的flashplayer本身有问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ssh port forwarding（ssh端口转发）</title>
+      <link>https://blog.gofinall.com/post/ssh-port-forwarding/</link>
+      <pubDate>Fri, 08 Jun 2018 16:56:41 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/ssh-port-forwarding/</guid>
+      <description>&lt;p&gt;SSH的的Port Forward，中文可以称为端口转发，是SSH的一项非常重要的功能。它可以建立一条安全的SSH通道，并把任意的TCP连接放到这条通道中。下面仔细就仔细讨论SSH的这种非常有用的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>下载神器-Aria2</title>
+      <link>https://blog.gofinall.com/post/aria2/</link>
+      <pubDate>Mon, 04 Jun 2018 14:52:50 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/aria2/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://aria2.github.io/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;aria2 &lt;/a&gt;是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP/FTP 下载的情况下），BitTorrent 下载每秒2.8M/S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。&lt;/p&gt;
+
+&lt;p&gt;很多人在 Windows 可能用过 Internet Download Manager，是很好用的多线程下载工具。Aria2 跟 IDM 类似，不仅可以多线程下载，还可以通过多来源进行下载，简单的说就是从多个镜像服务器同时下载一个文件，Aria2 还支持 BT 协议，弥补了 IDM 只支持 HTTP 和 FTP 的痛点。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>AriaNG--易用高颜值的Aria2 WebUI</title>
+      <link>https://blog.gofinall.com/post/aria2-webui-ariang/</link>
+      <pubDate>Mon, 04 Jun 2018 14:48:08 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/aria2-webui-ariang/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+
+&lt;p&gt;AriaNg是一个现代网络前端，使aria2更易于使用。AriaNg是用纯HTML和JavaScript编写的，因此它不需要任何编译器或运行时环境。您可以将AriaNg放入您的Web服务器并在浏览器中打开它。AriaNg使用响应式布局，并支持任何桌面或移动设备。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>vsftpd服务器配置虚拟用户</title>
+      <link>https://blog.gofinall.com/post/vsftpd-virtul-user/</link>
+      <pubDate>Mon, 28 May 2018 17:26:10 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/vsftpd-virtul-user/</guid>
+      <description>&lt;h3 id=&#34;vsftpd介绍&#34;&gt;vsftpd介绍&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;VSFTP&lt;/strong&gt;是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是它的一个最大的特点。它可以运行在诸如Linux、BSD、Solaris、 HP-UNIX等系统上面，是一个完全免费的、开发源代码的FTP服务器软件，支持很多其他的FTP服务器所不支持的特征。比如：非常高的安全性需求、带宽限制、良好的可伸缩性、可创建虚拟用户、支持IPv6、速率高等。&lt;/p&gt;
+
+&lt;p&gt;本文所有配置是在CentOS 5.8-64位系统上进行，配置的是&lt;strong&gt;vsftp虚拟用户模式&lt;/strong&gt;，虚拟用户的特点是只能访问服务器为其提供的FTP服务，而不能访问系统的其它资源。所以，如果想让用户对FTP服务器站内具有写权限，但又不允许访问系统其它资源，可以使用虚拟用户来提高系统的安全性。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testlink 安装时提示logs/upload路径错误解决办法</title>
+      <link>https://blog.gofinall.com/post/testlink_install_error1/</link>
+      <pubDate>Wed, 23 May 2018 11:13:44 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/testlink_install_error1/</guid>
+      <description>如果安装Testlink的时候出现以下问题 For security reasons we suggest that directories tagged with [S] on following messages, will be made UNREACHEABLE from browser. Give a look to README file, section &#39;Installation &amp;amp; SECURITY&#39; to understand how to change the defaults. Checking if /var/www/testlink/gui/templates_c directory exists OK Checking if /var/www/testlink/gui/templates_c directory is writable (by</description>
+    </item>
+    
+    <item>
+      <title>Jenkins Ftp Publisher Plugin</title>
+      <link>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</link>
+      <pubDate>Fri, 18 May 2018 11:25:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/jenkins-ftp-publisher-plugin/</guid>
+      <description>&lt;p&gt;说明：这个插件可以将构建的产物（例如：Jar）发布到FTP中去。&lt;/p&gt;
+
+&lt;p&gt;官方说明：&lt;a href=&#34;http://wiki.hudson-ci.org/display/HUDSON/FTP-Publisher+Plugin&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;FTP publisher plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Oneindex:使用微软网盘创建自己的公开网盘</title>
+      <link>https://blog.gofinall.com/post/oneindex/</link>
+      <pubDate>Wed, 16 May 2018 11:04:38 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/oneindex/</guid>
+      <description>&lt;p&gt;Onedrive Directory Index&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>oracle12c中文乱码，修改字符集的方法</title>
+      <link>https://blog.gofinall.com/post/oracle-character/</link>
+      <pubDate>Wed, 02 May 2018 14:31:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/oracle-character/</guid>
+      <description>&lt;p&gt;由于在安装Oracle 12c的时候没有设定字符集，采用的是操作系统默认字符集：WE8MSWIN1252，现需要将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>kvm虚拟机centos根目录扩容</title>
+      <link>https://blog.gofinall.com/post/kvm-centos-add-disk/</link>
+      <pubDate>Mon, 12 Mar 2018 16:01:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/kvm-centos-add-disk/</guid>
+      <description>&lt;p&gt;由于之前给kvm虚拟机中的centos分配的根目录过少，导致根目录经常100%，下面我们来进行根目录扩容。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Tomcat调整Jvm</title>
+      <link>https://blog.gofinall.com/post/tomcat-jvm/</link>
+      <pubDate>Thu, 08 Mar 2018 17:30:05 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/tomcat-jvm/</guid>
+      <description>&lt;h3 id=&#34;适用场景&#34;&gt;适用场景&lt;/h3&gt;
+
+&lt;p&gt;Tomcat 运行过程遇到Caused by: java.lang.OutOfMemoryError: PermGen space或者java.lang.OutOfMemoryError: Java heap space错误。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>将Centos的yum源更换为国内的阿里云源</title>
+      <link>https://blog.gofinall.com/post/centos-yum-aliyun/</link>
+      <pubDate>Thu, 08 Mar 2018 12:09:12 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-yum-aliyun/</guid>
+      <description>&lt;p&gt;由于centos默认的Yum源速度太慢，在使用的时候不方便，于是将yum源改成阿里的源。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Postgres绿色版本安装 windows</title>
+      <link>https://blog.gofinall.com/post/postgres-install/</link>
+      <pubDate>Mon, 05 Mar 2018 16:21:04 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/postgres-install/</guid>
+      <description>&lt;p&gt;虽然PostgreSQL是为类UNIX平台开发的，但它却是可以移植的。从7.1版本开始，PostgreSQL可以编译安装和作为一个PostgreSQL服务器运行在Windows NT 4，2000，XP和Server 2003中。从8.0版本开始，已经有了Windows本地版本了，为服务端和客户端提供了Windows的安装程序。
+PostgreSQL的Windows安装包包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PostgreSQL server&lt;/li&gt;
+&lt;li&gt;pgAdmin，一个动图形化工具，用来维护和管理你的Postgres 数据库&lt;/li&gt;
+&lt;li&gt;StackBuilder，一个包管理器，可用于下载和安装额外的PostgreSQL应用程序和驱&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux下python2.7安装pip</title>
+      <link>https://blog.gofinall.com/post/python-pip-install/</link>
+      <pubDate>Fri, 02 Mar 2018 17:20:56 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/python-pip-install/</guid>
+      <description>&lt;p&gt;由于centos自带的python为2.7，默认没有安装pip，我们在使用的时候不方便，下面就说下怎么安装pip。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL中utf8和utf8mb4的区别</title>
+      <link>https://blog.gofinall.com/post/mysql-utf8-utf8mb4/</link>
+      <pubDate>Fri, 02 Mar 2018 14:51:39 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql-utf8-utf8mb4/</guid>
+      <description>&lt;p&gt;我们在使用PhpMyAdmin管理面板时，可以在首页看到名为“Server connection collation”（服务器连接排序规则）的选项，用来选择所使用的字符集。对于我们常用的UTF8，却有utf8和utf8mb4两种，这是为什么呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitLab_本地GitLab服务器搭建</title>
+      <link>https://blog.gofinall.com/post/gitlab/</link>
+      <pubDate>Mon, 26 Feb 2018 15:07:55 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/gitlab/</guid>
+      <description>&lt;p&gt;GitLab 是一个用于仓库管理系统的开源项目，使用&lt;a href=&#34;https://baike.baidu.com/item/Git&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;Git&lt;/a&gt;作为代码管理工具，并在此基础上搭建起来的web服务&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>linux 技巧： 让你的远程会话后台执行</title>
+      <link>https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Wed, 24 Jan 2018 14:40:26 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</guid>
+      <description>&lt;p&gt;你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux互信</title>
+      <link>https://blog.gofinall.com/post/linux%E4%BA%92%E4%BF%A1/</link>
+      <pubDate>Tue, 23 Jan 2018 18:16:24 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E4%BA%92%E4%BF%A1/</guid>
+      <description>&lt;p&gt;配置多台主机之间ssh免密码登录&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>优秀开源软件分享-frp</title>
+      <link>https://blog.gofinall.com/post/frp/</link>
+      <pubDate>Mon, 22 Jan 2018 16:37:07 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/frp/</guid>
+      <description>&lt;p&gt;frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp, http, https 协议。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>My Source - RSS &amp; Podcasts安卓离线rss阅读器去广告版本</title>
+      <link>https://blog.gofinall.com/post/mysourcerss/</link>
+      <pubDate>Tue, 16 Jan 2018 17:13:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysourcerss/</guid>
+      <description>&lt;p&gt;My Source - RSS &amp;amp; Podcasts是一款安卓手机离线rss阅读器。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用Hugo来生成静态博客</title>
+      <link>https://blog.gofinall.com/post/hugo-build/</link>
+      <pubDate>Tue, 16 Jan 2018 16:58:07 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/hugo-build/</guid>
+      <description>&lt;h3 id=&#34;关于hugo&#34;&gt;关于Hugo&lt;/h3&gt;
+
+&lt;p&gt;Hugo是一个用Go语言编写的静态网站生成器，它使用起来非常简单，相对于Jekyll复杂的安装设置来说，Hugo仅需要一个二进制文件hugo(hugo.exe)即可轻松用于本地调试和生成静态页面。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux性能监控及收集工具 Nmon</title>
+      <link>https://blog.gofinall.com/post/linux%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-nmon/</link>
+      <pubDate>Tue, 16 Jan 2018 15:07:48 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-nmon/</guid>
+      <description>&lt;p&gt;Linux性能监控工具 - Nmon安装及简介&lt;/p&gt;
+
+&lt;h3 id=&#34;软件介绍&#34;&gt;软件介绍&lt;/h3&gt;
+
+&lt;p&gt;分析 AIX 和 Linux 性能的免费工具，
+这个高效的工具可以工作于任何哑屏幕、telnet 会话、甚至拨号线路。另外，它并不会消耗大量的 CPU 周期，通常低于百分之二。在更新的计算机上，其CPU使用率将低于百分之一。
+使用哑屏幕，在屏幕上对数据进行显示，并且每隔两秒钟对其进行更新。然而，您可以很容易地将这个时间间隔更改为更长或更短的时间段。如果您拉伸窗口，并在X Windows、VNC、PuTTY 或类似的窗口中显示这些数据，nmon 工具可以同时输出大量的信息。
+nmon 工具还可以将相同的数据捕获到一个文本文件，便于以后对报告进行分析和绘制图形。输出文件采用电子表格的格式 (.csv)。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Rclone远程挂载</title>
+      <link>https://blog.gofinall.com/post/rclone%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/</link>
+      <pubDate>Tue, 16 Jan 2018 15:04:03 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/rclone%E8%BF%9C%E7%A8%8B%E6%8C%82%E8%BD%BD/</guid>
+      <description>&lt;h3 id=&#34;rclone简介&#34;&gt;rclone简介&lt;/h3&gt;
+
+&lt;p&gt;rclone能够方便的管理 google drive 、dropbox 等网盘，ftp/sftp等文件存储服，支持挂载盘符与命令行上传下载&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mysql使用存储过程来造测试数据</title>
+      <link>https://blog.gofinall.com/post/mysql%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%9D%A5%E9%80%A0%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Tue, 16 Jan 2018 14:21:37 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mysql%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%9D%A5%E9%80%A0%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/</guid>
+      <description>&lt;p&gt;有时候我们需要对大数据进行测试，本地一般没有那么多数据，就需要我们自己生成一些。下面会借助内存表的特点进行生成百万条测试数据。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>linux安装oracle精简版客户端</title>
+      <link>https://blog.gofinall.com/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+      <pubDate>Tue, 16 Jan 2018 11:52:41 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux%E5%AE%89%E8%A3%85oracle%E7%B2%BE%E7%AE%80%E7%89%88%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
+      <description>&lt;p&gt;linux安装oracle精简版客户端
+&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

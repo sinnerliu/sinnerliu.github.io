@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ldd on 终点站</title>
+    <link>https://blog.gofinall.com/tags/ldd/</link>
+    <description>Recent content in Ldd on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 12 Jul 2018 16:36:09 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/ldd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>linux下使用pmap和ldd查看进程调用了什么lib</title>
+      <link>https://blog.gofinall.com/post/linux-pmap-ldd/</link>
+      <pubDate>Thu, 12 Jul 2018 16:36:09 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/linux-pmap-ldd/</guid>
+      <description>&lt;p&gt;在写安装脚本或者其他时候我们想了解某个经常调用了哪些lib，我们可以使用pmap方法，显示出的lib比较全面，当然也可以使用ldd来查看。接下来看看&lt;a href=&#34;https://blog.gofinall.com/categories/linux/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;linux&lt;/a&gt;下使用pmap和ldd的命令。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

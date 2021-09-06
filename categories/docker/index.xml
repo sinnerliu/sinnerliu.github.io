@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on 终点站</title>
+    <link>https://blog.gofinall.com/categories/docker/</link>
+    <description>Recent content in Docker on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 24 Feb 2020 12:25:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker搭建Svn Server</title>
+      <link>https://blog.gofinall.com/post/docker-svn-server/</link>
+      <pubDate>Mon, 24 Feb 2020 12:25:31 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/docker-svn-server/</guid>
+      <description>&lt;h3 id=&#34;基础环境&#34;&gt;基础环境&lt;/h3&gt;
+
+&lt;p&gt;系统版本: centos-7.6(linux)&lt;/p&gt;
+
+&lt;p&gt;环境依赖: Docker&lt;/p&gt;
+
+&lt;p&gt;系统要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;关闭selinux&lt;/li&gt;
+&lt;li&gt;防火墙放行80、3690端口(或者关闭防火墙)&lt;/li&gt;
+&lt;li&gt;服务器的80和3690端口没有被占用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

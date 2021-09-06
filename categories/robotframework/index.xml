@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robotframework on 终点站</title>
+    <link>https://blog.gofinall.com/categories/robotframework/</link>
+    <description>Recent content in Robotframework on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 29 Aug 2018 16:17:14 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/robotframework/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>robotframework 执行job出现了Unexpected error: UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe6 in position 977: ordinal not in range(128)</title>
+      <link>https://blog.gofinall.com/post/robotframework-unicodedecodeerror/</link>
+      <pubDate>Wed, 29 Aug 2018 16:17:14 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/robotframework-unicodedecodeerror/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;今天在升级了&lt;code&gt;robotframework-seleniumlibrary&lt;/code&gt;和&lt;code&gt;robotframework-selenium2library&lt;/code&gt;后，执行窗口选择的时候一直出现下面的错误&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[ ERROR ] Unexpected error: UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe6 in position 977: ordinal not in range(128)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Robotframework&#43;Python实现右键功能</title>
+      <link>https://blog.gofinall.com/post/robotframework-python-right-click/</link>
+      <pubDate>Tue, 21 Aug 2018 16:13:58 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/robotframework-python-right-click/</guid>
+      <description>&lt;p&gt;刚开始研究robotframework,使用时测试的web应用有个右键弹出框功能,发现RF并没有右键相关的关键字可用,在网上看了很多的资料,最后按葫芦画瓢,能成功弹出右键弹出框&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

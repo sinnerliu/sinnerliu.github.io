@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Swap on 终点站</title>
+    <link>https://blog.gofinall.com/tags/swap/</link>
+    <description>Recent content in Swap on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 27 Sep 2018 18:31:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/swap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Centos给swap扩容</title>
+      <link>https://blog.gofinall.com/post/centos-add-swap/</link>
+      <pubDate>Thu, 27 Sep 2018 18:31:37 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/centos-add-swap/</guid>
+      <description>&lt;h3 id=&#34;swap空间介绍&#34;&gt;swap空间介绍&lt;/h3&gt;
+
+&lt;p&gt;swap分区的用处：swap是当物理内存不够用的时候，把数据放到swap中，所以swap起到了一个虚拟内存的作用，在某种意义上来说也算是加大了内存空间。一般swap分区是在安装系统时设置的，如果安装系统时忘记分swap分区或者分区太小，那也没事，还有补救的方法。下面就讲讲安装完CentOS系统后如何给swap分区扩容。&lt;/p&gt;
+
+&lt;p&gt;场景：
+安装完CentOS Linux系统后，安装oracle发下swap大小不够用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

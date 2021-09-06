@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>浏览器 on 终点站</title>
+    <link>https://blog.gofinall.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/</link>
+    <description>Recent content in 浏览器 on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 10 Jul 2018 15:58:36 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【解决flash助手推荐】flash_player_30_0_0_127地区不相容PJ</title>
+      <link>https://blog.gofinall.com/post/flashplayer-2144-2/</link>
+      <pubDate>Tue, 10 Jul 2018 15:58:36 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/flashplayer-2144-2/</guid>
+      <description>&lt;p&gt;上一篇文章(&lt;a href=&#34;https://blog.gofinall.com/post/flashplayer-2144/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题&lt;/a&gt;)说了两个解决flash地区不相容 的问题，但是事情比我们想象的要复杂。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>解决‘FlashPlayer与您的地区不相容，请重新安装FlashPlayer’问题</title>
+      <link>https://blog.gofinall.com/post/flashplayer-2144/</link>
+      <pubDate>Tue, 12 Jun 2018 17:26:27 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/flashplayer-2144/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;最近发现打开flash的网站后就出现&amp;rdquo;此Flash Player 与您的地区不相容&amp;rdquo;的提示信息（如图所示），可按照提示操作下载后问题依旧。排查了一些浏览器设置并在网络上搜索之后，发现可能是下载的flashplayer本身有问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

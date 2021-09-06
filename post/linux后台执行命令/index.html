@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>linux 技巧： 让你的远程会话后台执行 - 终点站</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="死性不改" />
+  <meta name="description" content="你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+
+" />
+<meta name="keywords" content="linux, screen, nohup, 后台" />
+
+
+
+<meta name="baidu-site-verification" content="YfDlqqg5mx" />
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=2.7.2" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="linux 技巧： 让你的远程会话后台执行" />
+<meta property="og:description" content="你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.gofinall.com/post/linux%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" /><meta property="article:published_time" content="2018-01-24T14:40:26&#43;08:00"/>
+<meta property="article:modified_time" content="2018-01-24T14:40:26&#43;08:00"/>
+<meta itemprop="name" content="linux 技巧： 让你的远程会话后台执行">
+<meta itemprop="description" content="你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-01-24T14:40:26&#43;08:00" />
+<meta itemprop="dateModified" content="2018-01-24T14:40:26&#43;08:00" />
+<meta itemprop="wordCount" content="2388">
+
+
+
+<meta itemprop="keywords" content="linux,后台," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="linux 技巧： 让你的远程会话后台执行"/>
+<meta name="twitter:description" content="你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">终点站</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">终点站</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">linux 技巧： 让你的远程会话后台执行</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-01-24 </span>
+        <div class="post-category">
+            
+              <a href="/categories/linux/"> linux </a>
+            
+          </div>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#nohup方式">nohup方式</a></li>
+<li><a href="#disown方式">disown方式</a></li>
+<li><a href="#screen方式">screen方式</a>
+<ul>
+<li><a href="#screen常用命令">screen常用命令</a></li>
+</ul></li>
+<li><a href="#tmux方式">tmux方式</a>
+<ul>
+<li><a href="#tmux功能">Tmux功能：</a></li>
+<li><a href="#tmux安装">Tmux安装</a>
+<ul>
+<li><a href="#tmux的使用">Tmux的使用</a></li>
+<li><a href="#需要注意的几点">需要注意的几点：</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#最后">最后</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。</p>
+
+<p></p>
+
+<h1 id="nohup方式">nohup方式</h1>
+
+<p><code>nohup sh shell.sh &amp;</code>
+查看日志：<code>tail -f nohup.out</code></p>
+
+<h1 id="disown方式">disown方式</h1>
+
+<p><code>sh shell.sh &amp; disown</code>
+查看日志：断开终端后，不能再查看日志</p>
+
+<h1 id="screen方式">screen方式</h1>
+
+<p>执行screen，如果命令不存在，需要先安装：<code>yum install screen -y</code>
+新建一个屏幕：<code>screen -S screen_name</code>
+执行命令：<code>sh shell.sh</code>
+依次按 Ctrl+A 与 D (无 Ctrl) 脱离该屏幕，此时程序仍运行在后台。
+如果希望查看日志或结束程序，你可以随时通过 <code>screen -d -r screen_name</code> 重新连接到该屏幕进行操作。
+可以用<code> screen -ls </code>命令查看当前存在的所有屏幕。</p>
+
+<h2 id="screen常用命令">screen常用命令</h2>
+
+<p>你可能注意到给screen发送命令使用了特殊的键组合C-a。这是因为我们在键盘上键入的信息是直接发送给当前screen窗口，必须用其他方式向screen窗口管理器发出命令，默认情况下，screen接收以C-a开始的命令。这种命令形式在screen中叫做键绑定（key binding），C-a叫做命令字符（command character）。</p>
+
+<p>可以通过<code>C-a ?</code>来查看所有的键绑定，常用的键绑定有：</p>
+
+<table>
+<thead>
+<tr>
+<th>C-a ?</th>
+<th>显示所有键绑定信息</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>C-a w</td>
+<td>显示所有窗口列表</td>
+</tr>
+
+<tr>
+<td>C-a C-a</td>
+<td>切换到之前显示的窗口</td>
+</tr>
+
+<tr>
+<td>C-a c</td>
+<td>创建一个新的运行shell的窗口并切换到该窗口</td>
+</tr>
+
+<tr>
+<td>C-a n</td>
+<td>切换到下一个窗口</td>
+</tr>
+
+<tr>
+<td>C-a p</td>
+<td>切换到前一个窗口(与C-a n相对)</td>
+</tr>
+
+<tr>
+<td>C-a 0..9</td>
+<td>切换到窗口0..9</td>
+</tr>
+
+<tr>
+<td>C-a a</td>
+<td>发送 C-a到当前窗口</td>
+</tr>
+
+<tr>
+<td>C-a d</td>
+<td>暂时断开screen会话</td>
+</tr>
+
+<tr>
+<td>C-a k</td>
+<td>杀掉当前窗口</td>
+</tr>
+
+<tr>
+<td>C-a [</td>
+<td>进入拷贝/回滚模式</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="tmux方式">tmux方式</h1>
+
+<p>Tmux是一个优秀的终端复用软件，类似GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；是BSD实现的Screen替代品，相对于Screen，它更加先进：支持屏幕切分，而且具备丰富的命令行参数，使其可以灵活、动态的进行各种布局和操作。下面就Tmux的使用做一梳理：</p>
+
+<h2 id="tmux功能">Tmux功能：</h2>
+
+<p>-  提供了强劲的、易于使用的命令行界面。
+-  可横向和纵向分割窗口。
+-  窗格可以自由移动和调整大小，或直接利用四个预设布局之一。
+-  支持 UTF-8 编码及 256 色终端。
+-  可在多个缓冲区进行复制和粘贴。
+-  可通过交互式菜单来选择窗口、会话及客户端。
+-  支持跨窗口搜索。
+-  支持自动及手动锁定窗口。</p>
+
+<h2 id="tmux安装">Tmux安装</h2>
+
+<ul>
+<li>ubuntu版本下直接apt-get安装</li>
+</ul>
+
+<pre><code class="language-shell">  # sudo apt-get install tmux
+</code></pre>
+
+<p>​</p>
+
+<ul>
+<li>centos7版本下直接yum安装</li>
+</ul>
+
+<pre><code class="language-shell">yum install -y tmux
+</code></pre>
+
+<ul>
+<li>centos6版本需要编译安装</li>
+</ul>
+
+<p><code>tmux官网下载地址：http://tmux.github.io/</code></p>
+
+<h3 id="tmux的使用">Tmux的使用</h3>
+
+<p>安装完成后输入命令tmux即可打开软件，界面十分简单，类似一个下方带有状态栏的终端控制台；但根据tmux的定义，在开启了tmux服务器后，会首先创建一个会话，而这个会话则会首先创建一个窗口，其中仅包含一个面板；也就是说，这里看到的所谓终端控制台应该称作tmux的一个面板，虽然其使用方法与终端控制台完全相同。</p>
+
+<pre><code class="language-shell"># tmux                                   //直接进入面板
+</code></pre>
+
+<p><strong>Tmux的快捷键使用说明：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Ctrl+b</th>
+<th>激活控制台；此时以下按键生效</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>?</td>
+<td>列出所有快捷键；按q返回</td>
+</tr>
+
+<tr>
+<td>d</td>
+<td>脱离当前会话；这样可以暂时返回Shell界面，输入tmux attach能够重新进入之前的会话</td>
+</tr>
+
+<tr>
+<td>D</td>
+<td>选择要脱离的会话；在同时开启了多个会话时使用</td>
+</tr>
+
+<tr>
+<td>Ctrl+z</td>
+<td>挂起当前会话</td>
+</tr>
+
+<tr>
+<td>r</td>
+<td>强制重绘未脱离的会话</td>
+</tr>
+
+<tr>
+<td>s</td>
+<td>选择并切换会话；在同时开启了多个会话时使用</td>
+</tr>
+
+<tr>
+<td>:</td>
+<td>进入命令行模式；此时可以输入支持的命令，例如kill-server可以关闭服务器</td>
+</tr>
+
+<tr>
+<td>[</td>
+<td>进入复制模式；此时的操作与vi/emacs相同，按q/Esc退出</td>
+</tr>
+
+<tr>
+<td>~</td>
+<td>列出提示信息缓存；其中包含了之前tmux返回的各种提示信息</td>
+</tr>
+
+<tr>
+<td>c</td>
+<td>创建新窗口</td>
+</tr>
+
+<tr>
+<td>&amp;</td>
+<td>关闭当前窗口</td>
+</tr>
+
+<tr>
+<td>数字键</td>
+<td>切换至指定窗口</td>
+</tr>
+
+<tr>
+<td>p</td>
+<td>切换至上一窗口</td>
+</tr>
+
+<tr>
+<td>n</td>
+<td>切换至下一窗口</td>
+</tr>
+
+<tr>
+<td>l</td>
+<td>在前后两个窗口间互相切换</td>
+</tr>
+
+<tr>
+<td>w</td>
+<td>通过窗口列表切换窗口</td>
+</tr>
+
+<tr>
+<td>,</td>
+<td>重命名当前窗口；这样便于识别</td>
+</tr>
+
+<tr>
+<td>.</td>
+<td>修改当前窗口编号；相当于窗口重新排序</td>
+</tr>
+
+<tr>
+<td>f</td>
+<td>在所有窗口中查找指定文本</td>
+</tr>
+
+<tr>
+<td>”</td>
+<td>将当前面板平分为上下两块</td>
+</tr>
+
+<tr>
+<td>%</td>
+<td>将当前面板平分为左右两块</td>
+</tr>
+
+<tr>
+<td>x</td>
+<td>关闭当前面板</td>
+</tr>
+
+<tr>
+<td>!</td>
+<td>将当前面板置于新窗口；即新建一个窗口，其中仅包含当前面板</td>
+</tr>
+
+<tr>
+<td>Ctrl+方向键</td>
+<td>以1个单元格为单位移动边缘以调整当前面板大小</td>
+</tr>
+
+<tr>
+<td>Alt+方向键</td>
+<td>以5个单元格为单位移动边缘以调整当前面板大小</td>
+</tr>
+
+<tr>
+<td>Space</td>
+<td>在预置的面板布局中循环切换；依次包括even-horizontal、even-vertical、main-horizontal、main-vertical、tiled</td>
+</tr>
+
+<tr>
+<td>q</td>
+<td>显示面板编号</td>
+</tr>
+
+<tr>
+<td>o</td>
+<td>在当前窗口中选择下一面板</td>
+</tr>
+
+<tr>
+<td>方向键</td>
+<td>移动光标以选择面板</td>
+</tr>
+
+<tr>
+<td>{</td>
+<td>向前置换当前面板</td>
+</tr>
+
+<tr>
+<td>}</td>
+<td>向后置换当前面板</td>
+</tr>
+
+<tr>
+<td>Alt+o</td>
+<td>逆时针旋转当前窗口的面板</td>
+</tr>
+
+<tr>
+<td>Ctrl+o</td>
+<td>顺时针旋转当前窗口的面板</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="需要注意的几点">需要注意的几点：</h3>
+
+<ul>
+<li><p>进入tmux面板后，一定要先按ctrl+b，然后松开，再按其他的组合键才生效。</p></li>
+
+<li><p>常用到的几个组合键：</p></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ctrl+b ?</td>
+<td>显示快捷键帮助</td>
+</tr>
+
+<tr>
+<td>ctrl+b 空格键</td>
+<td>采用下一个内置布局，这个很有意思，在多屏时，用这个就会将多有屏幕竖着展示</td>
+</tr>
+
+<tr>
+<td>ctrl+b !</td>
+<td>把当前窗口变为新窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b  &ldquo;</td>
+<td>模向分隔窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b %</td>
+<td>纵向分隔窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b q</td>
+<td>显示分隔窗口的编号</td>
+</tr>
+
+<tr>
+<td>ctrl+b o</td>
+<td>跳到下一个分隔窗口。多屏之间的切换</td>
+</tr>
+
+<tr>
+<td>ctrl+b 上下键</td>
+<td>上一个及下一个分隔窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b C-方向键</td>
+<td>调整分隔窗口大小</td>
+</tr>
+
+<tr>
+<td>ctrl+b &amp;</td>
+<td>确认后退出当前tmux</td>
+</tr>
+
+<tr>
+<td>ctrl+b [</td>
+<td>复制模式，即将当前屏幕移到上一个的位置上，其他所有窗口都向前移动一个。</td>
+</tr>
+
+<tr>
+<td>ctrl+b c</td>
+<td>创建新窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b n</td>
+<td>选择下一个窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b l</td>
+<td>最后使用的窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b p</td>
+<td>选择前一个窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b w</td>
+<td>以菜单方式显示及选择窗口</td>
+</tr>
+
+<tr>
+<td>ctrl+b s</td>
+<td>以菜单方式显示和选择会话。这个常用到，可以选择进入哪个tmux</td>
+</tr>
+
+<tr>
+<td>ctrl+b t</td>
+<td>显示时钟。然后按enter键后就会恢复到shell终端状态</td>
+</tr>
+
+<tr>
+<td>ctrl+b d</td>
+<td>脱离当前会话；这样可以暂时返回Shell界面，输入tmux attach能够重新进入之前的会话</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="最后">最后</h1>
+
+<p>一般常用的为：nohup和screen</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/linux/">linux</a>
+          
+          <a href="/tags/%E5%90%8E%E5%8F%B0/">后台</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/gitlab/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">GitLab_本地GitLab服务器搭建</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/linux%E4%BA%92%E4%BF%A1/">
+            <span class="next-text nav-default">Linux互信</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://blog.gofinall.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io" target="_blank" rel="nofollow">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even" target="_blank" rel="nofollow">Even</a>
+	
+  </span>
+
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">死性不改</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.2"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?7d0cf0782b27334f7af6fece6f2e47c4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+</body>
+</html>

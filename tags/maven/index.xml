@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Maven on 终点站</title>
+    <link>https://blog.gofinall.com/tags/maven/</link>
+    <description>Recent content in Maven on 终点站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 13 Jun 2018 21:20:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.gofinall.com/tags/maven/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>maven命令行窗口指定settings.xml</title>
+      <link>https://blog.gofinall.com/post/mvn-setting/</link>
+      <pubDate>Wed, 13 Jun 2018 21:20:23 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/mvn-setting/</guid>
+      <description>&lt;h3 id=&#34;setting-xml是什么&#34;&gt;setting.xml是什么&lt;/h3&gt;
+
+&lt;p&gt;从settings.xml的文件名就可以看出，它是用来设置maven参数的配置文件。并且，&lt;strong&gt;settings.xml是maven的全局配置文件&lt;/strong&gt;。而pom.xml文件是所在项目的局部配置。 Settings.xml中包含类似本地仓储位置、修改远程仓储服务器、认证信息等配置&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
