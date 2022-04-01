@@ -73,7 +73,7 @@ VSFTP是一个在UNIX/Linux操作系统上运行的FTP服务器，安全性是�
 
 <meta itemprop="datePublished" content="2018-05-28T17:26:10&#43;08:00" />
 <meta itemprop="dateModified" content="2018-05-28T17:26:10&#43;08:00" />
-<meta itemprop="wordCount" content="1752">
+<meta itemprop="wordCount" content="1736">
 
 
 
@@ -249,7 +249,7 @@ yum install vsftpd db4-utils -y
 
 <h3 id="编辑虚拟用户名单文件">编辑虚拟用户名单文件：</h3>
 
-<p>第一行账号，第二行密码，注意：不能使用root做用户名，系统保留</p>
+<p>单行为账号，双行为密码，注意：不能使用root做用户名，系统保留</p>
 
 <pre><code>vi /etc/vsftpd/virtusers
 </code></pre>
@@ -298,28 +298,28 @@ vi ftp01
 
 <pre><code>#虚拟用户登录后的根目录
 local_root=/home/vsftpd/ftp01
-#虚拟用户和本地用户有相同的权限,默认是NO.
-#virtual_use_local_privs=YES
 anon_umask=022
-#开放虚拟用户的下载权限。注意这个地方千万不能写成YES，否则将不能列出和下载子目录的文件。
-anon_world_readable_only=NO
+#开放虚拟用户的下载权限。
+anon_world_readable_only=YES
 #开放虚拟用户的写权限
-write_enable=NO
+write_enable=YES
 #开放虚拟用户的下载权限
 anon_world_readable_only=YES
 #开放虚拟用户的上传权限
-anon_upload_enable=NO
+anon_upload_enable=YES
 #开放虚拟用户创建目录的权限
-anon_mkdir_write_enable=NO
+anon_mkdir_write_enable=YES
 #开放虚拟用户删除和重命名的权限
-anon_other_write_enable=NO
+anon_other_write_enable=YES
 </code></pre>
 
 <h3 id="配置vsftpd">配置vsftpd</h3>
 
 <p>编辑<code>/etc/vsftpd/vsftpd.conf</code>文件</p>
 
-<pre><code>#设定不允许匿名访问 
+<pre><code>#修改默认21端口为5151，可不用修改
+listen_port=5151
+#设定不允许匿名访问 
 anonymous_enable=NO
 #设定本地用户可以访问。注：如使用虚拟宿主用户，在该项目设定为NO的情况下所有虚拟用户将无法访问 
 local_enable=YES
@@ -337,12 +337,16 @@ guest_enable=YES
 #指定虚拟用户的宿主用户
 guest_username=vsftpd
 #设定虚拟用户个人vsftp的FTP服务文件存放路径。
-user_config_dir=/etc/vsftpd/vuser_conf
+user_config_dir=/etc/vsftpd/vconf
+allow_writeable_chroot=YES
+virtual_use_local_privs=YES
 </code></pre>
 
 <h3 id="重启vsftpd服务器">重启vsftpd服务器</h3>
 
-<pre><code>#centos6
+<pre><code># 生成chroot_list文件
+touch /etc/vsftpd/chroot_list
+#centos6
 service vsftpd restart 
 #centos7
 systemctl restart vsftpd.service
@@ -489,7 +493,7 @@ ftp   21/udp   -------&gt;       ftp      2121/udp
     &copy; 
     
       2018 - 
-    2021
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

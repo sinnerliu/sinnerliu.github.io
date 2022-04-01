@@ -6,10 +6,23 @@
     <description>Recent content in Linux on 终点站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 27 Oct 2020 13:00:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 15 Sep 2021 16:06:30 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.gofinall.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>centos7安装Kerberos客户端</title>
+      <link>https://blog.gofinall.com/post/kerberos-client-centos/</link>
+      <pubDate>Wed, 15 Sep 2021 16:06:30 +0800</pubDate>
+      
+      <guid>https://blog.gofinall.com/post/kerberos-client-centos/</guid>
+      <description>&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+
+&lt;p&gt;有时候需要连接有kerberos认证的hive，但是自己部署的hive客户端服务器没有安装kerberos客户端，导致不能连接，于是就有了这篇文章。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Linux下文件名编码转换-Convmv</title>
