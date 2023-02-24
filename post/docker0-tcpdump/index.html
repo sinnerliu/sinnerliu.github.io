@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2023-02-24T11:26:51&#43;08:00" />
 <meta itemprop="dateModified" content="2023-02-24T11:26:51&#43;08:00" />
-<meta itemprop="wordCount" content="957">
+<meta itemprop="wordCount" content="956">
 
 
 
@@ -202,8 +202,8 @@
 
 <p>启动容器，马上看到这么一条告警：</p>
 
-<pre><code>1.   run -it ubuntu:18.04 /bin/bash   
-2.  G: IPv4 forwarding is disabled. Networking will not work
+<pre><code>docker run -it ubuntu:18.04 /bin/bash
+WARNING: IPv4 forwarding is disabled. Networking will not work
 </code></pre>
 
 <p>可以看到，这个告警信息，正常的容器以前是没有的。所以很明显，这个问题必须先搞定。</p>

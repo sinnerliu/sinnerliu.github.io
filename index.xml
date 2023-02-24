@@ -48,8 +48,8 @@
 
 &lt;p&gt;启动容器，马上看到这么一条告警：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;1.   run -it ubuntu:18.04 /bin/bash   
-2.  G: IPv4 forwarding is disabled. Networking will not work
+&lt;pre&gt;&lt;code&gt;docker run -it ubuntu:18.04 /bin/bash
+WARNING: IPv4 forwarding is disabled. Networking will not work
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;可以看到，这个告警信息，正常的容器以前是没有的。所以很明显，这个问题必须先搞定。&lt;/p&gt;
