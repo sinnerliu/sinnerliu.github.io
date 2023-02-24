@@ -137,8 +137,9 @@ ip link set docker0 promisc on
 &lt;li&gt;Linux下设置&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;1、设置混杂模式 &lt;code&gt;ifconfig eth0 promisc&lt;/code&gt;
-2、取消混杂模式 &lt;code&gt;ifconfig etho -promisc&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;1、设置混杂模式 &lt;code&gt;ifconfig eth0 promisc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;2、取消混杂模式 &lt;code&gt;ifconfig etho -promisc&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;备注：eth0为网卡名&lt;/p&gt;</description>
     </item>
