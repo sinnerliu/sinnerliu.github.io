@@ -31,6 +31,119 @@
     </item>
     
     <item>
+      <title>docker宿主机不能ping通容器内部ip,使用tcpdump抓包后则能ping通</title>
+      <link>https://blog.gofinall.com/post/docker0-tcpdump/</link>
+      <pubDate>Fri, 24 Feb 2023 11:26:51 +0800</pubDate>
+      <author> 死性不改 </author>
+      <guid>https://blog.gofinall.com/post/docker0-tcpdump/</guid>
+      <description>&lt;h3 id=&#34;问题现象&#34;&gt;问题现象&lt;/h3&gt;
+
+&lt;p&gt;一次意外的服务器宕机，导致服务器上容器不能访问，在宿主机上也不能ping通容器内的ip。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;问题定位&#34;&gt;问题定位&lt;/h3&gt;
+
+&lt;h4 id=&#34;ip-forward转发&#34;&gt;IP Forward转发&lt;/h4&gt;
+
+&lt;p&gt;启动容器，马上看到这么一条告警：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.   run -it ubuntu:18.04 /bin/bash   
+2.  G: IPv4 forwarding is disabled. Networking will not work
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看到，这个告警信息，正常的容器以前是没有的。所以很明显，这个问题必须先搞定。&lt;/p&gt;
+
+&lt;p&gt;查看：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; cat /proc/sys/net/ipv4/ip_forward
+0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;于是，在主机上面开启 ip_forward 开关：&lt;/p&gt;
+
+&lt;p&gt;修改/etc/sysctl.conf ，在文件里增加一条net.&lt;a href=&#34;https://so.csdn.net/so/search?q=ipv4&amp;amp;spm=1001.2101.3001.7020&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;ipv4&lt;/a&gt;.ip_forward = 1&lt;/p&gt;
+
+&lt;p&gt;然后sysctl -p /etc/sysctl.conf 生效。&lt;/p&gt;
+
+&lt;p&gt;改完后，再启动容器，该Warning就消失了，但是在宿主机上也不能ping通容器内的ip。&lt;/p&gt;
+
+&lt;h4 id=&#34;tcpdump抓包&#34;&gt;tcpdump抓包&lt;/h4&gt;
+
+&lt;p&gt;既然还是不通，那祭出大杀器Tcpdump呗，在宿主机的docker0上开始抓包分析：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tcpdump -nn -i docker0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后在宿主机上再次执行ping命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ping 172.17.0.5
+64 bytes from 172.17.0.1: seq=1104 ttl=64 time=0.203 ms
+64 bytes from 172.17.0.1: seq=1105 ttl=64 time=0.166 ms
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;发现莫名其妙的通了，停掉tcpdump后，发现又不能ping通，试了几次发现，只要我tcpdump抓包，网络就通。一旦tcpdump停掉，网络就不通。&lt;/p&gt;
+
+&lt;p&gt;问了度娘后，才知道tcpdump命令，会使得网卡进入混杂模式，使它会接受不是属于自己的报文。&lt;/p&gt;
+
+&lt;p&gt;没错，通过&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cat /sys/class/net/docker0/flags
+0x1103
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查询状态（右数第3位，0和1表示是否为混杂模式）。&lt;/p&gt;
+
+&lt;p&gt;结果为0x1003&lt;/p&gt;
+
+&lt;p&gt;当开启tcpdump时为0x1103，关闭tcpdump时为0x1003&lt;/p&gt;
+
+&lt;p&gt;那么说明问题就是docker0在默认情况下，并没有进入混杂模式导致的。&lt;/p&gt;
+
+&lt;p&gt;所以，修复方案就是把这个docker0的网卡，直接设置为混杂模式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ifconfig docker0 promisc
+或
+ip link set docker0 promisc on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后验证，一切OK。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip link set docker0 promisc off
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再次确认一下，将混杂模式关闭后，容器里面继续不通。&lt;/p&gt;
+
+&lt;p&gt;到此，整个网络问题搞定。&lt;/p&gt;
+
+&lt;h3 id=&#34;可能的原因&#34;&gt;可能的原因&lt;/h3&gt;
+
+&lt;p&gt;猜测可能这台机器是新安装的，一开始没有打开IP Forward转发开关。然后又是手动安装的Docker离线包，导致docker0为非混杂模式。&lt;/p&gt;
+
+&lt;h3 id=&#34;问题总结&#34;&gt;问题总结&lt;/h3&gt;
+
+&lt;p&gt;本次容器网络不通问题，总结一下，大概：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;主机IP Forward转发没打开。&lt;/li&gt;
+&lt;li&gt;Docker0网桥的混杂模式未打开。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;扩展阅读&#34;&gt;扩展阅读&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;混杂模式&lt;/strong&gt;（英语：promiscuous mode）：是指一台机器的网卡能够接收所有经过它的数据流，而不论其目的地址是否是它。一般计算机网卡都工作在非混杂模式下，如果设置网卡为混杂模式需要root权限。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Linux下设置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;1、设置混杂模式 &lt;code&gt;ifconfig eth0 promisc&lt;/code&gt;
+2、取消混杂模式 &lt;code&gt;ifconfig etho -promisc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;备注：eth0为网卡名&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>centos7安装Kerberos客户端</title>
       <link>https://blog.gofinall.com/post/kerberos-client-centos/</link>
       <pubDate>Wed, 15 Sep 2021 16:06:30 +0800</pubDate>
@@ -732,117 +845,6 @@ connect -H 127.0.0.1:1080 &amp;quot;$@&amp;quot;
 &lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://segmentfault.com/q/1010000000118837&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://segmentfault.com/q/1010000000118837&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>DenyHosts安装配置详解及安装报错处理</title>
-      <link>https://blog.gofinall.com/post/denyhosts/</link>
-      <pubDate>Mon, 02 Mar 2020 17:19:49 +0800</pubDate>
-      <author> 死性不改 </author>
-      <guid>https://blog.gofinall.com/post/denyhosts/</guid>
-      <description>&lt;h3 id=&#34;denyhosts-简介&#34;&gt;DenyHosts 简介&lt;/h3&gt;
-
-&lt;p&gt;DenyHosts 是 Python 语言写的一个程序软件，运行于 Linux 上预防 SSH 暴力破解的，它会分析 sshd 的日志文件（/var/log/secure），当发现重复的攻击时就会记录 IP 到/etc/hosts.deny 文件，从而达到自动屏 IP 的功能。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;下载denyhosts&#34;&gt;下载DenyHosts&lt;/h3&gt;
-
-&lt;p&gt;DenyHosts官网：&lt;a href=&#34;http://denyhosts.sourceforge.net&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;http://denyhosts.sourceforge.net/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;最新版本下载地址：&lt;a href=&#34;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&#34; rel=&#34;noreferrer&#34; target=&#34;_blank&#34;&gt;https://sourceforge.net/projects/denyhosts/files/denyhosts/2.6/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;解压并安装&#34;&gt;解压并安装&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;安装服务器系统：CentOS 7.2&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;# 官网下载包安装
-[root@tmp ~]# tar zxvf DenyHosts-2.6.tar.gz
-[root@tmp ~]# cd DenyHosts-2.6
-[root@tmp ~]# DenyHosts-2.6]# python setup.py install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 进入配置目录
-[root@tmp ~]# cd /usr/share/denyhosts/
-# 创建配置文件
-[root@tmp denyhosts]# cp denyhosts.cfg-dist denyhosts.cfg 
-# 修改服务文件名称
-[root@tmp denyhosts]# cp daemon-control-dist daemon-control
-# 提高安全级别，修改权限
-[root@tmp denyhosts]# chown root daemon-control
-[root@tmp denyhosts]# chmod 700 daemon-control
-[root@tmp denyhosts]# vi denyhosts.cfg
-SECURE_LOG = /var/log/secure   #ssh日志文件
-# format is: i[dhwmy]
-# Where i is an integer (eg. 7)
-# m = minutes
-# h = hours
-# d = days
-# w = weeks
-# y = years
-#
-# never purge:
-PURGE_DENY = 50m               #过多久后清除已阻止IP
-HOSTS_DENY = /etc/hosts.deny   #将阻止IP写入到hosts.deny
-BLOCK_SERVICE = sshd           #阻止服务名
-PURGE_THRESHOLD =              #定义了某一IP最多被解封多少次。某IP暴力破解SSH密码被阻止/解封达到了PURGE_THRESHOLD次，则会被永久禁止；
-DENY_THRESHOLD_INVALID = 1     #允许无效用户登录失败的次数
-DENY_THRESHOLD_VALID = 10      #允许普通用户登录失败的次数
-DENY_THRESHOLD_ROOT = 5        #允许root登录失败的次数
-WORK_DIR = /usr/local/share/denyhosts/data #将deny的host或ip纪录到Work_dir中
-DENY_THRESHOLD_RESTRICTED = 1 #设定 deny host 写入到该资料夹
-LOCK_FILE = /var/lock/subsys/denyhosts #将DenyHOts启动的pid纪录到LOCK_FILE中，已确保服务正确启动，防止同时启动多个服务。
-HOSTNAME_LOOKUP=NO            #是否做域名反解
-ADMIN_EMAIL =                 #设置管理员邮件地址
-DAEMON_LOG = /var/log/denyhosts #DenyHosts日志位置
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;配置服务及启动&#34;&gt;配置服务及启动&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 创建启动服务连接
-[root@tmp ~]# ln -s /usr/share/denyhosts/daemon-control /etc/init.d/denyhosts
-# 添加启动项
-[root@tmp ~]# chkconfig denyhosts on
-# 查看启动像是否成功
-[root@tmp ~]# chkconfig --list|grep denyhosts
-# 启动denyhosts
-[root@tmp ~]# service denyhosts start  # 或者 systemctl start denyhosts
-# 查看后台进程
-[root@tmp ~]# ps -ef|grep denyhosts
-root      3098  3865  0 17:35 pts/1    00:00:00 grep --color=auto denyhosts
-root     21121     1  0 Feb28 ?        00:00:01 python /usr/bin/denyhosts.py --daemon --config=/usr/share/denyhosts/denyhosts.cfg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;问题排查&#34;&gt;问题排查&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;starting DenyHosts: /usr/bin/env python /usr/bin/denyhosts.py &amp;ndash;daemon &amp;ndash;config=/usr/share/denyhosts/denyhosts.cfg python: can&amp;rsquo;t open file &amp;lsquo;/usr/bin/denyhosts.py&amp;rsquo;: [Errno 2] No such file or directory&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;解决方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;cd /usr/share/denyhosts/
-vi daemon-control
-DENYHOSTS_BIN = &amp;quot;/usr/bin/denyhosts.py&amp;quot;
-改为
-DENYHOSTS_BIN = &amp;quot;/usr/local/bin/denyhosts.py&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ImportError: No module named DenyHosts.python_version&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;解决方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# 下面的python版本视服务器上的版本而定
-cp -r /usr/local/lib/python2.7/site-packages/DenyHosts /usr/lib/python2.6/site-packages/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后重启即可。&lt;/p&gt;</description>
     </item>
     
   </channel>
