@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2019-01-18T13:53:38&#43;08:00" />
 <meta itemprop="dateModified" content="2019-01-18T13:53:38&#43;08:00" />
-<meta itemprop="wordCount" content="1483">
+<meta itemprop="wordCount" content="1525">
 
 
 
@@ -315,7 +315,9 @@ def gitlab_project_commits(project_list):
                     commit_add=0
                     commit_del=0
                     commit_id=project_branch_commit_json['id']
-                    commit_title=project_branch_commit_json['title']
+                    # title里面提交可能只有部分，因此使用message来获取完整的提交日志内容
+                    # commit_title=project_branch_commit_json['title']
+                    commit_title=project_branch_commit_json['message']
                     commit_create_at=project_branch_commit_json['created_at']
                     # commit_create_at=commit_create_at[0:19].replace('T',' ')
                     commit_author_name=project_branch_commit_json['author_name']
